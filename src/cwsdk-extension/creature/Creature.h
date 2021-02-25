@@ -86,7 +86,7 @@ namespace cube
 			IsRunning,
 			Unk_07,
 			Unk_08,
-			Unk_09,
+			StayOnGround,
 			IsSneaking,
 			Unk_11,
 			Unk_12,

@@ -10,7 +10,7 @@
 void hook::InitializeAll()
 {
 	// Initialize all hooks here.
-	DropGoldOnHitInitialize();
+	//DropGoldOnHitInitialize();
 	ChestOpeningInitialize();
 }
 

@@ -1,11 +1,31 @@
 #include "CreatureFactory.h"
 
+#include <random>
+#include "time.h"
 #include "cwsdk.h"
+
+#include "Creature.h"
 
 long long cube::CreatureFactory::GenerateId()
 {
 	cube::Game* game = cube::GetGame();
-	return 999 + game->host.world.creatures.size();
+	//return 999 + game->host.world.creatures.size();
+
+	const auto& map = game->host.world.id_to_creature_map;
+	long long cnt = 1000;
+	while (true) {
+		if (map.find(cnt) == map.end())
+		{
+			return cnt;
+		}
+
+		if (cnt > 100000)
+		{
+			return -1;
+		}
+		cnt++;
+	}
+	
 }
 
 void cube::CreatureFactory::SetAppearance(cube::Creature* creature, int entityType, int entityBehaviour, int level)
@@ -21,4 +41,141 @@ void cube::CreatureFactory::AddCreatureToWorld(cube::Creature* creature)
 	cube::Game* game = cube::GetGame();
 	game->host.world.creatures.push_back(creature);
 	game->host.world.id_to_creature_map.insert_or_assign(creature->id, creature);
+}
+
+cube::Creature* cube::CreatureFactory::SpawnCreature(const LongVector3& position, int entityType, int entityBehaviour, int level)
+{
+	cube::Creature* creature = cube::Creature::Create(cube::CreatureFactory::GenerateId());
+	if (creature != nullptr)
+	{
+		creature->entity_data.position = position;
+
+		cube::CreatureFactory::SetAppearance(creature, entityType, entityBehaviour, level);
+		cube::CreatureFactory::AddCreatureToWorld(creature);
+	}
+	return creature;
+}
+
+cube::Creature* cube::CreatureFactory::SpawnChest(const LongVector3& position, float rotationY, int chestType, int level)
+{
+	if (chestType < 0 || chestType >= 4)
+	{
+		return nullptr;
+	}
+
+	if (level < 0)
+	{
+		return nullptr;
+	}
+
+	cube::Creature* creature = SpawnCreature(position, 181 + chestType, (int)cube::Enums::EntityBehaviour::ExamineObject, level);
+	if (creature != nullptr)
+	{
+		// Todo: Fix rotation
+		creature->entity_data.head_rotation = rotationY;
+		creature->entity_data.binary_toggles |= 1 << (int)cube::Enums::StateFlags::ActiveLantern;
+	}
+
+	return creature;
+}
+
+cube::Creature* cube::CreatureFactory::SpawnFish(const LongVector3& position, int entityType, int level, int friendly)
+{
+	const static int ENTITY_COUNT = 13;
+	const static int MAX_LEVEL = 5;
+	const static int ENTITY_TYPES[ENTITY_COUNT] = {
+		106,
+		107,
+		145,
+		146,
+		147,
+		148,
+		149,
+		150,
+		152,
+		153,
+		154,
+		155,
+		295,
+	};
+
+	// Todo: Fix randomness
+	int random = std::rand();
+	if (entityType == -1)
+	{
+		entityType = random % ENTITY_COUNT;
+	}
+
+	// Todo: Fix random leveling to spawn more lowered leveled ones
+	if (level == -1)
+	{
+		level = random % MAX_LEVEL;
+	}
+
+	if (friendly == -1)
+	{
+		friendly = random % 2;
+	}
+
+	cube::Creature* creature = SpawnCreature(
+		position,
+		ENTITY_TYPES[entityType],
+		(int)cube::Enums::EntityBehaviour::Hostile,
+		level
+	);
+
+	if (creature != nullptr)
+	{
+		creature->entity_data.appearance.flags2 |= friendly << (int)cube::Enums::AppearanceModifiers::IsFriendly;
+		creature->entity_data.HP = creature->GetMaxHP();
+	}
+
+	return creature;
+}
+
+std::vector<cube::Creature*> cube::CreatureFactory::SpawnFishes(int amount, long long range)
+{
+	std::vector<cube::Creature*> creatures;
+
+	if (amount < 0)
+	{
+		return creatures;
+	}
+
+	LongVector3 position = cube::GetGame()->GetPlayer()->entity_data.position;
+	for (int i = 0; i < amount; i++)
+	{
+		LongVector3 offset = cube::CreatureFactory::GetRandomOffset(range);
+		offset.x += position.x;
+		offset.y += position.y;
+		offset.z += position.z;
+		cube::Creature* creature = cube::CreatureFactory::SpawnFish(offset, -1, -1, 1);
+		if (creature != nullptr)
+		{
+			creatures.push_back(creature);
+		}
+	}
+
+	return creatures;
+}
+
+static float RandomZeroToOne()
+{
+	static long long count = 0;
+	int random = rand();
+	count++;
+	std::srand(random + count);
+	return (float)(random / (float)(RAND_MAX));
+}
+
+LongVector3 cube::CreatureFactory::GetRandomOffset(long long range)
+{
+	auto u = RandomZeroToOne() + RandomZeroToOne();
+	auto t = RandomZeroToOne() * 2 * 3.14f;
+	auto r = u > 1.0f ? 2 - u : u;
+
+	auto rr = range * r;
+	auto cost = cos(t);
+	auto sint = sin(t);
+	return LongVector3(rr * cost, rr * sint, rr * cost * sint);
 }

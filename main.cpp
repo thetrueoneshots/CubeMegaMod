@@ -3,10 +3,12 @@
 
 #include "src/cwsdk-extension.h"
 
+static int bit = 0;
+
 // Create global vars here
 #include "src/hooks.h"
 
-cube::Creature* SpawnCreature(const LongVector3& position, int entityType, int entityBehaviour, int level)
+/*cube::Creature* SpawnCreature(const LongVector3& position, int entityType, int entityBehaviour, int level)
 {
 	cube::Creature* creature = cube::Creature::Create(cube::CreatureFactory::GenerateId());
 	if (creature != nullptr)
@@ -18,8 +20,8 @@ cube::Creature* SpawnCreature(const LongVector3& position, int entityType, int e
 	}
 	return creature;
 }
-
-void SpawnChest(const LongVector3& position, float rotationY, int chestType, int level)
+*/
+/*cube::Creature* SpawnChest(const LongVector3& position, float rotationY, int chestType, int level)
 {
 	if (chestType < 0 || chestType >= 4)
 	{
@@ -38,7 +40,9 @@ void SpawnChest(const LongVector3& position, float rotationY, int chestType, int
 		creature->entity_data.head_rotation = rotationY;
 		creature->entity_data.binary_toggles |= 1 << (int)cube::Enums::StateFlags::ActiveLantern;
 	}
-}
+
+	return creature;
+}*/
 
 /*
 * Spawns a fish at the given position. Any of the other parameters is -1, it means that it will be decided randomly.
@@ -47,64 +51,38 @@ void SpawnChest(const LongVector3& position, float rotationY, int chestType, int
 * @param	{int}					level		The level of the creature to spawn. If -1, a random level will be assigned.
 * @param	{int}					friendly	If the creature is friendly or not [0 = hostile, 1 = friendly]. If -1, it will be random.
 */
-void SpawnFish(const LongVector3& position, int entityType = -1, int level = -1, int friendly = -1)
+/*cube::Creature* SpawnFish(const LongVector3& position, int entityType = -1, int level = -1, int friendly = -1)
 {
-	const static int ENTITY_COUNT = 13;
-	const static int MAX_LEVEL = 5;
-	const static int ENTITY_TYPES[ENTITY_COUNT] = {
-		106,
-		107,
-		145,
-		146,
-		147,
-		148,
-		149,
-		150,
-		152,
-		153,
-		154,
-		155,
-		295,
-	};
 
-	// Todo: Fix randomness
-	int random = std::rand();
-	if (entityType == -1)
+}*/
+
+/*std::vector<cube::Creature*> SpawnFishes(int amount)
+{
+	const static long long SPAWN_RANGE = 2000000;
+
+	if (amount < 0)
 	{
-		entityType = random % ENTITY_COUNT;
+		return;
 	}
 
-	// Todo: Fix random leveling to spawn more lowered leveled ones
-	if (level == -1)
-	{
-		level = random % MAX_LEVEL;
-	}
+	std::vector<cube::Creature*> creatures;
 
-	if (friendly == -1)
+	LongVector3 position = cube::GetGame()->GetPlayer()->entity_data.position;
+	for (int i = 0; i < amount; i++)
 	{
-		friendly = random % 2;
-	}
-
-	cube::Creature* creature = SpawnCreature(
-		cube::GetGame()->GetPlayer()->entity_data.position,
-		ENTITY_TYPES[entityType],
-		(int)cube::Enums::EntityBehaviour::Hostile,
-		level
-	);
-
-	if (creature != nullptr)
-	{
-		creature->entity_data.appearance.flags2 |= friendly << (int)cube::Enums::AppearanceModifiers::IsFriendly;
-		
-		// Todo: Only showing light sometimes
-		for (int i = 0; i < 16; i++)
+		LongVector3 offset = cube::CreatureFactory::GetRandomOffset(SPAWN_RANGE);
+		offset.x += position.x;
+		offset.y += position.y;
+		offset.z += position.z;
+		cube::Creature* creature = cube::CreatureFactory::SpawnFish(offset, -1, -1, 1);
+		if (creature != nullptr)
 		{
-			creature->entity_data.binary_toggles |= 1 << i;
+			creatures.push_back(creature);
 		}
-
-		creature->entity_data.HP = creature->GetMaxHP();
 	}
-}
+
+	return creatures;
+}*/
 
 /* Mod class containing all the functions for the mod.
 */
@@ -120,18 +98,15 @@ class Mod : GenericMod {
 
 		cube::Creature* player = cube::GetGame()->GetPlayer();
 		int index = 0;
+		if (swscanf_s(msg, L"/bit %d", &index) == 1)
+		{
+			bit = index;
+			return 1;
+		}
 
 		if (!wcscmp(msg, L"/fish") || swscanf_s(msg, L"/fish %d", &index) == 1)
 		{
-			if (index == 0)
-			{
-				index = 1;
-			}
-			
-			for (int i = 0; i < index; i++)
-			{
-				SpawnFish(player->entity_data.position, -1, -1, 1);
-			}
+			cube::CreatureFactory::SpawnFishes(index);
 		}
 
 		else if (!wcscmp(msg, L"/roots"))
@@ -143,8 +118,7 @@ class Mod : GenericMod {
 		}
 		else if (!wcscmp(msg, L"/chest") || swscanf_s(msg, L"/chest %d", &index) == 1)
 		{
-			
-			SpawnChest(player->entity_data.position, player->entity_data.head_rotation, index, 4);
+			cube::CreatureFactory::SpawnChest(player->entity_data.position, player->entity_data.head_rotation, index, 4);
 		}
 		return 0;
 	}
