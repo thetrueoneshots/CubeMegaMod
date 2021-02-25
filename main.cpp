@@ -6,30 +6,52 @@
 // Create global vars here
 #include "src/hooks.h"
 
-void SpawnChest(int chest)
+cube::Creature* SpawnCreature(const LongVector3& position, int entityType, int entityBehaviour, int level)
 {
-	if (chest < 0 || chest >= 4)
+	cube::Creature* creature = cube::Creature::Create(cube::CreatureFactory::GenerateId());
+	if (creature != nullptr)
+	{
+		creature->entity_data.position = position;
+
+		cube::CreatureFactory::SetAppearance(creature, entityType, entityBehaviour, level);
+		cube::CreatureFactory::AddCreatureToWorld(creature);
+	}
+	return creature;
+}
+
+void SpawnChest(const LongVector3& position, float rotationY, int chestType, int level)
+{
+	if (chestType < 0 || chestType >= 4)
 	{
 		return;
 	}
 
-	// Todo: Refactor.
-	cube::Creature* creature = cube::CreatureFactory::CreateCreature(cube::CreatureTypeBlueFish, 1);
+	if (level < 0)
+	{
+		return;
+	}
+
+	cube::Creature* creature = SpawnCreature(position, 181 + chestType, (int)cube::Enums::EntityBehaviour::ExamineObject, level);
 	if (creature != nullptr)
 	{
-		creature->entity_data.position = cube::GetGame()->GetPlayer()->entity_data.position;
-		creature->entity_data.race = 181 + chest;
-		creature->entity_data.level = 4;
-		creature->entity_data.hostility_type = (int)cube::EntityBehaviour::ExamineObject;
-		creature->entity_data.appearance.flags2 |= 1 << (int)cube::AppearanceModifiers::IsPossesed;
-		((cube::Creature * (*)(cube::World*, int, cube::Creature*))CWOffset(0x2B67B0))(&cube::GetGame()->host.world, 0, creature);
-		cube::CreatureFactory::AddCreatureToWorld(creature);
+		// Todo: Fix rotation
+		creature->entity_data.head_rotation = rotationY;
+		creature->entity_data.binary_toggles |= 1 << (int)cube::Enums::StateFlags::ActiveLantern;
 	}
 }
 
-void SpawnFish()
+/*
+* Spawns a fish at the given position. Any of the other parameters is -1, it means that it will be decided randomly.
+* @param	{const LongVector3&}	position	The Position to spawn the fish at.
+* @param	{int}					entityType	The type of the creature to spawn [0-12]. If -1, a random fish will be spawned.
+* @param	{int}					level		The level of the creature to spawn. If -1, a random level will be assigned.
+* @param	{int}					friendly	If the creature is friendly or not [0 = hostile, 1 = friendly]. If -1, it will be random.
+*/
+void SpawnFish(const LongVector3& position, int entityType = -1, int level = -1, int friendly = -1)
 {
-	const static int ENTITY_TYPES[13] = {
+	const static int ENTITY_COUNT = 13;
+	const static int MAX_LEVEL = 5;
+	const static int ENTITY_TYPES[ENTITY_COUNT] = {
 		106,
 		107,
 		145,
@@ -45,24 +67,42 @@ void SpawnFish()
 		295,
 	};
 
-	const static int MAX_COUNT = 5;
-	int rand = std::rand();
-	int cnt = 13;
-	
-	for (int i = 0; i < cnt; i++)
+	// Todo: Fix randomness
+	int random = std::rand();
+	if (entityType == -1)
 	{
-		// Todo: Refactor
-		cube::Creature* creature = cube::CreatureFactory::CreateCreature(cube::CreatureTypeBlueFish, 1);
-		if (creature != nullptr)
+		entityType = random % ENTITY_COUNT;
+	}
+
+	// Todo: Fix random leveling to spawn more lowered leveled ones
+	if (level == -1)
+	{
+		level = random % MAX_LEVEL;
+	}
+
+	if (friendly == -1)
+	{
+		friendly = random % 2;
+	}
+
+	cube::Creature* creature = SpawnCreature(
+		cube::GetGame()->GetPlayer()->entity_data.position,
+		ENTITY_TYPES[entityType],
+		(int)cube::Enums::EntityBehaviour::Hostile,
+		level
+	);
+
+	if (creature != nullptr)
+	{
+		creature->entity_data.appearance.flags2 |= friendly << (int)cube::Enums::AppearanceModifiers::IsFriendly;
+		
+		// Todo: Only showing light sometimes
+		for (int i = 0; i < 16; i++)
 		{
-			creature->entity_data.position = cube::GetGame()->GetPlayer()->entity_data.position;
-			creature->entity_data.race = ENTITY_TYPES[i];
-			creature->entity_data.level = (rand + i) % 5;
-			creature->entity_data.hostility_type = (int)cube::EntityBehaviour::Hostile;
-			creature->entity_data.appearance.flags2 |= 1 << (int)cube::AppearanceModifiers::IsFriendly;
-			((cube::Creature * (*)(cube::World*, int, cube::Creature*))CWOffset(0x2B67B0))(&cube::GetGame()->host.world, 0, creature);
-			cube::CreatureFactory::AddCreatureToWorld(creature);
+			creature->entity_data.binary_toggles |= 1 << i;
 		}
+
+		creature->entity_data.HP = creature->GetMaxHP();
 	}
 }
 
@@ -77,20 +117,34 @@ class Mod : GenericMod {
 	*/
 	virtual int OnChat(std::wstring* message) override {
 		const wchar_t* msg = message->c_str();
+
+		cube::Creature* player = cube::GetGame()->GetPlayer();
 		int index = 0;
 
-		if (!wcscmp(msg, L"/init"))
+		if (!wcscmp(msg, L"/fish") || swscanf_s(msg, L"/fish %d", &index) == 1)
+		{
+			if (index == 0)
+			{
+				index = 1;
+			}
+			
+			for (int i = 0; i < index; i++)
+			{
+				SpawnFish(player->entity_data.position, -1, -1, 1);
+			}
+		}
+
+		else if (!wcscmp(msg, L"/roots"))
 		{
 			// Adding 3 Dragon roots
-			//cube::Item item = cube::Item(11, 36);
-			//cube::ItemStack* stack = new cube::ItemStack(3, item);
-			//cube::GetGame()->GetPlayer()->inventory_tabs.at(cube::Inventory::IngredientsTab).push_back(*stack);
-
-			SpawnFish();
+			cube::Item item = cube::Item(11, 36);
+			cube::ItemStack stack = cube::ItemStack(3, item);
+			cube::GetGame()->GetPlayer()->inventory_tabs.at(cube::Inventory::IngredientsTab).push_back(stack);
 		}
 		else if (!wcscmp(msg, L"/chest") || swscanf_s(msg, L"/chest %d", &index) == 1)
 		{
-			SpawnChest(index);
+			
+			SpawnChest(player->entity_data.position, player->entity_data.head_rotation, index, 4);
 		}
 		return 0;
 	}
@@ -109,7 +163,7 @@ class Mod : GenericMod {
 
 		// Check for DivingEvent
 		unsigned int flags = game->GetPlayer()->entity_data.flags;
-		if (flags & (1 << (int)cube::CollisionFlags::Water) && !(flags & (1 << (int)cube::CollisionFlags::Surfaced)))
+		if (flags & (1 << (int)cube::Enums::CollisionFlags::Water) && !(flags & (1 << (int)cube::Enums::CollisionFlags::Surfaced)))
 		{
 			if (!eventList.Find(cube::EventType::Diving))
 			{

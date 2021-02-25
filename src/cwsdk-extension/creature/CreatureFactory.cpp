@@ -2,19 +2,18 @@
 
 #include "cwsdk.h"
 
-cube::Creature* cube::CreatureFactory::CreateCreature(CreatureType type, int star)
+long long cube::CreatureFactory::GenerateId()
 {
 	cube::Game* game = cube::GetGame();
-	long long id = 999 + game->host.world.id_to_creature_map.size();
-	
-	cube::Creature* creature = cube::Creature::Create(id);
-	if (creature == nullptr)
-	{
-		return nullptr;
-	}
-	creature->entity_data.level = star;
+	return 999 + game->host.world.creatures.size();
+}
 
-	return creature;
+void cube::CreatureFactory::SetAppearance(cube::Creature* creature, int entityType, int entityBehaviour, int level)
+{
+	creature->entity_data.race = entityType;
+	creature->entity_data.hostility_type = entityBehaviour;
+	creature->entity_data.level = level;
+	((void (*)(cube::World*, int, cube::Creature*))CWOffset(0x2B67B0))(&cube::GetGame()->host.world, 0, creature);
 }
 
 void cube::CreatureFactory::AddCreatureToWorld(cube::Creature* creature)

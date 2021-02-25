@@ -4,21 +4,11 @@ namespace cube
 {
 	class Creature;
 
-	enum CreatureType
-	{
-		CreatureTypeBlueFish = 0,
-		CreatureTypeYellowFish,
-		CreatureTypeShark,
-		CreatureTypeBigBlueFish,
-		CreatureTypeMawFish,
-		CreatureTypeBlobFish,
-		CreatureTypeSeaHorse,
-	};
-
 	class CreatureFactory
 	{
 	public:
-		static cube::Creature* CreateCreature(CreatureType type, int level);
+		static long long GenerateId();
+		static void SetAppearance(cube::Creature* creature, int entityType, int entityBehaviour, int level);
 		static void AddCreatureToWorld(cube::Creature* creature);
 	};
 }
