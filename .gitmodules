@@ -1,0 +1,3 @@
+[submodule "CWSDK"]
+	path = CWSDK
+	url = https://github.com/ChrisMiuchiz/CWSDK.git
