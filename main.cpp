@@ -20,12 +20,16 @@ class Mod : GenericMod {
 
 		cube::Creature* player = cube::GetGame()->GetPlayer();
 		int index = 0;
+		if (swscanf_s(msg, L"/ability %d", &index) == 1)
+		{
+			cube::Ability::CWAbility(player, index);
+			return 1;
+		}
 
 		if (!wcscmp(msg, L"/fish") || swscanf_s(msg, L"/fish %d", &index) == 1)
 		{
 			cube::CreatureFactory::SpawnFishes(index);
 		}
-
 		else if (!wcscmp(msg, L"/roots"))
 		{
 			// Adding 3 Dragon roots
@@ -45,12 +49,20 @@ class Mod : GenericMod {
 	 * @return	{void}
 	*/
 	virtual void OnGameTick(cube::Game* game) override {
+		static long cnt = 0;
+		cnt++;
+		if (cnt > 360)
+			cnt = 0;
 		static bool initialized = false;
 		if (!initialized)
 		{
 			initialized = true;
 			eventList.Add(new cube::AddGoldEvent());
+			game->screen_shake = true;
+
 		}
+
+		//game->camera_angle.z = 180;
 
 		// Check for DivingEvent
 		unsigned int flags = game->GetPlayer()->entity_data.flags;
@@ -73,6 +85,60 @@ class Mod : GenericMod {
 		}
 		
 		return;
+	}
+
+	void OnGetKeyboardState(BYTE* diKeys) override {
+		static DButton KeyW(17); //W
+		static DButton KeyA(30); //A
+		static DButton KeyS(31); //S
+		static DButton KeyD(32); //D
+
+		static DButton Key1(2); //1
+		static DButton Key2(3); //2
+
+		if (cube::Helper::InGUI(cube::GetGame()))
+		{
+			return;
+		}
+
+		KeyW.Update(diKeys);
+		KeyA.Update(diKeys);
+		KeyS.Update(diKeys);
+		KeyD.Update(diKeys);
+
+		Key1.Update(diKeys);
+		Key2.Update(diKeys);
+
+		cube::Creature* player = cube::GetGame()->GetPlayer();
+
+		if (Key1.Pressed())
+		{
+			cube::ConvertMTSAbility().Execute(player);
+		}
+		if (Key2.Pressed())
+		{
+			cube::HealAbility().Execute(player);
+		}
+
+		if (KeyW.Pressed() == 2)
+		{
+			cube::FarJumpAbility(0).Execute(player);
+		}
+
+		if (KeyA.Pressed() == 2)
+		{
+			cube::FarJumpAbility(1).Execute(player);
+		}
+
+		if (KeyS.Pressed() == 2)
+		{
+			cube::FarJumpAbility(3).Execute(player);
+		}
+
+		if (KeyD.Pressed() == 2)
+		{
+			cube::FarJumpAbility(2).Execute(player);
+		}
 	}
 
 	/* Function hook that gets called on intialization of cubeworld.
