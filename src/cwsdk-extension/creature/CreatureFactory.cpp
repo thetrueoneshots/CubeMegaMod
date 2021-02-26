@@ -154,20 +154,20 @@ std::vector<cube::Creature*> cube::CreatureFactory::SpawnFishes(int amount, long
 {
 	std::vector<cube::Creature*> creatures;
 
-	if (amount < 0)
+	if (amount <= 0)
 	{
 		return creatures;
 	}
 
-	cube::Creature* creature = cube::GetGame()->GetPlayer();
-	LongVector3 position = creature->entity_data.position;
+	cube::Creature* player = cube::GetGame()->GetPlayer();
+	LongVector3 position = player->entity_data.position;
 	for (int i = 0; i < amount; i++)
 	{
 		LongVector3 offset = cube::CreatureFactory::GetRandomOffset(range);
 		offset.x += position.x;
 		offset.y += position.y;
 		offset.z += position.z;
-		cube::Creature* creature = cube::CreatureFactory::SpawnFish(offset, creature->entity_data.current_region, -1, -1, 1);
+		cube::Creature* creature = cube::CreatureFactory::SpawnFish(offset, player->entity_data.current_region, -1, -1, 1);
 		if (creature != nullptr)
 		{
 			creatures.push_back(creature);
@@ -179,11 +179,11 @@ std::vector<cube::Creature*> cube::CreatureFactory::SpawnFishes(int amount, long
 
 LongVector3 cube::CreatureFactory::GetRandomOffset(long long range)
 {
-	auto u = RandomZeroToOne() + RandomZeroToOne();
+	//auto u = RandomZeroToOne() + RandomZeroToOne();
 	auto t = RandomZeroToOne() * 2 * 3.14f;
-	auto r = u > 1.0f ? 2 - u : u;
+	//auto r = u > 1.0f ? 2 - u : u;
 
-	auto rr = range * r;
+	auto rr = range;
 	auto cost = cos(t);
 	auto sint = sin(t);
 	return LongVector3(rr * cost, rr * sint, rr * cost * sint);

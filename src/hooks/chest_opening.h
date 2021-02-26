@@ -6,6 +6,8 @@
 #pragma once
 #include "cwsdk.h"
 
+#include "../cwsdk-extension/creature/Creature.h"
+
 void AnnounceItem(cube::Game* game, cube::Item* item, unsigned int count, cube::Creature* creature)
 {
 	((void (*)(cube::Game *, cube::Item *, unsigned int, cube::Creature *))CWOffset(0x9D6F0))(game, item, count, creature);
@@ -17,6 +19,11 @@ void KillCreature(cube::World* world, cube::Creature* creature)
 }
 
 extern "C" void OpenChest(cube::Game* game, cube::Creature* chest) {
+	if (chest->entity_data.binary_toggles >> (int)cube::Enums::StateFlags::VisibleOnMap & 1 == 1)
+	{
+		chest->entity_data.binary_toggles ^= 1 << (int)cube::Enums::StateFlags::VisibleOnMap;
+	}
+
 	chest->entity_data.interaction_state = 2;
 
 	//cube::Item item = cube::Item(23, 1);

@@ -9,6 +9,8 @@ cube::DivingEvent::DivingEvent()
 	eventType = cube::EventType::Diving;
 
 	m_SpawnTimer = cube::Timer(SPAWN_RATE, m_CurrentTime);
+	// Todo: Set to TREASURE_RATE
+	m_TreasureTimer = cube::Timer(1, m_CurrentTime);
 
 	cube::GetGame()->PrintMessage(L"[Event Started] ", 100, 100, 255);
 	cube::GetGame()->PrintMessage(L"Diving Event\n");
@@ -22,13 +24,17 @@ cube::DivingEvent::~DivingEvent()
 		delete m_ItemEffectTimer;
 	}
 
-
-	for (auto p : spawnedCreatures)
+	for (auto p : m_SpawnedCreatures)
 	{
 		for (auto c : p.creatures)
 		{
 			c->entity_data.HP = 0;
 		}
+	}
+
+	for (auto p : m_SpawnedTreasures)
+	{
+		p->entity_data.HP = 0;
 	}
 
 	cube::GetGame()->PrintMessage(L"[Event Ended] ", 100, 100, 255);
@@ -47,7 +53,8 @@ void cube::DivingEvent::Update()
 {
 	Event::Update();
 
-	LongVector3 pos = cube::GetGame()->GetPlayer()->entity_data.position;
+	cube::Creature* player = cube::GetGame()->GetPlayer();
+	LongVector3 pos = player->entity_data.position;
 
 	// Check for consumables
 	if (m_ItemEffectTimer != nullptr && m_ItemEffectTimer->IsTriggered(m_CurrentTime))
@@ -66,21 +73,60 @@ void cube::DivingEvent::Update()
 		ConsumeItem();
 	}
 
-
-	// Spawn fishes
-	if (m_SpawnTimer.IsTriggered(m_CurrentTime) && spawnedCreatures.size() < MAX_CREATURES / SPAWN_AMOUNT)
+	// Spawn treasures
+	if (m_TreasureTimer.IsTriggered(m_CurrentTime) && m_SpawnedTreasures.size() < MAX_TREASURES)
 	{
-		cube::GetGame()->PrintMessage(L"[Spawning Fishes] \n", 100, 170, 30);
-		std::vector<cube::Creature*> creatures = cube::CreatureFactory::SpawnFishes(SPAWN_AMOUNT);
-
-		spawnedCreatures.push_back({pos, creatures });
+		cube::GetGame()->PrintMessage(L"[Spawning Treasure] \n", 0, 0, 100);
+		LongVector3 offset = cube::CreatureFactory::GetRandomOffset(2 * SPAWN_RANGE);
+		offset.x += pos.x;
+		offset.y += pos.y;
+		offset.z += pos.z;
+		cube::Creature* creature = cube::CreatureFactory::SpawnChest(offset, player->entity_data.current_region, rand() % 4);
+		if (creature != nullptr)
+		{
+			m_SpawnedTreasures.push_back(creature);
+		}
 	}
 
-	const auto dist = (DELETE_RANGE_MULTIPLIER * SPAWN_RANGE) * (DELETE_RANGE_MULTIPLIER * SPAWN_RANGE);
+	// Check for treasures to be deleted
+	const auto distTreasure = (DELETE_RANGE_MULTIPLIER * 2 * SPAWN_RANGE) * (DELETE_RANGE_MULTIPLIER * 2 * SPAWN_RANGE);
 	std::vector<int> toBeErased;
-	for (int i = 0; i < spawnedCreatures.size(); i++)
+	for (int i = 0; i < m_SpawnedTreasures.size(); i++)
 	{
-		auto p = spawnedCreatures.at(i);
+		auto p = m_SpawnedTreasures.at(i);
+		if (DistanceSquared(p->entity_data.position, pos) < distTreasure)
+		{
+			continue;
+		}
+
+		p->entity_data.HP = 0;
+
+		toBeErased.push_back(i);
+	}
+
+	int cnt = 0;
+	for (auto i : toBeErased)
+	{
+		m_SpawnedTreasures.erase(m_SpawnedTreasures.begin() + i - cnt);
+		cnt++;
+	}
+
+	// Spawn fishes
+	if (m_SpawnTimer.IsTriggered(m_CurrentTime) && m_SpawnedCreatures.size() < MAX_CREATURES / SPAWN_AMOUNT)
+	{
+		cube::GetGame()->PrintMessage(L"[Spawning Fishes] \n", 100, 170, 30);
+		std::vector<cube::Creature*> creatures = cube::CreatureFactory::SpawnFishes(SPAWN_AMOUNT, SPAWN_RANGE);
+
+		m_SpawnedCreatures.push_back({pos, creatures });
+	}
+
+	// Check for fishes to be deleted
+	const auto dist = (DELETE_RANGE_MULTIPLIER * SPAWN_RANGE) * (DELETE_RANGE_MULTIPLIER * SPAWN_RANGE);
+	//std::vector<int> toBeErased;
+	toBeErased.clear();
+	for (int i = 0; i < m_SpawnedCreatures.size(); i++)
+	{
+		auto p = m_SpawnedCreatures.at(i);
 		if (DistanceSquared(p.position, pos) < dist)
 		{
 			continue;
@@ -101,10 +147,10 @@ void cube::DivingEvent::Update()
 		cube::GetGame()->PrintMessage(buffer, 250, 170, 100);
 	}
 
-	int cnt = 0;
+	cnt = 0;
 	for (auto i : toBeErased)
 	{
-		spawnedCreatures.erase(spawnedCreatures.begin() + i - cnt);
+		m_SpawnedCreatures.erase(m_SpawnedCreatures.begin() + i - cnt);
 		cnt++;
 	}
 }
