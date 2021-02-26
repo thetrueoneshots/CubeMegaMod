@@ -76,11 +76,11 @@ void cube::DivingEvent::Update()
 	// Spawn treasures
 	if (m_TreasureTimer.IsTriggered(m_CurrentTime) && m_SpawnedTreasures.size() < MAX_TREASURES)
 	{
-		cube::GetGame()->PrintMessage(L"[Spawning Treasure] \n", 0, 0, 100);
+		cube::GetGame()->PrintMessage(L"[Spawning Treasure] \n", 255, 50, 255);
 		LongVector3 offset = cube::CreatureFactory::GetRandomOffset(2 * SPAWN_RANGE);
 		offset.x += pos.x;
 		offset.y += pos.y;
-		offset.z += pos.z;
+		offset.z = pos.z - abs(offset.z);
 		cube::Creature* creature = cube::CreatureFactory::SpawnChest(offset, player->entity_data.current_region, rand() % 4);
 		if (creature != nullptr)
 		{
