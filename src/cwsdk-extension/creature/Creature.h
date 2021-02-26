@@ -85,7 +85,7 @@ namespace cube
 			Unk_05,
 			IsRunning,
 			Unk_07,
-			Unk_08,
+			VisibleOnMap,
 			StayOnGround,
 			IsSneaking,
 			Unk_11,

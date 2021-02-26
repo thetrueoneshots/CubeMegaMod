@@ -94,7 +94,10 @@ namespace cube {
 			int XP;
 			unsigned __int8 classType;
 			char specialization;
-			_BYTE gap13E[10];
+			// NEW
+			_BYTE gap13E[2];
+			IntVector2 current_region;
+			// OLD: _BYTE gap13E[10];
 			char charge;
 			_BYTE gap149[27];
 			FloatVector3 attack_rotation;

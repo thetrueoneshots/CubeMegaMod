@@ -6,6 +6,15 @@
 
 #include "Creature.h"
 
+static float RandomZeroToOne()
+{
+	static long long count = 0;
+	int random = rand();
+	count++;
+	std::srand(random + count);
+	return (float)(random / (float)(RAND_MAX));
+}
+
 long long cube::CreatureFactory::GenerateId()
 {
 	cube::Game* game = cube::GetGame();
@@ -43,20 +52,21 @@ void cube::CreatureFactory::AddCreatureToWorld(cube::Creature* creature)
 	game->host.world.id_to_creature_map.insert_or_assign(creature->id, creature);
 }
 
-cube::Creature* cube::CreatureFactory::SpawnCreature(const LongVector3& position, int entityType, int entityBehaviour, int level)
+cube::Creature* cube::CreatureFactory::SpawnCreature(const LongVector3& position, const IntVector2& region, int entityType, int entityBehaviour, int level)
 {
 	cube::Creature* creature = cube::Creature::Create(cube::CreatureFactory::GenerateId());
 	if (creature != nullptr)
 	{
 		creature->entity_data.position = position;
-
+		creature->entity_data.current_region = region;
+		creature->entity_data.yaw = RandomZeroToOne() * 360;
 		cube::CreatureFactory::SetAppearance(creature, entityType, entityBehaviour, level);
 		cube::CreatureFactory::AddCreatureToWorld(creature);
 	}
 	return creature;
 }
 
-cube::Creature* cube::CreatureFactory::SpawnChest(const LongVector3& position, float rotationY, int chestType, int level)
+cube::Creature* cube::CreatureFactory::SpawnChest(const LongVector3& position, const IntVector2& region, int chestType, int level)
 {
 	if (chestType < 0 || chestType >= 4)
 	{
@@ -65,21 +75,27 @@ cube::Creature* cube::CreatureFactory::SpawnChest(const LongVector3& position, f
 
 	if (level < 0)
 	{
-		return nullptr;
+		level = RandomZeroToOne() * 6;
 	}
 
-	cube::Creature* creature = SpawnCreature(position, 181 + chestType, (int)cube::Enums::EntityBehaviour::ExamineObject, level);
+	cube::Creature* creature = SpawnCreature(position, region, 181 + chestType, (int)cube::Enums::EntityBehaviour::ExamineObject, level);
 	if (creature != nullptr)
 	{
-		// Todo: Fix rotation
-		creature->entity_data.head_rotation = rotationY;
 		creature->entity_data.binary_toggles |= 1 << (int)cube::Enums::StateFlags::ActiveLantern;
+		creature->entity_data.binary_toggles |= 1 << (int)cube::Enums::StateFlags::VisibleOnMap;
 	}
 
 	return creature;
 }
 
-cube::Creature* cube::CreatureFactory::SpawnFish(const LongVector3& position, int entityType, int level, int friendly)
+/*
+* Spawns a fish at the given position. Any of the other parameters is -1, it means that it will be decided randomly.
+* @param	{const LongVector3&}	position	The Position to spawn the fish at.
+* @param	{int}					entityType	The type of the creature to spawn [0-12]. If -1, a random fish will be spawned.
+* @param	{int}					level		The level of the creature to spawn. If -1, a random level will be assigned.
+* @param	{int}					friendly	If the creature is friendly or not [0 = hostile, 1 = friendly]. If -1, it will be random.
+*/
+cube::Creature* cube::CreatureFactory::SpawnFish(const LongVector3& position, const IntVector2& region, int entityType, int level, int friendly)
 {
 	const static int ENTITY_COUNT = 13;
 	const static int MAX_LEVEL = 5;
@@ -119,6 +135,7 @@ cube::Creature* cube::CreatureFactory::SpawnFish(const LongVector3& position, in
 
 	cube::Creature* creature = SpawnCreature(
 		position,
+		region,
 		ENTITY_TYPES[entityType],
 		(int)cube::Enums::EntityBehaviour::Hostile,
 		level
@@ -142,14 +159,15 @@ std::vector<cube::Creature*> cube::CreatureFactory::SpawnFishes(int amount, long
 		return creatures;
 	}
 
-	LongVector3 position = cube::GetGame()->GetPlayer()->entity_data.position;
+	cube::Creature* creature = cube::GetGame()->GetPlayer();
+	LongVector3 position = creature->entity_data.position;
 	for (int i = 0; i < amount; i++)
 	{
 		LongVector3 offset = cube::CreatureFactory::GetRandomOffset(range);
 		offset.x += position.x;
 		offset.y += position.y;
 		offset.z += position.z;
-		cube::Creature* creature = cube::CreatureFactory::SpawnFish(offset, -1, -1, 1);
+		cube::Creature* creature = cube::CreatureFactory::SpawnFish(offset, creature->entity_data.current_region, -1, -1, 1);
 		if (creature != nullptr)
 		{
 			creatures.push_back(creature);
@@ -157,15 +175,6 @@ std::vector<cube::Creature*> cube::CreatureFactory::SpawnFishes(int amount, long
 	}
 
 	return creatures;
-}
-
-static float RandomZeroToOne()
-{
-	static long long count = 0;
-	int random = rand();
-	count++;
-	std::srand(random + count);
-	return (float)(random / (float)(RAND_MAX));
 }
 
 LongVector3 cube::CreatureFactory::GetRandomOffset(long long range)
