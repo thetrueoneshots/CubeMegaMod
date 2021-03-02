@@ -4,11 +4,6 @@
 
 namespace cube
 {
-	namespace Helper
-	{
-		void AnnounceItem(cube::Game* game, cube::Item* item, unsigned int count, cube::Creature* creature);
-		void LevelUp(cube::Creature* player);
-	}
 	namespace Enums
 	{
 		enum class EntityBehaviour

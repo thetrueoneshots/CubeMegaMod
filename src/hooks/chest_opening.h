@@ -7,6 +7,7 @@
 #include "cwsdk.h"
 
 #include "../cwsdk-extension/creature/Creature.h"
+#include "../cwsdk-extension/helper/Helper.h"
 
 void KillCreature(cube::World* world, cube::Creature* creature)
 {
@@ -14,6 +15,7 @@ void KillCreature(cube::World* world, cube::Creature* creature)
 }
 
 extern "C" void OpenChest(cube::Game* game, cube::Creature* chest) {
+	cube::Creature* player = cube::GetGame()->GetPlayer();
 	if (chest->entity_data.binary_toggles >> (int)cube::Enums::StateFlags::VisibleOnMap & 1 == 1)
 	{
 		chest->entity_data.binary_toggles ^= 1 << (int)cube::Enums::StateFlags::VisibleOnMap;
@@ -23,7 +25,64 @@ extern "C" void OpenChest(cube::Game* game, cube::Creature* chest) {
 	// Todo: Use the interactions to drop an item.
 	//cube::Item item = cube::Item(23, 1);
 	//AnnounceItem(game, &item, 1, game->GetPlayer());
-	KillCreature(&game->host.world, chest);
+	//KillCreature(&game->host.world, chest);
+	switch (chest->entity_data.race - 181)
+	{
+	case 1:
+	{
+		// Skull chest
+		if (cube::Helper::RandomInt() % 20 == 0)
+		{
+			// Drop artifact (5% chance)
+			cube::Helper::DropItem(player, cube::Helper::ItemGenerationType::Artifact);
+		}
+
+		// Drop gold (100% chance)
+		cube::Helper::DropItem(player, cube::Helper::ItemGenerationType::Gold, 5 * (1 + cube::Helper::RandomInt() % 6));
+
+
+		// Drop gear (50% chance - 1, 50% chance - 2)
+		int cnt = 1 + cube::Helper::RandomInt() % 2;
+		for (int i = 0; i < cnt; i++)
+		{
+			cube::Item item = cube::Helper::GenerateItem(cube::Helper::ItemGenerationType::Gear, chest->entity_data.current_region);
+			item.rarity = 3 + cube::Helper::RandomInt() % 4;
+			cube::Helper::DropItem(player, item, 1);
+		}
+		break;
+	}
+	case 2:
+		// Obsedian chest
+
+		// Drop artifact (100% chance)
+		cube::Helper::DropItem(player, cube::Helper::ItemGenerationType::Artifact);
+		break;
+	case 3:
+		// Bone chest
+
+		// Drop pet (100% chance)
+		cube::Helper::DropItem(player, cube::Helper::ItemGenerationType::Pet);
+		break;
+	case 0:
+		// Normal chest
+
+		// Drop gold (100% chance)
+		cube::Helper::DropItem(player, cube::Helper::ItemGenerationType::Gold, 10);
+
+		if (cube::Helper::RandomInt() % 4 != 0)
+		{
+			// Drop gear (75% chance)
+			cube::Helper::DropItem(player, cube::Helper::ItemGenerationType::Gear, 1);
+		}
+
+		if (cube::Helper::RandomInt() % 2 == 0)
+		{
+			// Drop consumable (50% chance)
+			cube::Helper::DropItem(player, cube::Helper::ItemGenerationType::Consumable, 1);
+		}
+		break;
+	}
+	
 }
 
 GETTER_VAR(void*, ASMCheckOpenChest_jmpback);

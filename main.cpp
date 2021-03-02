@@ -20,15 +20,21 @@ class Mod : GenericMod {
 
 		cube::Creature* player = cube::GetGame()->GetPlayer();
 		int index = 0;
+		int count = 1;
 		if (swscanf_s(msg, L"/ability %d", &index) == 1)
 		{
 			cube::Ability::CWAbility(player, index);
 			return 1;
 		}
 
-		if (!wcscmp(msg, L"/lvl"))
+		if (swscanf_s(msg, L"/drop %d %d", &index, &count) == 2 || swscanf_s(msg, L"/drop %d", &index) == 1)
 		{
-			cube::Helper::LevelUp(player);
+			//cube::Helper::LevelUp(player);
+			cube::Helper::DropItem(
+				player, 
+				(cube::Helper::ItemGenerationType)index,
+				count
+			);
 			return 1;
 		}
 

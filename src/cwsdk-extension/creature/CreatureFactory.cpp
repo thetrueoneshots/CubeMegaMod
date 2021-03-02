@@ -5,15 +5,7 @@
 #include "cwsdk.h"
 
 #include "Creature.h"
-
-static float RandomZeroToOne()
-{
-	static long long count = 0;
-	int random = rand();
-	count++;
-	std::srand(random + count);
-	return (float)(random / (float)(RAND_MAX));
-}
+#include "../helper/Helper.h"
 
 long long cube::CreatureFactory::GenerateId()
 {
@@ -59,7 +51,7 @@ cube::Creature* cube::CreatureFactory::SpawnCreature(const LongVector3& position
 	{
 		creature->entity_data.position = position;
 		creature->entity_data.current_region = region;
-		creature->entity_data.yaw = RandomZeroToOne() * 360;
+		creature->entity_data.yaw = Helper::RandomZeroToOne() * 360;
 		cube::CreatureFactory::SetAppearance(creature, entityType, entityBehaviour, level);
 		cube::CreatureFactory::AddCreatureToWorld(creature);
 	}
@@ -75,7 +67,7 @@ cube::Creature* cube::CreatureFactory::SpawnChest(const LongVector3& position, c
 
 	if (level < 0)
 	{
-		level = RandomZeroToOne() * 6;
+		level = Helper::RandomZeroToOne() * 6;
 	}
 
 	cube::Creature* creature = SpawnCreature(position, region, 181 + chestType, (int)cube::Enums::EntityBehaviour::ExamineObject, level);
@@ -180,7 +172,7 @@ std::vector<cube::Creature*> cube::CreatureFactory::SpawnFishes(int amount, long
 LongVector3 cube::CreatureFactory::GetRandomOffset(long long range)
 {
 	//auto u = RandomZeroToOne() + RandomZeroToOne();
-	auto t = RandomZeroToOne() * 2 * 3.14f;
+	auto t = Helper::RandomZeroToOne() * 2 * 3.14f;
 	//auto r = u > 1.0f ? 2 - u : u;
 
 	auto rr = range;
