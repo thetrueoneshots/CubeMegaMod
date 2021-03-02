@@ -8,11 +8,6 @@
 
 #include "../cwsdk-extension/creature/Creature.h"
 
-void AnnounceItem(cube::Game* game, cube::Item* item, unsigned int count, cube::Creature* creature)
-{
-	((void (*)(cube::Game *, cube::Item *, unsigned int, cube::Creature *))CWOffset(0x9D6F0))(game, item, count, creature);
-}
-
 void KillCreature(cube::World* world, cube::Creature* creature)
 {
 	((void (*)(cube::World*, cube::Creature::EntityData*, int))CWOffset(0x2A7CA0))(world, &creature->entity_data, 5);
@@ -25,7 +20,7 @@ extern "C" void OpenChest(cube::Game* game, cube::Creature* chest) {
 	}
 
 	chest->entity_data.interaction_state = 2;
-
+	// Todo: Use the interactions to drop an item.
 	//cube::Item item = cube::Item(23, 1);
 	//AnnounceItem(game, &item, 1, game->GetPlayer());
 	KillCreature(&game->host.world, chest);

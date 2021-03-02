@@ -32,8 +32,13 @@ static void Popup(const char* title, const char* msg) {
 
 namespace hook
 {
+	enum class HookEvent
+	{
+		LevelUp = 0,
+	};
+
 	// Initializes all hooks
-	void InitializeAll();
+	void InitializeAll(std::vector<HookEvent>* hookEvents);
 
 	// Disables or enables the floating in water of inanimate and examine object creatures.
 	void DisableCreatureFloating();

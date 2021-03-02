@@ -9,7 +9,7 @@
 /* Mod class containing all the functions for the mod.
 */
 class Mod : GenericMod {
-
+	std::vector<hook::HookEvent> hookEvents;
 	cube::EventList eventList;
 	/* Hook for the chat function. Triggers when a user sends something in the chat.
 	 * @param	{std::wstring*} message
@@ -23,6 +23,12 @@ class Mod : GenericMod {
 		if (swscanf_s(msg, L"/ability %d", &index) == 1)
 		{
 			cube::Ability::CWAbility(player, index);
+			return 1;
+		}
+
+		if (!wcscmp(msg, L"/lvl"))
+		{
+			cube::Helper::LevelUp(player);
 			return 1;
 		}
 
@@ -83,7 +89,21 @@ class Mod : GenericMod {
 		{
 			e->Update();
 		}
-		
+
+		for (hook::HookEvent e : hookEvents)
+		{
+			switch (e)
+			{
+			case hook::HookEvent::LevelUp:
+				cube::Helper::LevelUp(cube::GetGame()->GetPlayer());
+				break;
+			default:
+
+				break;
+			}
+		}
+		hookEvents.clear();
+
 		return;
 	}
 
@@ -147,7 +167,7 @@ class Mod : GenericMod {
 	*/
 	virtual void Initialize() override {
 
-		hook::InitializeAll();
+		hook::InitializeAll(&hookEvents);
 		hook::DisableCreatureFloating();
 
 		cube::DivingEvent::Initialize();
