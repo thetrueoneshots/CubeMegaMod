@@ -159,7 +159,7 @@ std::vector<cube::Creature*> cube::CreatureFactory::SpawnFishes(int amount, long
 		offset.x += position.x;
 		offset.y += position.y;
 		offset.z += position.z;
-		cube::Creature* creature = cube::CreatureFactory::SpawnFish(offset, player->entity_data.current_region, -1, -1, 1);
+		cube::Creature* creature = cube::CreatureFactory::SpawnFish(offset, player->entity_data.current_region, -1, -1, -1);
 		if (creature != nullptr)
 		{
 			creatures.push_back(creature);

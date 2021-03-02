@@ -58,6 +58,13 @@ cube::Item cube::Helper::GenerateItem(ItemGenerationType type, IntVector2 region
 		item.modifier = random;
 		item.region = region;
 		item.material = 1 + RandomInt() % 44;
+
+		// Missing materials, shift material by two, to always have a correct material.
+		if (item.material == 3 || item.material == 8 || item.material == 9)
+		{
+			item.material += 2;
+		}
+
 		item.rarity = RandomInt() % 6;
 		break;
 	case ItemGenerationType::Consumable:

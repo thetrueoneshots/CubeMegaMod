@@ -12,9 +12,9 @@ const static double SPAWN_RATE = 1;
 const static double TREASURE_TIME = 60;
 const static auto DELETE_RANGE_MULTIPLIER = 2;
 const static long long SPAWN_RANGE = 5000000;
-const static auto SPAWN_AMOUNT = 4;
-const static auto MAX_CREATURES = 150;
-const static auto MAX_TREASURES = 10;
+const static auto SPAWN_AMOUNT = 2;
+const static auto MAX_CREATURES = 50;
+const static auto MAX_TREASURES = 5;
 
 struct SpawnMoment
 {

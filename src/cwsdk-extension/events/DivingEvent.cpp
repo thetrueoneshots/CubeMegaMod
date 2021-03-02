@@ -9,8 +9,7 @@ cube::DivingEvent::DivingEvent()
 	eventType = cube::EventType::Diving;
 
 	m_SpawnTimer = cube::Timer(SPAWN_RATE, m_CurrentTime);
-	// Todo: Set to TREASURE_RATE
-	m_TreasureTimer = cube::Timer(1, m_CurrentTime);
+	m_TreasureTimer = cube::Timer(TREASURE_TIME, m_CurrentTime);
 
 	cube::GetGame()->PrintMessage(L"[Event Started] ", 100, 100, 255);
 	cube::GetGame()->PrintMessage(L"Diving Event\n");
@@ -76,12 +75,36 @@ void cube::DivingEvent::Update()
 	// Spawn treasures
 	if (m_TreasureTimer.IsTriggered(m_CurrentTime) && m_SpawnedTreasures.size() < MAX_TREASURES)
 	{
-		cube::GetGame()->PrintMessage(L"[Spawning Treasure] \n", 255, 50, 255);
+		//cube::GetGame()->PrintMessage(L"[Spawning Treasure] \n", 255, 50, 255);
 		LongVector3 offset = cube::CreatureFactory::GetRandomOffset(2 * SPAWN_RANGE);
 		offset.x += pos.x;
 		offset.y += pos.y;
 		offset.z = pos.z - abs(offset.z);
-		cube::Creature* creature = cube::CreatureFactory::SpawnChest(offset, player->entity_data.current_region, rand() % 4);
+		int random = rand() % 100;
+		int chest = 0;
+		const static int NORMAL_CHANCE = 60;
+		const static int SKULL_CHANCE = 20;
+		const static int OBSEDIAN_CHANCE = 10;
+		const static int BONE_CHANCE = 10;
+
+		if (random < NORMAL_CHANCE)
+		{
+			chest = 0;
+		}
+		else if (random - NORMAL_CHANCE < SKULL_CHANCE)
+		{
+			chest = 1;
+		} 
+		else if (random - NORMAL_CHANCE - SKULL_CHANCE < OBSEDIAN_CHANCE)
+		{
+			chest = 2;
+		}
+		else
+		{
+			chest = 3;
+		}
+
+		cube::Creature* creature = cube::CreatureFactory::SpawnChest(offset, player->entity_data.current_region, chest);
 		if (creature != nullptr)
 		{
 			m_SpawnedTreasures.push_back(creature);
@@ -114,7 +137,7 @@ void cube::DivingEvent::Update()
 	// Spawn fishes
 	if (m_SpawnTimer.IsTriggered(m_CurrentTime) && m_SpawnedCreatures.size() < MAX_CREATURES / SPAWN_AMOUNT)
 	{
-		cube::GetGame()->PrintMessage(L"[Spawning Fishes] \n", 100, 170, 30);
+		//cube::GetGame()->PrintMessage(L"[Spawning Fishes] \n", 100, 170, 30);
 		std::vector<cube::Creature*> creatures = cube::CreatureFactory::SpawnFishes(SPAWN_AMOUNT, SPAWN_RANGE);
 
 		m_SpawnedCreatures.push_back({pos, creatures });
@@ -144,7 +167,7 @@ void cube::DivingEvent::Update()
 	{
 		wchar_t buffer[250];
 		swprintf_s(buffer, 250, L"[Deleted Fishes] %d\n", toBeErased.size());
-		cube::GetGame()->PrintMessage(buffer, 250, 170, 100);
+		//cube::GetGame()->PrintMessage(buffer, 250, 170, 100);
 	}
 
 	cnt = 0;
