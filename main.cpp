@@ -6,6 +6,14 @@
 // Create global vars here
 #include "src/hooks.h"
 
+#define DEBUG 1
+
+int DisplayOnlyInDebugMessage()
+{
+	cube::GetGame()->PrintMessage(L"[Error] This command is only available in debug mode.");
+	return 1;
+}
+
 /* Mod class containing all the functions for the mod.
 */
 class Mod : GenericMod {
@@ -23,13 +31,20 @@ class Mod : GenericMod {
 		int count = 1;
 		if (swscanf_s(msg, L"/ability %d", &index) == 1)
 		{
+			if (DEBUG)
+			{
+				return DisplayOnlyInDebugMessage();
+			}
 			cube::Ability::CWAbility(player, index);
 			return 1;
 		}
 
 		if (swscanf_s(msg, L"/drop %d %d", &index, &count) == 2 || swscanf_s(msg, L"/drop %d", &index) == 1)
 		{
-			//cube::Helper::LevelUp(player);
+			if (DEBUG)
+			{
+				return DisplayOnlyInDebugMessage();
+			}
 			cube::Helper::DropItem(
 				player, 
 				(cube::Helper::ItemGenerationType)index,
@@ -40,6 +55,10 @@ class Mod : GenericMod {
 
 		if (!wcscmp(msg, L"/fish") || swscanf_s(msg, L"/fish %d", &index) == 1)
 		{
+			if (DEBUG)
+			{
+				return DisplayOnlyInDebugMessage();
+			}
 			cube::CreatureFactory::SpawnFishes(index);
 		}
 		else if (!wcscmp(msg, L"/roots"))
@@ -51,6 +70,10 @@ class Mod : GenericMod {
 		}
 		else if (!wcscmp(msg, L"/chest") || swscanf_s(msg, L"/chest %d", &index) == 1)
 		{
+			if (DEBUG)
+			{
+				return DisplayOnlyInDebugMessage();
+			}
 			cube::CreatureFactory::SpawnChest(player->entity_data.position, player->entity_data.current_region, index);
 		}
 		return 0;

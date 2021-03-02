@@ -20,8 +20,6 @@ extern "C" void OnPrintRGBA(std::wstring* message) {
 	{
 		if (index >= LORE_LEVELUP_THRESHHOLD)
 		{
-			//cube::Creature* player = cube::GetGame()->GetPlayer();
-			//cube::Helper::LevelUp(player);
 			hookEvents->push_back(hook::HookEvent::LevelUp);
 		}
 		return;
