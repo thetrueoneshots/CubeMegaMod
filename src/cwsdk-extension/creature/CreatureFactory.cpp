@@ -13,7 +13,7 @@ long long cube::CreatureFactory::GenerateId()
 	//return 999 + game->host.world.creatures.size();
 
 	const auto& map = game->host.world.id_to_creature_map;
-	long long cnt = 1000;
+	long long cnt = 9999;
 	while (true) {
 		if (map.find(cnt) == map.end())
 		{
@@ -159,7 +159,7 @@ std::vector<cube::Creature*> cube::CreatureFactory::SpawnFishes(int amount, long
 		offset.x += position.x;
 		offset.y += position.y;
 		offset.z += position.z;
-		cube::Creature* creature = cube::CreatureFactory::SpawnFish(offset, player->entity_data.current_region, -1, -1, -1);
+		cube::Creature* creature = cube::CreatureFactory::SpawnFish(offset, player->entity_data.current_region, -1, -1, 0);
 		if (creature != nullptr)
 		{
 			creatures.push_back(creature);

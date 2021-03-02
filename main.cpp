@@ -10,7 +10,7 @@
 
 int DisplayOnlyInDebugMessage()
 {
-	cube::GetGame()->PrintMessage(L"[Error] This command is only available in debug mode.");
+	cube::GetGame()->PrintMessage(L"[Error] This command is only available in debug mode.\n", 255, 127, 80);
 	return 1;
 }
 
@@ -63,9 +63,13 @@ class Mod : GenericMod {
 		}
 		else if (!wcscmp(msg, L"/roots"))
 		{
+			if (DEBUG)
+			{
+				return DisplayOnlyInDebugMessage();
+			}
 			// Adding 3 Dragon roots
 			cube::Item item = cube::Item(11, 36);
-			cube::ItemStack stack = cube::ItemStack(3, item);
+			cube::ItemStack stack = cube::ItemStack(60, item);
 			cube::GetGame()->GetPlayer()->inventory_tabs.at(cube::Inventory::IngredientsTab).push_back(stack);
 		}
 		else if (!wcscmp(msg, L"/chest") || swscanf_s(msg, L"/chest %d", &index) == 1)
@@ -84,20 +88,11 @@ class Mod : GenericMod {
 	 * @return	{void}
 	*/
 	virtual void OnGameTick(cube::Game* game) override {
-		static long cnt = 0;
-		cnt++;
-		if (cnt > 360)
-			cnt = 0;
 		static bool initialized = false;
 		if (!initialized)
 		{
 			initialized = true;
-			eventList.Add(new cube::AddGoldEvent());
-			game->screen_shake = true;
-
 		}
-
-		//game->camera_angle.z = 180;
 
 		// Check for DivingEvent
 		unsigned int flags = game->GetPlayer()->entity_data.flags;

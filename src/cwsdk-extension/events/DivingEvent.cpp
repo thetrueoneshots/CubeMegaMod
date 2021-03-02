@@ -127,6 +127,13 @@ void cube::DivingEvent::Update()
 		toBeErased.push_back(i);
 	}
 
+	if (toBeErased.size() >= 1)
+	{
+		wchar_t buffer[250];
+		swprintf_s(buffer, 250, L"[Deleted treasures] %d\n", toBeErased.size());
+		cube::GetGame()->PrintMessage(buffer, 250, 170, 200);
+	}
+
 	int cnt = 0;
 	for (auto i : toBeErased)
 	{
@@ -185,11 +192,21 @@ void cube::DivingEvent::Initialize()
 
 void cube::DivingEvent::ConsumeItem()
 {
+	cube::Creature* player = cube::GetGame()->GetPlayer();
+	if (player->gold >= 0)
+	{
+		player->gold -= 10;
+		m_ItemEffectTimer = new cube::Timer(10, m_CurrentTime);
+		WriteByte((char*)CWBase() + 0x2E038D + 0x02, 0x58);
+		cube::GetGame()->PrintMessage(L"[Consumed] ", 100, 255, 0);
+		cube::GetGame()->PrintMessage(L"10 Gold\n");
+	}
+	/*
 	if (cube::Inventory::ConsumeItem(s_Consumable))
 	{
 		m_ItemEffectTimer = new cube::Timer(10, m_CurrentTime);
 		WriteByte((char*)CWBase() + 0x2E038D + 0x02, 0x58);
 		cube::GetGame()->PrintMessage(L"[Consumed] ", 100, 255, 0);
 		cube::GetGame()->PrintMessage(L"Dragon Root\n");
-	}
+	}*/
 }

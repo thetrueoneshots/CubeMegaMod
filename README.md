@@ -16,7 +16,8 @@ They are automatically used when underwater.
 
 - You can spawn fish by typing `/fish 100`, which will spawn 100 fish around you. [Pre-release only]
 - You can spawn chests by typing `/chest 0`, which will spawn a chest with type 0. Types are 0 - 3. [Pre-release only]
-- You can add 3 dragon roots to your inventory by typing `/roots`. This can be done any number of times, so stack them up a bit before you go and test out the mod. [Pre-release only]
+- You can add 60 dragon roots to your inventory by typing `/roots`. This can be done any number of times, so stack them up a bit before you go and test out the mod. 
+[Pre-release only]
 
 New combat abilities are added as well. 
 - The movement keys (WASD) can be double tapped for movement abilities (WAD) and an attack ability (S). The costs of these ability is currently 75 stamina.
