@@ -53,5 +53,5 @@ For v.1.0.0+, the usage is the following:
 - `/disable doubletap`: Disable movement ability triggering with doubletap.
 
 ## Final words
-Special thanks **Chris** for his work for the modding community and **Timothy(GrayShadoz - Youtube)** for his effort to make cubeworld videos (including all my mods).
+Special thanks **Chris** for his work for the modding community and **Timothy(GrayShadoz - Youtube)** for his effort to make cubeworld videos (including of all of my mods).
 Also thanks to **TheBagel3(Youtube, Discord, Twitch)**, **Raxiti(Reddit)**, **kuba.dlouhej(Discord)** for testing and giving feedback on the mod.
