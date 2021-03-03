@@ -64,8 +64,8 @@ void cube::DivingEvent::Update()
 
 		// WriteByte reset
 		WriteByte((char*)CWBase() + 0x2E038D + 0x02, 0x5C);
-		cube::GetGame()->PrintMessage(L"[Effect Ended] ", 0, 100, 255);
-		cube::GetGame()->PrintMessage(L"Dragon Root\n");
+		//cube::GetGame()->PrintMessage(L"[Effect Ended] ", 0, 100, 255);
+		//cube::GetGame()->PrintMessage(L"Underwater Breathing\n");
 	}
 
 	if (m_ItemEffectTimer == nullptr)
