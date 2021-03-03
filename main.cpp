@@ -19,6 +19,7 @@ int DisplayOnlyInDebugMessage()
 class Mod : GenericMod {
 	std::vector<hook::HookEventData> hookEvents;
 	cube::EventList eventList;
+	bool m_DoubleTapEnabled = false;
 	/* Hook for the chat function. Triggers when a user sends something in the chat.
 	 * @param	{std::wstring*} message
 	 * @return	{int}
@@ -37,6 +38,16 @@ class Mod : GenericMod {
 			}
 			cube::Ability::CWAbility(player, index);
 			return 1;
+		}
+
+		if (!wcscmp(msg, L"/enable doubletap"))
+		{
+			m_DoubleTapEnabled = true;
+		}
+
+		if (!wcscmp(msg, L"/disable doubletap"))
+		{
+			m_DoubleTapEnabled = false;
 		}
 
 		if (swscanf_s(msg, L"/drop %d %d", &index, &count) == 2 || swscanf_s(msg, L"/drop %d", &index) == 1)
@@ -132,14 +143,31 @@ class Mod : GenericMod {
 		return;
 	}
 
-	void OnGetKeyboardState(BYTE* diKeys) override {
-		static DButton KeyW(17); //W
-		static DButton KeyA(30); //A
-		static DButton KeyS(31); //S
-		static DButton KeyD(32); //D
+	bool CheckMovementButtonPress(cube::DButton* button, cube::DButton* lCntr)
+	{
+		if (button->Pressed() == cube::DButton::State::DoubleTap && m_DoubleTapEnabled)
+		{
+			return true;
+		}
 
-		static DButton Key1(2); //1
-		static DButton Key2(3); //2
+		if (!m_DoubleTapEnabled && button->Pressed() != cube::DButton::State::None && lCntr->Pressed() == cube::DButton::State::Held)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	void OnGetKeyboardState(BYTE* diKeys) override {
+		static cube::DButton KeyW(17); //W
+		static cube::DButton KeyA(30); //A
+		static cube::DButton KeyS(31); //S
+		static cube::DButton KeyD(32); //D
+
+		static cube::DButton KeyLCntrl(29); //LCntrl // Todo: Debug
+
+		static cube::DButton Key1(2); //1
+		static cube::DButton Key2(3); //2
 
 		if (cube::Helper::InGUI(cube::GetGame()))
 		{
@@ -151,36 +179,38 @@ class Mod : GenericMod {
 		KeyS.Update(diKeys);
 		KeyD.Update(diKeys);
 
+		KeyLCntrl.Update(diKeys);
+
 		Key1.Update(diKeys);
 		Key2.Update(diKeys);
 
 		cube::Creature* player = cube::GetGame()->GetPlayer();
 
-		if (Key1.Pressed())
+		if (Key1.Pressed() == cube::DButton::State::Pressed)
 		{
 			cube::ConvertMTSAbility().Execute(player);
 		}
-		if (Key2.Pressed())
+		if (Key2.Pressed() == cube::DButton::State::Pressed)
 		{
 			cube::HealAbility().Execute(player);
 		}
 
-		if (KeyW.Pressed() == 2)
+		if (CheckMovementButtonPress(&KeyW, &KeyLCntrl))
 		{
 			cube::FarJumpAbility(0).Execute(player);
 		}
 
-		if (KeyA.Pressed() == 2)
+		if (CheckMovementButtonPress(&KeyA, &KeyLCntrl))
 		{
 			cube::FarJumpAbility(1).Execute(player);
 		}
 
-		if (KeyS.Pressed() == 2)
+		if (CheckMovementButtonPress(&KeyS, &KeyLCntrl))
 		{
 			cube::FarJumpAbility(3).Execute(player);
 		}
 
-		if (KeyD.Pressed() == 2)
+		if (CheckMovementButtonPress(&KeyD, &KeyLCntrl))
 		{
 			cube::FarJumpAbility(2).Execute(player);
 		}

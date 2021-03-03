@@ -1,43 +1,54 @@
 #include "DButton.h"
 
+// Taken from https://github.com/ChrisMiuchiz/Cube-World-Building-Mod. Code is modified.
+
 #include <sys/timeb.h>
 
-DButton::DButton(int diKey) {
+cube::DButton::DButton(int diKey) {
 	oldState = 0;
 	currentState = 0;
 	SetKey(diKey);
 }
 
-void DButton::Update(BYTE* diKeys) {
+void cube::DButton::Update(BYTE* diKeys) {
 	oldState = currentState;
 	currentState = diKeys[diKey];
+
+	if (((oldState & 0x80) == 0) && ((currentState & 0x80) != 0))
+	{
+		struct _timeb timebuffer;
+		_ftime64_s(&timebuffer);
+		last_time = current_time;
+		current_time = (timebuffer.time * 1000) + (timebuffer.millitm);
+	}	
 }
 
-int DButton::Pressed() {
+// Todo: This code sucks, but it will do for now.
+cube::DButton::State cube::DButton::Pressed() {
 	const static int DOUBLE_PRESS = 350;
 
 	bool ret = ((oldState & 0x80) == 0) && ((currentState & 0x80) != 0);
 	if (ret)
 	{
-		struct _timeb timebuffer;
-		_ftime64_s(&timebuffer);
-		time_t current_time = (timebuffer.time * 1000) + (timebuffer.millitm);
 		if (difftime(current_time, last_time) <= DOUBLE_PRESS)
 		{
-			last_time = current_time;
-			return 2;
+			return State::DoubleTap;
 		}
-		last_time = current_time;
-		return 1;
+		return State::Pressed;
 	}
-	return 0;
+
+	if ((oldState & 0x80) != 0)
+	{
+		return State::Held;
+	}
+	return State::None;
 }
 
-void DButton::SetKey(int dikey) {
+void cube::DButton::SetKey(int dikey) {
 	this->diKey = dikey;
 }
 
-const char* DButton::GetKeyName() {
+const char* cube::DButton::GetKeyName() {
 	static const char* keys[] = {
 		"KEY 0x00",
 		"ESC",

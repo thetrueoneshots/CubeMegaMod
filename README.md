@@ -2,27 +2,48 @@
 This is a large mod for CubeWorld steam version. It adds / will add underwater exploration, combat modifications,
 lore improvements, new item consumables, gold usages and more.
 
+### Features
+Features of this mod include sea exploration, lore interactions and combat improvements.
+
+#### Sea exploration
+Going underwater will spawn random hostile fishes around you. Going underwater usually drains stamina.
+This is still the case, however now 10 gold is automatically used to gain the underwater breathing ability for 10 seconds.
+On top of that, underwater exploring is rewarded with random chests spawning every 60 seconds.
+The chest types are:
+- Wood chest	[Chances to drop gold, 1 - 5 star gear and consumables (also including new ones)]
+- Skull chest	[Drops gold and one or two 4 - 6 star gear items]
+- Obsedian chest[Drops artifacts]
+- Bone chest	[Drops pets (also including unavailable pets)]
+
+#### Lore interactions
+Lore interactions are updated. 
+- Every lore < 100 has a maximum of 50% (based on lore) chance to drop a 1 star gear.
+- Every 100 < lore < 150 has a maximum of 50% (based on lore) chance to drop 2-3 star weapon.
+- Every lore >= 150 has a maximum of 100% (based on lore) chance to drop an artifact.
+
+#### Combat improvements
+New combat abilities added: 
+- The 1 key converts your mana to stamina.
+- The 2 key restores you to full health at the cost of 50 combo.
+
+If the doubletap functionality is active, the following abilities can be activated by double tapping the mentioned key.
+If it is disabled, it can be activated using leftControl + mentioned key.
+- The movement keys (WASD) can be pressed for movement abilities (WAD) and an attack ability (S). The costs of these abilities is currently 75 stamina.
+
 ## Installing
 Throw the `.dll` of one of the releases in your mod folder.
 
 ## Usage
 For v.0.3.0, the usage is the following:
 
-Going underwater will spawn random fishes around you. For now they are all friendly, but this will change.
-Going underwater usually drains stamina. 
-This is still the case, however you can now use dragon roots to get the underwater breathing ability, meaning that your stamina will not get reduced, for the duration the dragon roots are active.
-Dragon roots give 10s of underwater breathing. 
-They are automatically used when underwater.
+### Commands
+- [Debug only] `/fish <0 - inf>`: Spawns which will spawn the defined amount of fish around you. (Gets really slow with high amounts of creatures, because Wollay)
+- [Debug only] `/chest <0 - 3>`: Spawns a chests with defined type.
+- [Debug only] `/roots`: Adds 60 dragon roots to your inventory.
+- [Debug only] `/lvl`: Drops a random artifact.
+- `/enable doubletap`: Enables movement ability triggering with doubletap.
+- `/disable doubletap`: Disable movement ability triggering with doubletap.
 
-- You can spawn fish by typing `/fish 100`, which will spawn 100 fish around you. [Pre-release only]
-- You can spawn chests by typing `/chest 0`, which will spawn a chest with type 0. Types are 0 - 3. [Pre-release only]
-- You can add 60 dragon roots to your inventory by typing `/roots`. This can be done any number of times, so stack them up a bit before you go and test out the mod. 
-[Pre-release only]
-
-New combat abilities are added as well. 
-- The movement keys (WASD) can be double tapped for movement abilities (WAD) and an attack ability (S). The costs of these ability is currently 75 stamina.
-- The 1 key converts your mana to stamina.
-- The 2 key restores you to full health at the cost of 50 combo.
-
-Lore interactions are updated. Every lore you read that gives 100+ percent lore, an artifact will be dropped.
-- You can checkout the dropping of artifacts by using `/lvl`. [Pre-release only]
+## Final words
+Special thanks Chris for his work for the modding community and Timothy(GrayShadoz - Youtube) for his effort to make cubeworld videos (including all my mods).
+Also thanks to TheBagel3(Youtube, Discord, Twitch), Raxiti(Reddit), kuba.dlouhej(Discord) for testing and giving feedback on the mod.
