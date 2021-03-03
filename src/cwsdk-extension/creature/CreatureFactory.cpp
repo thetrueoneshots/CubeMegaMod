@@ -75,6 +75,7 @@ cube::Creature* cube::CreatureFactory::SpawnChest(const LongVector3& position, c
 	{
 		creature->entity_data.binary_toggles |= 1 << (int)cube::Enums::StateFlags::ActiveLantern;
 		creature->entity_data.binary_toggles |= 1 << (int)cube::Enums::StateFlags::VisibleOnMap;
+		creature->entity_data.interaction_state = 1;
 	}
 
 	return creature;

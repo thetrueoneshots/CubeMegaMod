@@ -31,7 +31,7 @@ class Mod : GenericMod {
 		int count = 1;
 		if (swscanf_s(msg, L"/ability %d", &index) == 1)
 		{
-			if (DEBUG)
+			if (!DEBUG)
 			{
 				return DisplayOnlyInDebugMessage();
 			}
@@ -41,7 +41,7 @@ class Mod : GenericMod {
 
 		if (swscanf_s(msg, L"/drop %d %d", &index, &count) == 2 || swscanf_s(msg, L"/drop %d", &index) == 1)
 		{
-			if (DEBUG)
+			if (!DEBUG)
 			{
 				return DisplayOnlyInDebugMessage();
 			}
@@ -55,7 +55,7 @@ class Mod : GenericMod {
 
 		if (!wcscmp(msg, L"/fish") || swscanf_s(msg, L"/fish %d", &index) == 1)
 		{
-			if (DEBUG)
+			if (!DEBUG)
 			{
 				return DisplayOnlyInDebugMessage();
 			}
@@ -63,7 +63,7 @@ class Mod : GenericMod {
 		}
 		else if (!wcscmp(msg, L"/roots"))
 		{
-			if (DEBUG)
+			if (!DEBUG)
 			{
 				return DisplayOnlyInDebugMessage();
 			}
@@ -74,7 +74,7 @@ class Mod : GenericMod {
 		}
 		else if (!wcscmp(msg, L"/chest") || swscanf_s(msg, L"/chest %d", &index) == 1)
 		{
-			if (DEBUG)
+			if (!DEBUG)
 			{
 				return DisplayOnlyInDebugMessage();
 			}
