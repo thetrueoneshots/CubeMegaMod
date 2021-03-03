@@ -19,6 +19,9 @@ namespace cube::Helper
 	void DropItem(cube::Creature* creature, const cube::Item& item, int amount = 1);
 	void DropItem(cube::Creature* creature, ItemGenerationType type, int amount = 1);
 
+	void LoreInteraction(cube::Creature* player, int percentage);
+
+
 	inline static int RandomInt()
 	{
 		static long long count = 0;

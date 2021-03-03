@@ -8,7 +8,7 @@
 /* Initializes all the needed mods.
  * @return	{void}
 */
-void hook::InitializeAll(std::vector<HookEvent>* hookEvents)
+void hook::InitializeAll(std::vector<HookEventData>* hookEvents)
 {
 	// Initialize all hooks here.
 	//DropGoldOnHitInitialize();

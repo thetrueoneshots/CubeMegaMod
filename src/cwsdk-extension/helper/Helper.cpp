@@ -1,5 +1,7 @@
 #include "Helper.h"
 
+#define DEBUG_HELPER 0
+
 void cube::Helper::AnnounceItem(cube::Game* game, cube::Item* item, unsigned int count, cube::Creature* creature)
 {
 	((void (*)(cube::Game*, cube::Item*, unsigned int, cube::Creature*))CWOffset(0x9D6F0))(game, item, count, creature);
@@ -110,4 +112,54 @@ void cube::Helper::DropItem(cube::Creature* creature, ItemGenerationType type, i
 	{
 		DropItem(creature, GenerateItem(type, creature->entity_data.current_region));
 	}
+}
+
+void cube::Helper::LoreInteraction(cube::Creature* player, int percentage)
+{
+	int chance = RandomInt() % 100;
+	int compare = 0;
+	if (percentage < 100)
+	{
+		
+		// percentage% (max 50%) chance for 1 star gear
+		compare = min(percentage, 50);
+		if (chance <= compare)
+		{
+			cube::Item item = GenerateItem(ItemGenerationType::Gear, player->entity_data.current_region);
+			item.rarity = 0;
+			DropItem(player, item);
+		}
+		
+		// [Possible] Drop gold
+	}
+	else if (percentage < 150)
+	{
+		compare = (percentage - 100);
+		// (percentage - 100)% chance of a 2-3 star weapon drop
+		if (chance <= compare)
+		{
+			cube::Item item = GenerateItem(ItemGenerationType::Gear, player->entity_data.current_region);
+			item.rarity = 1 + RandomInt() % 2;
+			item.category = 3;
+			item.id = RandomInt() % 18;
+			DropItem(player, item);
+		}
+	}
+	else
+	{
+		compare = min(percentage - 150, 100);
+		// (percentage - 150) % chance of an artifact drop
+		if (chance <= compare)
+		{
+			DropItem(player, ItemGenerationType::Artifact);
+		}
+	}
+
+	if (DEBUG_HELPER)
+	{
+		wchar_t buffer[250];
+		swprintf_s(buffer, 250, L"Lore: %d(DropChance: %d, Result: %d)\n", percentage, compare, chance);
+		cube::GetGame()->PrintMessage(buffer, 250, 170, 90);
+	}
+	
 }

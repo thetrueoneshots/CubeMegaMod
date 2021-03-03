@@ -17,7 +17,7 @@ int DisplayOnlyInDebugMessage()
 /* Mod class containing all the functions for the mod.
 */
 class Mod : GenericMod {
-	std::vector<hook::HookEvent> hookEvents;
+	std::vector<hook::HookEventData> hookEvents;
 	cube::EventList eventList;
 	/* Hook for the chat function. Triggers when a user sends something in the chat.
 	 * @param	{std::wstring*} message
@@ -114,15 +114,16 @@ class Mod : GenericMod {
 			e->Update();
 		}
 
-		for (hook::HookEvent e : hookEvents)
+		for (hook::HookEventData e : hookEvents)
 		{
-			switch (e)
+			switch (e.type)
 			{
 			case hook::HookEvent::LevelUp:
 				cube::Helper::LevelUp(cube::GetGame()->GetPlayer());
 				break;
+			case hook::HookEvent::LoreInteraction:
+				cube::Helper::LoreInteraction(cube::GetGame()->GetPlayer(), e.data);
 			default:
-
 				break;
 			}
 		}

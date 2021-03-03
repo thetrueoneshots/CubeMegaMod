@@ -9,7 +9,7 @@
 
 #include "../cwsdk-extension/creature/Creature.h"
 
-static std::vector<hook::HookEvent>* hookEvents;
+static std::vector<hook::HookEventData>* hookEvents;
 const static int LORE_LEVELUP_THRESHHOLD = 100;
 
 extern "C" void OnPrintRGBA(std::wstring* message) {
@@ -18,11 +18,7 @@ extern "C" void OnPrintRGBA(std::wstring* message) {
 
 	if (swscanf_s(msg, L" lore increased to %d", &index) == 1)
 	{
-		if (index >= LORE_LEVELUP_THRESHHOLD)
-		{
-			hookEvents->push_back(hook::HookEvent::LevelUp);
-		}
-		return;
+		hookEvents->push_back({ hook::HookEvent::LoreInteraction,  index });
 	}
 }
 
@@ -63,7 +59,7 @@ void SetupIncreaseLoreHandler() {
 	ASMIncreaseLore_jmpback = (void*)(base + 0x26B6D9);
 }
 
-void IncreaseLoreInitialize(std::vector<hook::HookEvent>* events)
+void IncreaseLoreInitialize(std::vector<hook::HookEventData>* events)
 {
 	hookEvents = events;
 	SetupIncreaseLoreHandler();
