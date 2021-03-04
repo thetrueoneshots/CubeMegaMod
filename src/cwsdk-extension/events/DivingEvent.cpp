@@ -42,6 +42,13 @@ cube::DivingEvent::~DivingEvent()
 	cube::GetGame()->PrintMessage(L"Diving Event\n");
 }
 
+/*
+* Calculates the squared distance between two longvector3 points.
+* 
+* @param	{const LongVector3&}	p1	Point one.
+* @param	{const LongVector3&}	p2	Point two.
+* @return	{long long}					Distance between the two points.
+*/
 static long long DistanceSquared(const LongVector3& p1, const LongVector3& p2)
 {
 	auto diffx = (p2.x - p1.x);
@@ -50,6 +57,12 @@ static long long DistanceSquared(const LongVector3& p1, const LongVector3& p2)
 	return diffx * diffx + diffy * diffy + diffz * diffz;
 }
 
+/*
+* Is called every gametick to update the diving event.
+* This includes handling all timers and their assigned actions.
+* 
+* @return	{void}
+*/
 void cube::DivingEvent::Update()
 {
 	Event::Update();
@@ -67,11 +80,18 @@ void cube::DivingEvent::Update()
 	HandleBoundsCheckTimer();
 }
 
+// Todo: Remove
 void cube::DivingEvent::Initialize()
 {
 	s_Consumable = cube::Item(11, 36);
 }
 
+/*
+* Checks if the player still has the underwater breathing ability.
+* If this is not the case, check if the player can gain the ability again.
+* 
+* @return	{void}
+*/
 void cube::DivingEvent::HandleItemEffectTimer()
 {
 	if (m_ItemEffectTimer != nullptr && m_ItemEffectTimer->IsTriggered(m_CurrentTime))
@@ -79,7 +99,7 @@ void cube::DivingEvent::HandleItemEffectTimer()
 		delete m_ItemEffectTimer;
 		m_ItemEffectTimer = nullptr;
 
-		// WriteByte reset
+		// Reset to stamina loss underwater
 		WriteByte((char*)CWBase() + 0x2E038D + 0x02, 0x5C);
 	}
 
@@ -89,20 +109,34 @@ void cube::DivingEvent::HandleItemEffectTimer()
 	}
 }
 
+/*
+* Checks if the player can gain the underwater breathing ability for a defined amount of time.
+* 
+* @return	{void}
+*/
 void cube::DivingEvent::ConsumeItem()
 {
 	cube::Creature* player = cube::GetGame()->GetPlayer();
 	if (player->gold >= 10)
 	{
 		player->gold -= 10;
+
+		// Set timer
 		m_ItemEffectTimer = new cube::Timer(10, m_CurrentTime);
+
+		// Stamina gain underwater.
 		WriteByte((char*)CWBase() + 0x2E038D + 0x02, 0x58);
+
 		cube::GetGame()->PrintMessage(L"[Consumed] ", 100, 255, 0);
 		cube::GetGame()->PrintMessage(L"10 Gold\n");
 	}
 }
 
-// Todo: Documentation
+/*
+* Handles the fish timer. If this timer is triggered, it will try to spawn fishes around the player.
+* 
+* @return	{void}
+*/
 void cube::DivingEvent::HandleFishTimer()
 {
 	LongVector3 pos = cube::GetGame()->GetPlayer()->entity_data.position;
@@ -113,25 +147,39 @@ void cube::DivingEvent::HandleFishTimer()
 	}
 }
 
-// Todo: Documentation
+
+/*
+* Spawns fishes around the player.
+* 
+* @param	{const LongVector3&}	position	Position of the player.
+* @return	{void}
+*/
 void cube::DivingEvent::SpawnFishes(const LongVector3& position)
 {
 	std::vector<cube::Creature*> creatures = cube::CreatureFactory::SpawnFishes(FISH_SPAWN_AMOUNT, CREATURE_SPAWN_RANGE);
 	m_SpawnedCreatures.push_back({ position, creatures });
 }
 
-// Todo: Documentation
+/*
+* Handles the treasure timer. If this timer is triggered, spawn a treasure in the water.
+* 
+* @return	{void}
+*/
 void cube::DivingEvent::HandleTreasureTimer()
 {
-	LongVector3 pos = cube::GetGame()->GetPlayer()->entity_data.position;
-
 	if (m_TreasureTimer.IsTriggered(m_CurrentTime) && m_SpawnedTreasures.size() < MAX_TREASURE_COUNT)
 	{
+		LongVector3 pos = cube::GetGame()->GetPlayer()->entity_data.position;
 		SpawnTreasures(pos);
 	}
 }
 
-// Todo: Documentation
+/*
+* Spawns a treasure somewhere depending on the player position.
+* 
+* @param	{const LongVector3&}	position	Position of the player.
+* @return	{void}
+*/
 void cube::DivingEvent::SpawnTreasures(const LongVector3& position)
 {
 	// Calculate spawn position
@@ -176,7 +224,13 @@ void cube::DivingEvent::SpawnTreasures(const LongVector3& position)
 	}
 }
 
-// Todo: Documentation
+/*
+* Handles the boundscheck timer. If this timer is triggered, it will remove all the treasures and fishes
+* that are out of range of the player.
+* This is done so that the amount of added creatures to the game stays minimal.
+* 
+* @return	{void}
+*/
 void cube::DivingEvent::HandleBoundsCheckTimer()
 {
 	if (m_BoundsTimer.IsTriggered(m_CurrentTime))
@@ -187,7 +241,13 @@ void cube::DivingEvent::HandleBoundsCheckTimer()
 	}
 }
 
-// Todo: Documentation
+/*
+* Checks if any spawned fishes are out of range of the player.
+* If this is the case, said fishes are deleted.
+* 
+* @param	{const LongVector3&}	position	Position of the Player.
+* @return	{void}
+*/
 void cube::DivingEvent::BoundCheckFishes(const LongVector3& position)
 {
 	const static auto dist = (BOUNDS_CHECK_DIST_MULTIPLIER * CREATURE_SPAWN_RANGE) * (BOUNDS_CHECK_DIST_MULTIPLIER * CREATURE_SPAWN_RANGE);
@@ -216,7 +276,13 @@ void cube::DivingEvent::BoundCheckFishes(const LongVector3& position)
 	}
 }
 
-// Todo: Documentation
+/*
+* Checks if any spawned treasures are out of range of the player.
+* If this is the case, said treasures are deleted.
+*
+* @param	{const LongVector3&}	position	Position of the Player.
+* @return	{void}
+*/
 void cube::DivingEvent::BoundCheckTreasures(const LongVector3& position)
 {
 	const static auto distTreasure = (BOUNDS_CHECK_DIST_MULTIPLIER * 2 * CREATURE_SPAWN_RANGE) * (BOUNDS_CHECK_DIST_MULTIPLIER * 2 * CREATURE_SPAWN_RANGE);

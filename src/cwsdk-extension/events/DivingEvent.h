@@ -68,3 +68,5 @@ namespace cube
 		void BoundCheckTreasures(const LongVector3& position);
 	};
 }
+
+static long long DistanceSquared(const LongVector3& p1, const LongVector3& p2);
