@@ -28,6 +28,8 @@ struct SpawnMoment
 	std::vector<cube::Creature*> creatures;
 };
 
+static long long DistanceSquared(const LongVector3& p1, const LongVector3& p2);
+
 namespace cube
 {
 	class DivingEvent : public Event
@@ -61,6 +63,7 @@ namespace cube
 		// Treasure logic
 		void HandleTreasureTimer();
 		void SpawnTreasures(const LongVector3& position);
+		int GenerateChestType();
 
 		// Deletion logic
 		void HandleBoundsCheckTimer();
@@ -68,5 +71,3 @@ namespace cube
 		void BoundCheckTreasures(const LongVector3& position);
 	};
 }
-
-static long long DistanceSquared(const LongVector3& p1, const LongVector3& p2);

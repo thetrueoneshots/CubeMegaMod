@@ -188,40 +188,55 @@ void cube::DivingEvent::SpawnTreasures(const LongVector3& position)
 	offset.y += position.y;
 	offset.z = position.z - abs(offset.z);
 
-	// Todo: Negate and return
-	if (Helper::PositionContainsWater(offset))
+	// Check if there is water in at the spawnposition
+	if (!Helper::PositionContainsWater(offset))
 	{
-		// Todo: Seperate function
-		int random = rand() % 100;
-		int chest = 0;
-		const static int NORMAL_CHANCE = 60;
-		const static int SKULL_CHANCE = 20;
-		const static int OBSEDIAN_CHANCE = 10;
-		const static int BONE_CHANCE = 10;
-
-		if (random < NORMAL_CHANCE)
-		{
-			chest = 0;
-		}
-		else if (random - NORMAL_CHANCE < SKULL_CHANCE)
-		{
-			chest = 1;
-		}
-		else if (random - NORMAL_CHANCE - SKULL_CHANCE < OBSEDIAN_CHANCE)
-		{
-			chest = 2;
-		}
-		else
-		{
-			chest = 3;
-		}
-
-		cube::Creature* creature = cube::CreatureFactory::SpawnChest(offset, cube::GetGame()->GetPlayer()->entity_data.current_region, chest);
-		if (creature != nullptr)
-		{
-			m_SpawnedTreasures.push_back(creature);
-		}
+		return;
 	}
+	
+	int type = GenerateChestType();
+	cube::Creature* creature = cube::CreatureFactory::SpawnChest(
+		offset, 
+		cube::GetGame()->GetPlayer()->entity_data.current_region, 
+		type
+	);
+
+	if (creature != nullptr)
+	{
+		m_SpawnedTreasures.push_back(creature);
+	}
+}
+
+/*
+* Generates a chest type to spawn. Certain chests are more likely to spawn than others.
+*/
+int cube::DivingEvent::GenerateChestType()
+{
+	const static int NORMAL_CHANCE = 60;
+	const static int SKULL_CHANCE = 20;
+	const static int OBSEDIAN_CHANCE = 10;
+	const static int BONE_CHANCE = 10;
+
+	int random = rand() % 100;
+
+	if (random < NORMAL_CHANCE)
+	{
+		return 0;
+	}
+	else if (random - NORMAL_CHANCE < SKULL_CHANCE)
+	{
+		return 1;
+	}
+	else if (random - NORMAL_CHANCE - SKULL_CHANCE < OBSEDIAN_CHANCE)
+	{
+		return 2;
+	}
+	else
+	{
+		return 3;
+	}
+
+	return 0;
 }
 
 /*
