@@ -160,6 +160,24 @@ void cube::Helper::LoreInteraction(cube::Creature* player, int percentage)
 		wchar_t buffer[250];
 		swprintf_s(buffer, 250, L"Lore: %d(DropChance: %d, Result: %d)\n", percentage, compare, chance);
 		cube::GetGame()->PrintMessage(buffer, 250, 170, 90);
+	}	
+}
+
+bool cube::Helper::PositionContainsWater(const LongVector3& position)
+{
+	cube::World* world = cube::GetGame()->world;
+	LongVector3 pos(position.x / cube::DOTS_PER_BLOCK, position.y / cube::DOTS_PER_BLOCK, position.z / cube::DOTS_PER_BLOCK);
+	cube::Block block = world->GetBlockInterpolated(pos);
+	while (block.type != cube::Block::Air)
+	{
+		if (block.type == cube::Block::Water)
+		{
+			return true;
+		}
+		// Do not want to check for every block. If there is no water more than 5 deep, don't even try spawning things
+		pos.z += 5;
+		block = world->GetBlockInterpolated(pos);
 	}
-	
+
+	return false;
 }

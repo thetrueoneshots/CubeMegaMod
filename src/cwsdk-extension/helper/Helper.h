@@ -21,6 +21,7 @@ namespace cube::Helper
 
 	void LoreInteraction(cube::Creature* player, int percentage);
 
+	bool PositionContainsWater(const LongVector3& position);
 
 	inline static int RandomInt()
 	{
