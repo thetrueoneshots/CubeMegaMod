@@ -16,6 +16,30 @@ void cube::Helper::LevelUp(cube::Creature* player)
 	DropItem(player, item);
 }
 
+static int CheckPetId(int id)
+{
+	const static int IDS[] = {
+		6, 24, 95, 120, 121, 123, 124, 125, 126, 127, 128, 129, 130,
+		131, 132, 133, 134, 135, 136, 137, 138, 139, 143, 175, 176,
+		177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188,
+		189, 190, 194, 195, 196, 197, 198, 204, 205, 206, 207, 212,
+		221, 222, 223, 231, 234, 235, 242, 243, 244, 245, 246, 247,
+		248, 249, 250, 251, 268, 271, 272, 273, 274, 278, 279, 280,
+		281, 282, 283, 284, 285, 289, 297, 301, 302
+	};
+
+	int cnt = sizeof(IDS) / sizeof(*IDS);
+	for (int i = 0; i < cnt; i++)
+	{
+		if (id == IDS[i])
+		{
+			id++;
+		}
+	}
+
+	return id;
+}
+
 cube::Item cube::Helper::GenerateItem(ItemGenerationType type, IntVector2 region)
 {
 	// Random seed
@@ -46,7 +70,7 @@ cube::Item cube::Helper::GenerateItem(ItemGenerationType type, IntVector2 region
 		break;
 	case ItemGenerationType::Pet:
 		item.category = 20;
-		item.id = random % 306;
+		item.id = CheckPetId(random % 306);
 		item.region = region;
 		item.rarity = 4;
 		break;
