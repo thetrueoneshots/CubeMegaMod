@@ -20,6 +20,7 @@ namespace cube
 		static cube::Creature* SpawnCreature(const LongVector3& position, const IntVector2& region, int entityType, int entityBehaviour, int level);
 		static cube::Creature* SpawnChest(const LongVector3& position, const IntVector2& region, int chestType, int level = -1);
 		static cube::Creature* SpawnFish(const LongVector3& position, const IntVector2& region, int entityType = -1, int level = -1, int friendly = -1);
+		static cube::Creature* SpawnBoss(const LongVector3& position, const IntVector2& region);
 
 		static std::vector<cube::Creature*> SpawnFishes(int amount, long long range = VISION_RANGE);
 

@@ -143,6 +143,70 @@ cube::Creature* cube::CreatureFactory::SpawnFish(const LongVector3& position, co
 	return creature;
 }
 
+cube::Creature* cube::CreatureFactory::SpawnBoss(const LongVector3& position, const IntVector2& region)
+{
+	const static int IDS[] =
+	{
+		82,  // Minotaur
+		108, // Troll
+		109, // Dark troll
+		110, // Hell demon
+		111, // Golem
+		112, // Ember golem
+		115, // Cyclops
+		118, // Runegiant
+		119, // Saurian
+		150, // Shark
+		215, // Turtle (blue)
+		216, // Snow gnobold
+		229, // Crawler
+		254, // Half-demon
+		263, // Treant
+		269, // Monstosity
+		295, // Snail
+	};
+
+	const static float SCALES[] =
+	{
+		3.0f, // Minotaur
+		2.0f, // Troll
+		2.0f, // Dark troll
+		2.0f, // Hell demon
+		2.0f, // Golem
+		2.0f, // Ember golem
+		2.0f, // Cyclops
+		2.0f, // Runegiant
+		2.0f, // Saurian
+		4.0f, // Shark
+		5.0f, // Turtle (blue)
+		5.0f, // Snow gnobold
+		6.0f, // Crawler
+		6.0f, // Half-demon
+		2.0f, // Treant
+		3.0f, // Monstosity
+		6.0f, // Snail
+	};
+
+	int count = sizeof(IDS) / sizeof(*IDS);
+	int bossType = cube::Helper::RandomInt() % count;
+
+	cube::Creature* boss = SpawnCreature(position, region, IDS[bossType], (int)cube::Enums::EntityBehaviour::Hostile, 5);
+	if (boss == nullptr)
+	{
+		return boss;
+	}
+
+	boss->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::IsBoss;
+	boss->entity_data.binary_toggles |= 1 << (int)cube::Enums::StateFlags::VisibleOnMap;
+	boss->entity_data.HP = boss->GetMaxHP();
+
+	boss->entity_data.appearance.graphics_scale *= SCALES[bossType];
+	boss->entity_data.appearance.hitbox_scale *= SCALES[bossType];
+	boss->entity_data.appearance.physics_scale *= SCALES[bossType];
+
+	return boss;
+}
+
 std::vector<cube::Creature*> cube::CreatureFactory::SpawnFishes(int amount, long long range)
 {
 	std::vector<cube::Creature*> creatures;

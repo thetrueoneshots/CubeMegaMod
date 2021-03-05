@@ -18,6 +18,10 @@ const static auto MAX_FISH_COUNT = 100;
 const static double TREASURE_SPAWN_INTERVAL = 60;
 const static auto MAX_TREASURE_COUNT = 5;
 
+// Boss spawning constants
+const static double BOSS_SPAWN_INTERVAL = 10;
+const static auto MAX_BOSS_COUNT = 1;
+
 // Other constants
 const static auto BOUNDS_CHECK_DIST_MULTIPLIER = 2;
 const static long long CREATURE_SPAWN_RANGE = 5000000;
@@ -40,10 +44,12 @@ namespace cube
 
 		cube::Timer m_SpawnTimer;
 		cube::Timer m_TreasureTimer;
+		cube::Timer m_BossTimer;
 		cube::Timer m_BoundsTimer;
 
 		std::vector<SpawnMoment> m_SpawnedCreatures;
 		std::vector<cube::Creature*> m_SpawnedTreasures;
+		std::vector<cube::Creature*> m_SpawnedBosses;
 
 		cube::FileVariables* settingVariables;
 
@@ -68,9 +74,14 @@ namespace cube
 		void SpawnTreasures(const LongVector3& position);
 		int GenerateChestType();
 
+		// Boss logic
+		void HandleBossTimer();
+		void SpawnBoss(const LongVector3& position);
+
 		// Deletion logic
 		void HandleBoundsCheckTimer();
 		void BoundCheckFishes(const LongVector3& position);
 		void BoundCheckTreasures(const LongVector3& position);
+		void BoundCheckBosses(const LongVector3& position);
 	};
 }

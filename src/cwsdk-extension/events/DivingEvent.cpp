@@ -12,6 +12,7 @@ cube::DivingEvent::DivingEvent(cube::FileVariables* vars)
 
 	m_SpawnTimer = cube::Timer(FISH_SPAWN_INTERVAL, m_CurrentTime);
 	m_TreasureTimer = cube::Timer(TREASURE_SPAWN_INTERVAL, m_CurrentTime);
+	m_BossTimer = cube::Timer(BOSS_SPAWN_INTERVAL, m_CurrentTime);
 	m_BoundsTimer = cube::Timer(BOUNDS_CHECK_INTERVAL, m_CurrentTime);
 
 	cube::GetGame()->PrintMessage(L"[Event Started] ", 100, 100, 255);
@@ -35,6 +36,11 @@ cube::DivingEvent::~DivingEvent()
 	}
 
 	for (auto p : m_SpawnedTreasures)
+	{
+		p->entity_data.HP = 0;
+	}
+
+	for (auto p : m_SpawnedBosses)
 	{
 		p->entity_data.HP = 0;
 	}
@@ -79,6 +85,9 @@ void cube::DivingEvent::Update()
 
 	// Spawn fishes
 	HandleFishTimer();
+
+	// Spawn bosses
+	HandleBossTimer();
 
 	// Check for fishes and treasures to be deleted
 	HandleBoundsCheckTimer();
@@ -192,7 +201,8 @@ void cube::DivingEvent::HandleTreasureTimer()
 void cube::DivingEvent::SpawnTreasures(const LongVector3& position)
 {
 	// Calculate spawn position
-	LongVector3 offset = cube::CreatureFactory::GetRandomOffset(2 * CREATURE_SPAWN_RANGE);
+	long long distance = (2.f + 1.f * Helper::RandomZeroToOne()) * CREATURE_SPAWN_RANGE;
+	LongVector3 offset = cube::CreatureFactory::GetRandomOffset(distance);
 	offset.x += position.x;
 	offset.y += position.y;
 	offset.z = position.z - abs(offset.z);
@@ -213,6 +223,7 @@ void cube::DivingEvent::SpawnTreasures(const LongVector3& position)
 	if (creature != nullptr)
 	{
 		m_SpawnedTreasures.push_back(creature);
+		cube::GetGame()->PrintMessage(L"A treasure chest appeared!\n", 255, 165, 0);
 	}
 }
 
@@ -248,6 +259,34 @@ int cube::DivingEvent::GenerateChestType()
 	return 0;
 }
 
+void cube::DivingEvent::HandleBossTimer()
+{
+	if (m_BossTimer.IsTriggered(m_CurrentTime) && m_SpawnedBosses.size() < MAX_BOSS_COUNT)
+	{
+		LongVector3 pos = cube::GetGame()->GetPlayer()->entity_data.position;
+		SpawnBoss(pos);
+	}
+}
+
+void cube::DivingEvent::SpawnBoss(const LongVector3& position)
+{
+	long long distance = (2.f + 1.f * Helper::RandomZeroToOne()) * CREATURE_SPAWN_RANGE;
+	LongVector3 offset = cube::CreatureFactory::GetRandomOffset(distance);
+	offset.x += position.x;
+	offset.y += position.y;
+	offset.z = position.z - abs(offset.z);
+
+	if (Helper::PositionContainsWater(offset))
+	{
+		cube::Creature* boss = cube::CreatureFactory::SpawnBoss(offset, cube::GetGame()->GetPlayer()->entity_data.current_region);
+		if (boss != nullptr)
+		{
+			m_SpawnedBosses.push_back(boss);
+			cube::GetGame()->PrintMessage(L"An underwater boss appeared!\n", 255, 165, 0);
+		}
+	}
+}
+
 /*
 * Handles the boundscheck timer. If this timer is triggered, it will remove all the treasures and fishes
 * that are out of range of the player.
@@ -262,6 +301,7 @@ void cube::DivingEvent::HandleBoundsCheckTimer()
 		LongVector3 pos = cube::GetGame()->GetPlayer()->entity_data.position;
 		BoundCheckFishes(pos);
 		BoundCheckTreasures(pos);
+		BoundCheckBosses(pos);
 	}
 }
 
@@ -309,7 +349,7 @@ void cube::DivingEvent::BoundCheckFishes(const LongVector3& position)
 */
 void cube::DivingEvent::BoundCheckTreasures(const LongVector3& position)
 {
-	const static auto distTreasure = (BOUNDS_CHECK_DIST_MULTIPLIER * 2 * CREATURE_SPAWN_RANGE) * (BOUNDS_CHECK_DIST_MULTIPLIER * 2 * CREATURE_SPAWN_RANGE);
+	const static auto distTreasure = (BOUNDS_CHECK_DIST_MULTIPLIER * 3 * CREATURE_SPAWN_RANGE) * (BOUNDS_CHECK_DIST_MULTIPLIER * 3 * CREATURE_SPAWN_RANGE);
 
 	std::vector<int> toBeErased;
 	for (int i = 0; i < m_SpawnedTreasures.size(); i++)
@@ -329,6 +369,63 @@ void cube::DivingEvent::BoundCheckTreasures(const LongVector3& position)
 	for (auto i : toBeErased)
 	{
 		m_SpawnedTreasures.erase(m_SpawnedTreasures.begin() + i - cnt);
+		cnt++;
+	}
+}
+
+void cube::DivingEvent::BoundCheckBosses(const LongVector3& position)
+{
+	const static auto distBoss = (BOUNDS_CHECK_DIST_MULTIPLIER * 2 * CREATURE_SPAWN_RANGE) * (BOUNDS_CHECK_DIST_MULTIPLIER * 2 * CREATURE_SPAWN_RANGE);
+
+	// Extensive search because there can only be one boss active at the time.
+
+	std::vector<int> toBeErased;
+	for (int i = 0; i < m_SpawnedBosses.size(); i++)
+	{
+		auto p = m_SpawnedBosses.at(i);
+
+		if (p->entity_data.HP <= 0.f)
+		{
+			toBeErased.push_back(i);
+			continue;
+		}
+
+		if (cube::GetGame()->host.world.id_to_creature_map.find(p->id)->second != p)
+		{
+			toBeErased.push_back(i);
+			continue;
+		}
+
+		bool found = false;
+		std::list<cube::Creature*>* creatures = &cube::GetGame()->host.world.creatures;
+		for (auto c : *creatures)
+		{
+			if (c->id == p->id)
+			{
+				found = true;
+			}
+		}
+
+		if (!found)
+		{
+			toBeErased.push_back(i);
+			continue;
+		}
+
+		if (DistanceSquared(p->entity_data.position, position) < distBoss)
+		{
+			continue;
+		}
+
+		p->entity_data.HP = 0;
+
+		toBeErased.push_back(i);
+	}
+
+	int cnt = 0;
+	for (auto i : toBeErased)
+	{
+		m_SpawnedBosses.erase(m_SpawnedBosses.begin() + i - cnt);
 		cnt++;
 	}
 }
