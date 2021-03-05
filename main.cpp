@@ -19,7 +19,8 @@ int DisplayOnlyInDebugMessage()
 class Mod : GenericMod {
 	std::vector<hook::HookEventData> hookEvents;
 	cube::EventList eventList;
-	bool m_DoubleTapEnabled = false;
+	//bool m_DoubleTapEnabled = false;
+	cube::FileVariables settings;
 	/* Hook for the chat function. Triggers when a user sends something in the chat.
 	 * @param	{std::wstring*} message
 	 * @return	{int}
@@ -42,12 +43,27 @@ class Mod : GenericMod {
 
 		if (!wcscmp(msg, L"/enable doubletap"))
 		{
-			m_DoubleTapEnabled = true;
+			settings.m_DoubleTapActivated = true;
+			cube::WriteSettingsFile(settings);
 		}
+
+		if (!wcscmp(msg, L"/enable autogoldusage"))
+		{
+			settings.m_AutomaticGoldConsumptionActivated = true;
+			cube::WriteSettingsFile(settings);
+		}
+
+		if (!wcscmp(msg, L"/disable autogoldusage"))
+		{
+			settings.m_AutomaticGoldConsumptionActivated = false;
+			cube::WriteSettingsFile(settings);
+		}
+
 
 		if (!wcscmp(msg, L"/disable doubletap"))
 		{
-			m_DoubleTapEnabled = false;
+			settings.m_DoubleTapActivated = false;
+			cube::WriteSettingsFile(settings);
 		}
 
 		if (swscanf_s(msg, L"/drop %d %d", &index, &count) == 2 || swscanf_s(msg, L"/drop %d", &index) == 1)
@@ -111,7 +127,7 @@ class Mod : GenericMod {
 		{
 			if (!eventList.Find(cube::EventType::Diving))
 			{
-				eventList.Add(new cube::DivingEvent());
+				eventList.Add(new cube::DivingEvent(&settings));
 			}
 		}
 		else
@@ -145,12 +161,12 @@ class Mod : GenericMod {
 
 	bool CheckMovementButtonPress(cube::DButton* button, cube::DButton* lCntr)
 	{
-		if (button->Pressed() == cube::DButton::State::DoubleTap && m_DoubleTapEnabled)
+		if (button->Pressed() == cube::DButton::State::DoubleTap && settings.m_DoubleTapActivated)
 		{
 			return true;
 		}
 
-		if (!m_DoubleTapEnabled && button->Pressed() != cube::DButton::State::None && lCntr->Pressed() == cube::DButton::State::Held)
+		if (!settings.m_DoubleTapActivated && button->Pressed() != cube::DButton::State::None && lCntr->Pressed() == cube::DButton::State::Held)
 		{
 			return true;
 		}
@@ -226,6 +242,9 @@ class Mod : GenericMod {
 		hook::DisableCreatureFloating();
 
 		cube::DivingEvent::Initialize();
+
+		settings = cube::ReadSettingsFile();
+		cube::WriteSettingsFile(settings);
 		return;
 	}
 };

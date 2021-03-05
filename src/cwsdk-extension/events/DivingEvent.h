@@ -5,6 +5,7 @@
 
 #include "Event.h"
 #include "../Timer.h"
+#include "../helper/FileParser.h"
 
 static cube::Item s_Consumable(11, 36);
 
@@ -44,8 +45,10 @@ namespace cube
 		std::vector<SpawnMoment> m_SpawnedCreatures;
 		std::vector<cube::Creature*> m_SpawnedTreasures;
 
+		cube::FileVariables* settingVariables;
+
 	public:
-		DivingEvent();
+		DivingEvent(cube::FileVariables* vars);
 		~DivingEvent();
 
 		void Update() override;

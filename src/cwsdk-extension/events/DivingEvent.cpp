@@ -4,9 +4,10 @@
 #include "../creature/CreatureFactory.h"
 #include "../helper/Helper.h"
 
-cube::DivingEvent::DivingEvent()
+cube::DivingEvent::DivingEvent(cube::FileVariables* vars)
 	: Event(), m_ItemEffectTimer(nullptr)
 {
+	settingVariables = vars;
 	eventType = cube::EventType::Diving;
 
 	m_SpawnTimer = cube::Timer(FISH_SPAWN_INTERVAL, m_CurrentTime);
@@ -37,6 +38,9 @@ cube::DivingEvent::~DivingEvent()
 	{
 		p->entity_data.HP = 0;
 	}
+
+	// Reset to stamina loss underwater
+	WriteByte((char*)CWBase() + 0x2E038D + 0x02, 0x5C);
 
 	cube::GetGame()->PrintMessage(L"[Event Ended] ", 100, 100, 255);
 	cube::GetGame()->PrintMessage(L"Diving Event\n");
@@ -116,6 +120,11 @@ void cube::DivingEvent::HandleItemEffectTimer()
 */
 void cube::DivingEvent::ConsumeItem()
 {
+	if (!settingVariables->m_AutomaticGoldConsumptionActivated)
+	{
+		return;
+	}
+
 	cube::Creature* player = cube::GetGame()->GetPlayer();
 	if (player->gold >= 10)
 	{
