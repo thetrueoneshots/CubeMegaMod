@@ -21,6 +21,8 @@ The chest types are:
 - Obsedian chest [Drops artifacts]
 - Bone chest [Drops pets (also including unavailable pets)]
 
+Next to that, random spawn while diving.
+
 #### Lore interactions
 Lore interactions are updated. 
 - Every (lore < 100) has a maximum of 50% (based on lore) chance to drop a 1 star gear.
@@ -50,7 +52,9 @@ For v.1.0.0+, the usage is the following:
 - [Debug only] `/drop <0 - 4> <1 - inf>`: Tests for dropping items. First the type, then the count is specified.
 - [Debug only] `/ability <0-160>`: Executes an ability defined by the id.
 - `/enable doubletap`: Enables movement ability triggering with doubletap.
-- `/disable doubletap`: Disable movement ability triggering with doubletap.
+- `/disable doubletap`: Disables movement ability triggering with doubletap.
+- `/enable autogoldusage`: Enables automatic gold consumption during the diving event.
+- `/disable autogoldusage`: Disables automatic gold consumption during the diving event.
 
 ## Final words
 Special thanks **Chris** for his work for the modding community and **Timothy(GrayShadoz - Youtube)** for his effort to make cubeworld videos (including of all of my mods).
