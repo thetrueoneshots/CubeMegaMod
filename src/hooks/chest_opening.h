@@ -46,7 +46,7 @@ extern "C" void OpenChest(cube::Game* game, cube::Creature* chest) {
 		for (int i = 0; i < cnt; i++)
 		{
 			cube::Item item = cube::Helper::GenerateItem(cube::Helper::ItemGenerationType::Gear, chest->entity_data.current_region);
-			item.rarity = 3 + cube::Helper::RandomInt() % 4;
+			item.rarity = 3 + cube::Helper::RandomInt() % 5;
 			cube::Helper::DropItem(player, item, 1);
 		}
 		break;

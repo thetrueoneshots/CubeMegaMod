@@ -1,5 +1,5 @@
 # CubeMegaMod
-This is a large mod for CubeWorld steam version. It adds / will add underwater exploration, combat modifications,
+This is a large mod for CubeWorld steam version. It adds underwater exploration, combat modifications,
 lore improvements, gold usages and more.
 
 **If anyone is in need for help with creating their own mods or a collaboration, don't hesitate to contact me. I am always glad to help and work with you. My discord is: Nichiren#3660.**
@@ -17,11 +17,12 @@ This is still the case, however now 10 gold is automatically used to gain the un
 On top of that, underwater exploring is rewarded with random chests spawning every 60 seconds.
 The chest types are:
 - Wood chest [Chances to drop gold, 1 - 5 star gear and consumables (also including unavailable ones)]
-- Skull chest [Drops gold and one or two 4 - 6 star gear items]
+- Skull chest [Drops gold and one or two 4 - 8 star gear items]
 - Obsedian chest [Drops artifacts]
 - Bone chest [Drops pets (also including unavailable pets)]
 
-Next to that, random spawn while diving.
+Next to that, random bosses spawn while diving. These can get be really strong (500k hp for example), 
+so only take them on when you are geared up with 5+ star gear.
 
 #### Lore interactions
 Lore interactions are updated. 
@@ -43,7 +44,7 @@ Download the latest version from the releases. Put the `CubeMegaMod-v.x.x.x.dll`
 If you have any trouble installing the mod, check out this guide: https://www.youtube.com/watch?v=Uuq47N3YT8I.
 
 ## Usage
-For v.1.0.0+, the usage is the following:
+For v.1.2.0+, the usage is the following:
 
 ### Commands
 - [Debug only] `/fish <0 - inf>`: Spawns which will spawn the defined amount of fish around you. (Gets really slow with high amounts of creatures, because Wollay)

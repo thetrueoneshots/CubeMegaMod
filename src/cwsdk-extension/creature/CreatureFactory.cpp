@@ -190,13 +190,29 @@ cube::Creature* cube::CreatureFactory::SpawnBoss(const LongVector3& position, co
 	int count = sizeof(IDS) / sizeof(*IDS);
 	int bossType = cube::Helper::RandomInt() % count;
 
-	cube::Creature* boss = SpawnCreature(position, region, IDS[bossType], (int)cube::Enums::EntityBehaviour::Hostile, 5);
+	int level = 3 + cube::Helper::RandomInt() % 3;
+	cube::Creature* boss = SpawnCreature(position, region, IDS[bossType], (int)cube::Enums::EntityBehaviour::Hostile, level);
 	if (boss == nullptr)
 	{
 		return boss;
 	}
 
-	boss->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::IsBoss;
+	int random = cube::Helper::RandomInt() % 100;
+	if (random < 60)
+	{
+		boss->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::IsMiniBoss;
+	}
+
+	if (random > 40)
+	{
+		boss->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::IsBoss;
+	}
+
+	if (random % 4 == 0)
+	{
+		boss->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::IsNamedBoss;
+	}
+
 	boss->entity_data.binary_toggles |= 1 << (int)cube::Enums::StateFlags::VisibleOnMap;
 	boss->entity_data.HP = boss->GetMaxHP();
 

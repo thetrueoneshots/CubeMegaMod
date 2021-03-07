@@ -232,10 +232,10 @@ void cube::DivingEvent::SpawnTreasures(const LongVector3& position)
 */
 int cube::DivingEvent::GenerateChestType()
 {
-	const static int NORMAL_CHANCE = 60;
+	const static int NORMAL_CHANCE = 70;
 	const static int SKULL_CHANCE = 20;
-	const static int OBSEDIAN_CHANCE = 10;
-	const static int BONE_CHANCE = 10;
+	const static int OBSEDIAN_CHANCE = 5;
+	const static int BONE_CHANCE = 5;
 
 	int random = rand() % 100;
 
