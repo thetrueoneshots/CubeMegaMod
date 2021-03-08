@@ -60,30 +60,30 @@ For v.1.2.0+, the usage is the following:
 ## Possible features
 This is a list of the possible features I am considering for this mod. Everything with a preceding *[possible]* is simply an idea that I might take a look into. Everything without the preceding possible is likely to be implemented at one point in this mod.
 
-1. User mod selection.
+### 1. User mod selection.
   - Allowing the user to select which parts of the mod they want to have enabled while playing the game.
   - Preferences will be saved
   - *[Possible]* Automatic updating from the github repo.
-2. Increased Supplier Gnome Usefullness.
+### 2. Increased Supplier Gnome Usefullness.
   - Selling artifacts for high prices.
   - Extra usages for gems, such as leveling up weapons.
   - Selling healing items, to support non healing classes in desert and fireland regions.
-3. *[Possible]* Spirit cubes.
+### 3. *[Possible]* Spirit cubes.
   - *[Possible]* Bringing back the old spirit cubes, if they can still be recovered from existing game code.
   - *[Possible]* Implement new kinds of spirit cubes. This can be: water spirit (the healing puddles as a weapon effect or chance to spawn bubbles on hit), shadow spirit (a chance to hit twice, much like the ranger's shadow), earth spirit (temporarily immobilizes the enemy, like the scout sand trap).
-4. Weapon upgrading.
+### 4. Weapon upgrading.
   - Either use gems, gold, XP or something else to upgrade weapons.
-5. Creature updates.
+### 5. Creature updates.
   - Buffing pet stats. (They are currently quite weak)
   - Nerfing ranged mobs.
     - Nerfing mobs equiped with boomerangs.
     - Nerfing mage mobs.
   - Nerfing poison DOT by mobs.
-6. Buff gold gained from gold bags. (They are useless right now)
-7. Inceasing item stack sizes.
+### 6. Buff gold gained from gold bags. (They are useless right now)
+### 7. Inceasing item stack sizes.
   - Gaining increased stack / 'pouch' sizes by buying them, gaining them with events or as an effect of certain artifacts.
-8. Random starting regions. (Not always the basic area)
-9. Combat updates (not all of them may be implemented)
+### 8. Random starting regions. (Not always the basic area)
+### 9. Combat updates (not all of them may be implemented)
   - An ability that gives 1-2% of hp at the cost of the amount of hp recovered in coins. Is a hold ability to support non-healing classes.
   - Mapping the movement abilities to better keys (currently left control)
   - Spending 50% of your hp to gain a damage buff.
@@ -94,14 +94,14 @@ This is a list of the possible features I am considering for this mod. Everythin
   - Converting mana to stamina / other way around.
   - Converting HP to mana / stamina.
   - Mapping the abilities to the appropriate keys (currently 1 - 9)
-10. Increased starting gold (~40), to allow for a faster start (Buying some gear, a flask and a pet food at the start)
-11. Buffing climbing speed by think of 100%. (The jumping hack is faster than climbing)
-12. New classes.
+### 10. Increased starting gold (~40), to allow for a faster start (Buying some gear, a flask and a pet food at the start)
+### 11. Buffing climbing speed by think of 100%. (The jumping hack is faster than climbing)
+### 12. New classes.
   - Adding the monk class in the mod.
   - Creating a new necromancer class.
   - [Possible] Creating a woodland / druid class.
-13. Buying artifacts with gold. (To make gold more useful again. Also done by the diving event and gold->hp ability)
-14. Incorporate previous mods into the mod.
+### 13. Buying artifacts with gold. (To make gold more useful again. Also done by the diving event and gold->hp ability)
+### 14. Incorporate previous mods into the mod.
   - Cubegression
   - GuardianFix
   - CubePatch
