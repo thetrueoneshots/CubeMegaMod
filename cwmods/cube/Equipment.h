@@ -7,7 +7,7 @@ class Equipment {
     public:
 		cube::Item unk_item;
 		cube::Item neck;
-		cube::Item chest;
+		cube::Item creature;
 		cube::Item feet;
 		cube::Item hands;
 		cube::Item shoulder;

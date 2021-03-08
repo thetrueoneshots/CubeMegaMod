@@ -3,11 +3,19 @@
 
 #include "src/cwsdk-extension.h"
 
-// Create global vars here
-#include "src/hooks.h"
+#include "src/mods/SeaExplorationMod/SeaExplorationMod.h"
+#include "src/CubeMod.h"
 
+
+GLOBAL std::vector<CubeMod*> g_Mods;
+GLOBAL char* g_Base;
+
+#include "src/hooks/ChestInteractionHandler.h"
+
+// OLD
 #define DEBUG 1
 
+// OLD
 int DisplayOnlyInDebugMessage()
 {
 	cube::GetGame()->PrintMessage(L"[Error] This command is only available in debug mode.\n", 255, 127, 80);
@@ -17,15 +25,23 @@ int DisplayOnlyInDebugMessage()
 /* Mod class containing all the functions for the mod.
 */
 class Mod : GenericMod {
+	// OLD
 	std::vector<hook::HookEventData> hookEvents;
-	cube::EventList eventList;
-	//bool m_DoubleTapEnabled = false;
 	cube::FileVariables settings;
 	/* Hook for the chat function. Triggers when a user sends something in the chat.
 	 * @param	{std::wstring*} message
 	 * @return	{int}
 	*/
 	virtual int OnChat(std::wstring* message) override {
+		for (CubeMod* mod : g_Mods)
+		{
+			if (mod->OnChat(message))
+			{
+				return 1;
+			}
+		}
+
+		// OLD
 		const wchar_t* msg = message->c_str();
 
 		cube::Creature* player = cube::GetGame()->GetPlayer();
@@ -115,32 +131,11 @@ class Mod : GenericMod {
 	 * @return	{void}
 	*/
 	virtual void OnGameTick(cube::Game* game) override {
-		static bool initialized = false;
-		if (!initialized)
-		{
-			initialized = true;
+		for (CubeMod* mod : g_Mods) {
+			mod->OnGameTick(game);
 		}
 
-		// Check for DivingEvent
-		unsigned int flags = game->GetPlayer()->entity_data.flags;
-		if (flags & (1 << (int)cube::Enums::CollisionFlags::Water) && !(flags & (1 << (int)cube::Enums::CollisionFlags::Surfaced)))
-		{
-			if (!eventList.Find(cube::EventType::Diving))
-			{
-				eventList.Add(new cube::DivingEvent(&settings));
-			}
-		}
-		else
-		{
-			eventList.Remove(cube::EventType::Diving);
-		}
-		
-		// Update all events
-		for (cube::Event* e : eventList.events)
-		{
-			e->Update();
-		}
-
+		// OLD
 		for (hook::HookEventData e : hookEvents)
 		{
 			switch (e.type)
@@ -159,6 +154,7 @@ class Mod : GenericMod {
 		return;
 	}
 
+	// OLD
 	bool CheckMovementButtonPress(cube::DButton* button, cube::DButton* lCntr)
 	{
 		if (button->Pressed() == cube::DButton::State::DoubleTap && settings.m_DoubleTapActivated)
@@ -175,6 +171,7 @@ class Mod : GenericMod {
 	}
 
 	void OnGetKeyboardState(BYTE* diKeys) override {
+		// OLD
 		static cube::DButton KeyW(17); //W
 		static cube::DButton KeyA(30); //A
 		static cube::DButton KeyS(31); //S
@@ -237,14 +234,18 @@ class Mod : GenericMod {
 	 * @return	{void}
 	*/
 	virtual void Initialize() override {
+		g_Base = (char*)CWBase();
+		g_Mods.push_back(new SeaExplorationMod());
 
-		hook::InitializeAll(&hookEvents);
-		hook::DisableCreatureFloating();
+		// Setup handlers
+		SetupChestInteractionHandler();
 
-		cube::DivingEvent::Initialize();
+		// OLD
+		//hook::InitializeAll(&hookEvents);
 
-		settings = cube::ReadSettingsFile();
-		cube::WriteSettingsFile(settings);
+		//settings = cube::ReadSettingsFile();
+		//cube::WriteSettingsFile(settings);
+
 		return;
 	}
 };

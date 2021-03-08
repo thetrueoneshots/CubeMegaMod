@@ -1,9 +1,5 @@
 #include "DivingEvent.h"
 
-#include "../Inventory.h"
-#include "../creature/CreatureFactory.h"
-#include "../helper/Helper.h"
-
 cube::DivingEvent::DivingEvent(cube::FileVariables* vars)
 	: Event(), m_ItemEffectTimer(nullptr)
 {
@@ -93,12 +89,6 @@ void cube::DivingEvent::Update()
 	HandleBoundsCheckTimer();
 }
 
-// Todo: Remove
-void cube::DivingEvent::Initialize()
-{
-	s_Consumable = cube::Item(11, 36);
-}
-
 /*
 * Checks if the player still has the underwater breathing ability.
 * If this is not the case, check if the player can gain the ability again.
@@ -129,7 +119,7 @@ void cube::DivingEvent::HandleItemEffectTimer()
 */
 void cube::DivingEvent::ConsumeItem()
 {
-	if (!settingVariables->m_AutomaticGoldConsumptionActivated)
+	if (settingVariables && !settingVariables->m_AutomaticGoldConsumptionActivated)
 	{
 		return;
 	}

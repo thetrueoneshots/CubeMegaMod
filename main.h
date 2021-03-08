@@ -12,4 +12,6 @@
 #include <windows.h>
 #include "cwmods/cwsdk.h"
 
+#define GLOBAL static __attribute__((used))
+
 #endif // MAIN_H

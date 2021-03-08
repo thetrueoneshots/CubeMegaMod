@@ -44,12 +44,6 @@ namespace hook
 		int data;
 	};
 
-	
-
 	// Initializes all hooks
 	void InitializeAll(std::vector<HookEventData>* hookEvents);
-
-	// Disables or enables the floating in water of inanimate and examine object creatures.
-	void DisableCreatureFloating();
-	void EnableCreatureFloating();
 }

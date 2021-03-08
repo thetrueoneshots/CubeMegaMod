@@ -3,11 +3,7 @@
 #include "cwsdk.h"
 #include <utility>
 
-#include "Event.h"
-#include "../Timer.h"
-#include "../helper/FileParser.h"
-
-static cube::Item s_Consumable(11, 36);
+#include "../src/cwsdk-extension.h"
 
 // Fish spawning constants
 const static double FISH_SPAWN_INTERVAL = 1;
@@ -58,8 +54,6 @@ namespace cube
 		~DivingEvent();
 
 		void Update() override;
-
-		static void Initialize();
 	private:
 		// Consumtion logic
 		void HandleItemEffectTimer();

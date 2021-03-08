@@ -21,17 +21,17 @@ The chest types are:
 - Obsedian chest [Drops artifacts]
 - Bone chest [Drops pets (also including unavailable pets)]
 
-Next to that, random bosses spawn while diving. These can get be really strong (500k hp for example), 
+Next to that, random bosses spawn while diving. These can get be really strong (500k hp for example),
 so only take them on when you are geared up with 5+ star gear.
 
 #### Lore interactions
-Lore interactions are updated. 
+Lore interactions are updated.
 - Every (lore < 100) has a maximum of 50% (based on lore) chance to drop a 1 star gear.
 - Every (lore >= 100 && lore < 150) has a maximum of 50% (based on lore) chance to drop 2-3 star weapon.
 - Every (lore >= 150) has a maximum of 100% (based on lore) chance to drop an artifact.
 
 #### Combat improvements
-New combat abilities added: 
+New combat abilities added:
 - The 1 key converts your mana to stamina.
 - The 2 key restores you to full health at the cost of 50 combo.
 
@@ -56,6 +56,60 @@ For v.1.2.0+, the usage is the following:
 - `/disable doubletap`: Disables movement ability triggering with doubletap.
 - `/enable autogoldusage`: Enables automatic gold consumption during the diving event.
 - `/disable autogoldusage`: Disables automatic gold consumption during the diving event.
+
+## Possible features
+This is a list of the possible features I am considering for this mod. Everything with a preceding *[possible]* is simply an idea that I might take a look into. Everything without the preceding possible is likely to be implemented at one point in this mod.
+
+1. User mod selection.
+  - Allowing the user to select which parts of the mod they want to have enabled while playing the game.
+  - Preferences will be saved
+  - *[Possible]* Automatic updating from the github repo.
+2. Increased Supplier Gnome Usefullness.
+  - Selling artifacts for high prices.
+  - Extra usages for gems, such as leveling up weapons.
+  - Selling healing items, to support non healing classes in desert and fireland regions.
+3. *[Possible]* Spirit cubes.
+  - *[Possible]* Bringing back the old spirit cubes, if they can still be recovered from existing game code.
+  - *[Possible]* Implement new kinds of spirit cubes. This can be: water spirit (the healing puddles as a weapon effect or chance to spawn bubbles on hit), shadow spirit (a chance to hit twice, much like the ranger's shadow), earth spirit (temporarily immobilizes the enemy, like the scout sand trap).
+4. Weapon upgrading.
+  - Either use gems, gold, XP or something else to upgrade weapons.
+5. Creature updates.
+  - Buffing pet stats. (They are currently quite weak)
+  - Nerfing ranged mobs.
+    - Nerfing mobs equiped with boomerangs.
+    - Nerfing mage mobs.
+  - Nerfing poison DOT by mobs.
+6. Buff gold gained from gold bags. (They are useless right now)
+7. Inceasing item stack sizes.
+  - Gaining increased stack / 'pouch' sizes by buying them, gaining them with events or as an effect of certain artifacts.
+8. Random starting regions. (Not always the basic area)
+9. Combat updates (not all of them may be implemented)
+  - An ability that gives 1-2% of hp at the cost of the amount of hp recovered in coins. Is a hold ability to support non-healing classes.
+  - Mapping the movement abilities to better keys (currently left control)
+  - Spending 50% of your hp to gain a damage buff.
+  - Spending combo to gain movement speed.
+  - Spending combo to gain HP.
+  - Spending combo to gain a buff (firetrail)
+  - Passives, like poison resistance or smth. Can also be when reaching 100+ combo, you gain a firetrail buff.
+  - Converting mana to stamina / other way around.
+  - Converting HP to mana / stamina.
+  - Mapping the abilities to the appropriate keys (currently 1 - 9)
+10. Increased starting gold (~40), to allow for a faster start (Buying some gear, a flask and a pet food at the start)
+11. Buffing climbing speed by think of 100%. (The jumping hack is faster than climbing)
+12. New classes.
+  - Adding the monk class in the mod.
+  - Creating a new necromancer class.
+  - [Possible] Creating a woodland / druid class.
+13. Buying artifacts with gold. (To make gold more useful again. Also done by the diving event and gold->hp ability)
+14. Incorporate previous mods into the mod.
+  - Cubegression
+  - GuardianFix
+  - CubePatch
+  - CubeTravel
+  - MonkClass
+
+
+
 
 ## Final words
 Special thanks **Chris** for his work for the modding community and **Timothy(GrayShadoz - Youtube)** for his effort to make cubeworld videos (including of all of my mods).

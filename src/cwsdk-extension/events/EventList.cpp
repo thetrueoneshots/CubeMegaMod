@@ -34,9 +34,6 @@ void cube::EventList::Remove(EventType type)
 		{
 			switch (e->eventType)
 			{
-			case EventType::Diving:
-				delete (cube::DivingEvent*)e;
-				break;
 			case EventType::AddGold:
 				delete (cube::AddGoldEvent*)e;
 				break;

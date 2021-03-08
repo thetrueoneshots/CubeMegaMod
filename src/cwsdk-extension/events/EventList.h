@@ -4,7 +4,6 @@
 
 #include "Event.h"
 #include "AddGoldEvent.h"
-#include "DivingEvent.h"
 
 namespace cube
 {
