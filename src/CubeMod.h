@@ -1,5 +1,7 @@
 #pragma once
+
 #include <string>
+#include <fstream>
 
 #include "cwsdk.h"
 
@@ -27,11 +29,18 @@ class CubeMod : public GenericMod
 {
 public:
 	std::string m_Name;
+	char* m_FileName;
 	int m_ID;
 	ModVersion m_Version;
 	bool m_Enabled;
 
-	CubeMod() { m_Name = "Standard Mod Class"; m_ID = 0; m_Version = { 1, 0, 0 }; m_Enabled = false; }
+	CubeMod() { 
+		m_Name = "Standard Mod Class"; 
+		m_FileName = "StandardModClass";
+		m_ID = 0; 
+		m_Version = { 1, 0, 0 }; 
+		m_Enabled = false; 
+	}
 
 	/*
 	* Triggers on interaction with chests created from a Creature.
@@ -51,4 +60,42 @@ public:
 	* @return	{void}
 	*/
 	inline virtual void OnLoreIncrease(cube::Game* game, int value) {};
+
+	inline void Save(void* data, int size)
+	{
+		char fileName[256] = { 0 };
+
+		CreateDirectory(cube::SAVE_FOLDER, NULL);
+		sprintf(fileName, "%s\\%s.sav", cube::SAVE_FOLDER, m_FileName);
+
+		std::ofstream file;
+		file.open(fileName, std::ios::out | std::ios::binary);
+
+		if (!file) {
+			return;
+		}
+
+		// Write settings
+		file.write((char*)data, sizeof(size));
+
+		file.close();
+	}
+	
+	inline void Load(void* data, int size)
+	{
+		char fileName[256] = { 0 };
+
+		CreateDirectory(cube::SAVE_FOLDER, NULL);
+		sprintf(fileName, "%s\\%s.sav", cube::SAVE_FOLDER, m_FileName);
+		std::ifstream file(fileName, std::ios::in | std::ios::binary | std::ios::ate);
+
+		if (!file.is_open()) {
+			return;
+		}
+
+		//File exists, read it
+		file.seekg(0, std::ios::beg);
+		file.read((char*)data, sizeof(size));
+		file.close();
+	}
 };

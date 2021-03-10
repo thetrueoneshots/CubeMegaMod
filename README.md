@@ -61,6 +61,12 @@ For v.1.2.0+, the usage is the following:
 - *(Disabled)* `/disable autogoldusage`: Disables automatic gold consumption during the diving event.
 - `/mod <ID> <0 - 1>`: Turns feature with ID on (1) or off (0).
 
+## Bugs
+Bugs known:
+- Underwater bosses sometimes drop random region gear.
+- Invisible creatures / chests (but visible on map).
+- Dissapearing creatures / chest.
+
 ## Possible features
 This is a list of the possible features I am considering for this mod. Everything with a preceding *[possible]* is simply an idea that I might take a look into. Everything without the preceding possible is likely to be implemented at one point in this mod.
 

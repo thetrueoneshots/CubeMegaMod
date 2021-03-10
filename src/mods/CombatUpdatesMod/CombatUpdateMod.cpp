@@ -2,12 +2,12 @@
 
 bool CombatUpdateMod::CheckMovementButtonPress(cube::DButton* button, cube::DButton* lCntr)
 {
-	if (button->Pressed() == cube::DButton::State::DoubleTap && false) // settings.m_DoubleTapActivated)
+	if (button->Pressed() == cube::DButton::State::DoubleTap && m_Data.doubleTap)
 	{
 		return true;
 	}
 
-	if (!false/*settings.m_DoubleTapActivated*/ && button->Pressed() != cube::DButton::State::None && lCntr->Pressed() == cube::DButton::State::Held)
+	if (!m_Data.doubleTap && button->Pressed() != cube::DButton::State::None && lCntr->Pressed() == cube::DButton::State::Held)
 	{
 		return true;
 	}
@@ -72,4 +72,24 @@ void CombatUpdateMod::OnGetKeyboardState(BYTE* diKeys)
 	{
 		cube::FarJumpAbility(2).Execute(player);
 	}
+}
+
+int CombatUpdateMod::OnChat(std::wstring* message)
+{
+	const wchar_t* msg = message->c_str();
+
+	if (!wcscmp(msg, L"/enable doubletap"))
+	{
+		m_Data.doubleTap = true;
+		Save(&m_Data, sizeof(m_Data));
+		return 1;
+	}
+
+	if (!wcscmp(msg, L"/disable doubletap"))
+	{
+		m_Data.doubleTap = false;
+		Save(&m_Data, sizeof(m_Data));
+		return 1;
+	}
+	return 0;
 }

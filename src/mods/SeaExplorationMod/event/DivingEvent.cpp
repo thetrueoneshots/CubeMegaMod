@@ -1,9 +1,9 @@
 #include "DivingEvent.h"
 
-cube::DivingEvent::DivingEvent(cube::FileVariables* vars)
+cube::DivingEvent::DivingEvent(bool* autoGoldUsage)
 	: Event(), m_ItemEffectTimer(nullptr)
 {
-	settingVariables = vars;
+	this->autoGoldUsage = autoGoldUsage;
 	eventType = cube::EventType::Diving;
 
 	m_SpawnTimer = cube::Timer(FISH_SPAWN_INTERVAL, m_CurrentTime);
@@ -119,7 +119,7 @@ void cube::DivingEvent::HandleItemEffectTimer()
 */
 void cube::DivingEvent::ConsumeItem()
 {
-	if (settingVariables && !settingVariables->m_AutomaticGoldConsumptionActivated)
+	if (autoGoldUsage && !*autoGoldUsage)
 	{
 		return;
 	}

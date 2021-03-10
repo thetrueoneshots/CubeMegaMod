@@ -1,5 +1,7 @@
 #include "SeaExplorationMod.h"
 
+#include <fstream>
+
 int SeaExplorationMod::OnChestInteraction(cube::Game* game, cube::Creature* creature, int type)
 {
 	game->PrintMessage(L"Open chest\n", 255, 165, 0);
@@ -74,7 +76,7 @@ void SeaExplorationMod::OnGameTick(cube::Game* game)
 	{
 		if (m_DivingEvent == nullptr)
 		{
-			m_DivingEvent = new cube::DivingEvent(nullptr);
+			m_DivingEvent = new cube::DivingEvent(&m_Data.autoGoldUsage);
 		}
 	}
 	else if (m_DivingEvent != nullptr)
@@ -87,6 +89,26 @@ void SeaExplorationMod::OnGameTick(cube::Game* game)
 	{
 		m_DivingEvent->Update();
 	}
+}
+
+int SeaExplorationMod::OnChat(std::wstring* message)
+{
+	const wchar_t* msg = message->c_str();
+
+	if (!wcscmp(msg, L"/enable autogoldusage"))
+	{
+		m_Data.autoGoldUsage = true;
+		Save(&m_Data, sizeof(m_Data));
+		return 1;
+	}
+
+	if (!wcscmp(msg, L"/disable autogoldusage"))
+	{
+		m_Data.autoGoldUsage = false;
+		Save(&m_Data, sizeof(m_Data));
+		return 1;
+	}
+	return 0;
 }
 
 void SeaExplorationMod::Initialize()

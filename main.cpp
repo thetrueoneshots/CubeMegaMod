@@ -28,9 +28,8 @@ int DisplayOnlyInDebugMessage()
 */
 class Mod : GenericMod {
 	std::vector<CubeMod*> modVector;
-	// OLD
 	std::vector<hook::HookEventData> hookEvents;
-	cube::FileVariables settings;
+
 	/* Hook for the chat function. Triggers when a user sends something in the chat.
 	 * @param	{std::wstring*} message
 	 * @return	{int}
@@ -85,31 +84,6 @@ class Mod : GenericMod {
 			}
 			cube::Ability::CWAbility(player, index);
 			return 1;
-		}
-
-		if (!wcscmp(msg, L"/enable doubletap"))
-		{
-			settings.m_DoubleTapActivated = true;
-			cube::WriteSettingsFile(settings);
-		}
-
-		if (!wcscmp(msg, L"/enable autogoldusage"))
-		{
-			settings.m_AutomaticGoldConsumptionActivated = true;
-			cube::WriteSettingsFile(settings);
-		}
-
-		if (!wcscmp(msg, L"/disable autogoldusage"))
-		{
-			settings.m_AutomaticGoldConsumptionActivated = false;
-			cube::WriteSettingsFile(settings);
-		}
-
-
-		if (!wcscmp(msg, L"/disable doubletap"))
-		{
-			settings.m_DoubleTapActivated = false;
-			cube::WriteSettingsFile(settings);
 		}
 
 		if (swscanf_s(msg, L"/drop %d %d", &index, &count) == 2 || swscanf_s(msg, L"/drop %d", &index) == 1)

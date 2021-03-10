@@ -47,10 +47,10 @@ namespace cube
 		std::vector<cube::Creature*> m_SpawnedTreasures;
 		std::vector<cube::Creature*> m_SpawnedBosses;
 
-		cube::FileVariables* settingVariables;
+		bool* autoGoldUsage;
 
 	public:
-		DivingEvent(cube::FileVariables* vars);
+		DivingEvent(bool* autoGoldUsage);
 		~DivingEvent();
 
 		void Update() override;
