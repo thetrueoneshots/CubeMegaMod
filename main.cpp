@@ -45,7 +45,18 @@ class Mod : GenericMod {
 				if (mod->m_ID == ID)
 				{
 					mod->m_Enabled = value == 0 ? false : true;
-					Popup("Notice", "Enabled mod");
+					if (mod->m_Enabled)
+					{
+						std::string tmp = "Enabled: ";
+						tmp += mod->m_Name;
+						Popup("Notice", tmp.c_str());
+					}
+					else
+					{
+						std::string tmp = "Disabled: ";
+						tmp += mod->m_Name;
+						Popup("Notice", tmp.c_str());
+					}
 				}
 			}
 			cube::SaveSettings(&modVector);

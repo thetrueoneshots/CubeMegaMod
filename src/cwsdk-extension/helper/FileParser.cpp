@@ -109,8 +109,6 @@ void cube::ApplySettings(std::vector<CubeMod*>* mods)
 			}
 		}
 	}
-
-	Popup("Notice", "Read settings");
 }
 
 void cube::SaveSettings(std::vector<CubeMod*>* mods)
@@ -136,6 +134,4 @@ void cube::SaveSettings(std::vector<CubeMod*>* mods)
 	}
 
 	file.close();
-
-	Popup("Notice", "Saved settings");
 }

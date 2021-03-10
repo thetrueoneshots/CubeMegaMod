@@ -11,7 +11,9 @@ I am not to be held responsible for any damage because of usage of this mod. Use
 ### Features
 Features of this mod include sea exploration, lore interactions and combat improvements.
 
-#### Sea exploration
+**NOTE THAT EVERY SEPERATE FEATURE CAN BE DISABLED WITH THE CHAT**
+
+#### Sea exploration [ID: 1]
 Going underwater will spawn random hostile fishes around you. Going underwater usually drains stamina.
 This is still the case, however now 10 gold is automatically used to gain the underwater breathing ability for 10 seconds.
 On top of that, underwater exploring is rewarded with random chests spawning every 60 seconds.
@@ -24,14 +26,14 @@ The chest types are:
 Next to that, random bosses spawn while diving. These can get be really strong (500k hp for example),
 so only take them on when you are geared up with 5+ star gear.
 
-#### Lore interactions
-Lore interactions are updated. Now, whenever you interaction with a lore object, you have a chance of finding an item. 
+#### Lore interactions [ID: 2]
+Lore interactions are updated. Now, whenever you interaction with a lore object, you have a chance of finding an item.
 In the chat, a message will appear on how this item was found. The rates for finding items are the following:
 - Every (lore < 100) has a maximum of 50% (based on lore) chance to drop a 1 star gear.
 - Every (lore >= 100 && lore < 150) has a maximum of 50% (based on lore) chance to drop 2-3 star weapon.
 - Every (lore >= 150) has a maximum of 100% (based on lore) chance to drop an artifact.
 
-#### Combat improvements
+#### Combat improvements [ID: 3]
 New combat abilities added:
 - The 1 key converts your mana to stamina.
 - The 2 key restores you to full health at the cost of 50 combo.
@@ -48,15 +50,16 @@ If you have any trouble installing the mod, check out this guide: https://www.yo
 For v.1.2.0+, the usage is the following:
 
 ### Commands
-- [Debug only] `/fish <0 - inf>`: Spawns which will spawn the defined amount of fish around you. (Gets really slow with high amounts of creatures, because Wollay)
-- [Debug only] `/chest <0 - 3>`: Spawns a chests with defined type.
-- [Debug only] `/roots`: Adds 60 dragon roots to your inventory.
-- [Debug only] `/drop <0 - 4> <1 - inf>`: Tests for dropping items. First the type, then the count is specified.
-- [Debug only] `/ability <0-160>`: Executes an ability defined by the id.
-- `/enable doubletap`: Enables movement ability triggering with doubletap.
-- `/disable doubletap`: Disables movement ability triggering with doubletap.
-- `/enable autogoldusage`: Enables automatic gold consumption during the diving event.
-- `/disable autogoldusage`: Disables automatic gold consumption during the diving event.
+- *(Disabled)* [Debug only] `/fish <0 - inf>`: Spawns which will spawn the defined amount of fish around you. (Gets really slow with high amounts of creatures, because Wollay)
+- *(Disabled)* [Debug only] `/chest <0 - 3>`: Spawns a chests with defined type.
+- *(Disabled)* [Debug only] `/roots`: Adds 60 dragon roots to your inventory.
+- *(Disabled)* [Debug only] `/drop <0 - 4> <1 - inf>`: Tests for dropping items. First the type, then the count is specified.
+- *(Disabled)* [Debug only] `/ability <0-160>`: Executes an ability defined by the id.
+- *(Disabled)* `/enable doubletap`: Enables movement ability triggering with doubletap.
+- *(Disabled)* `/disable doubletap`: Disables movement ability triggering with doubletap.
+- *(Disabled)* `/enable autogoldusage`: Enables automatic gold consumption during the diving event.
+- *(Disabled)* `/disable autogoldusage`: Disables automatic gold consumption during the diving event.
+- `/mod <ID> <0 - 1>`: Turns feature with ID on (1) or off (0).
 
 ## Possible features
 This is a list of the possible features I am considering for this mod. Everything with a preceding *[possible]* is simply an idea that I might take a look into. Everything without the preceding possible is likely to be implemented at one point in this mod.
