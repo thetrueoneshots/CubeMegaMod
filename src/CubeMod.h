@@ -42,8 +42,9 @@ public:
 	/*
 	* Triggers on increase of lore.
 	*
-	* @param	{int}				percentage	New percentage of the lore.
+	* @param	{cube::Game*}		game		Pointer to the game.
+	* @param	{int}				value		New percentage value of the lore.
 	* @return	{void}
 	*/
-	inline virtual void OnLoreIncrease(int percentage) {};
+	inline virtual void OnLoreIncrease(cube::Game* game, int value) {};
 };

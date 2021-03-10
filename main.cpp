@@ -4,13 +4,14 @@
 #include "src/cwsdk-extension.h"
 
 #include "src/mods/SeaExplorationMod/SeaExplorationMod.h"
+#include "src/mods/LoreInteractionMod/LoreInteractionMod.h"
 #include "src/CubeMod.h"
-
 
 GLOBAL std::vector<CubeMod*> g_Mods;
 GLOBAL char* g_Base;
 
 #include "src/hooks/ChestInteractionHandler.h"
+#include "src/hooks/lore_increase.h"
 
 // OLD
 #define DEBUG 1
@@ -135,16 +136,17 @@ class Mod : GenericMod {
 			mod->OnGameTick(game);
 		}
 
-		// OLD
 		for (hook::HookEventData e : hookEvents)
 		{
 			switch (e.type)
 			{
-			case hook::HookEvent::LevelUp:
+			case hook::HookEvent::LevelUp: // OLD
 				cube::Helper::LevelUp(cube::GetGame()->GetPlayer());
 				break;
 			case hook::HookEvent::LoreInteraction:
-				cube::Helper::LoreInteraction(cube::GetGame()->GetPlayer(), e.data);
+				for (CubeMod* mod : g_Mods) {
+					mod->OnLoreIncrease(game, e.data);
+				}
 			default:
 				break;
 			}
@@ -236,9 +238,16 @@ class Mod : GenericMod {
 	virtual void Initialize() override {
 		g_Base = (char*)CWBase();
 		g_Mods.push_back(new SeaExplorationMod());
+		g_Mods.push_back(new LoreInteractionMod());
 
 		// Setup handlers
 		SetupChestInteractionHandler();
+		IncreaseLoreInitialize(&hookEvents); // Todo: Rename handler
+
+		for (CubeMod* mod : g_Mods)
+		{
+			mod->Initialize();
+		}
 
 		// OLD
 		//hook::InitializeAll(&hookEvents);

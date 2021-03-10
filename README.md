@@ -25,7 +25,8 @@ Next to that, random bosses spawn while diving. These can get be really strong (
 so only take them on when you are geared up with 5+ star gear.
 
 #### Lore interactions
-Lore interactions are updated.
+Lore interactions are updated. Now, whenever you interaction with a lore object, you have a chance of finding an item. 
+In the chat, a message will appear on how this item was found. The rates for finding items are the following:
 - Every (lore < 100) has a maximum of 50% (based on lore) chance to drop a 1 star gear.
 - Every (lore >= 100 && lore < 150) has a maximum of 50% (based on lore) chance to drop 2-3 star weapon.
 - Every (lore >= 150) has a maximum of 100% (based on lore) chance to drop an artifact.
