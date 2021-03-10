@@ -6,6 +6,7 @@
 #include "src/mods/SeaExplorationMod/SeaExplorationMod.h"
 #include "src/mods/LoreInteractionMod/LoreInteractionMod.h"
 #include "src/mods/CombatUpdatesMod/CombatUpdateMod.h"
+#include "src/mods/CreatureUpdatesMod/CreatureUpdatesMod.h"
 #include "src/CubeMod.h"
 
 GLOBAL std::vector<CubeMod*> g_Mods;
@@ -172,6 +173,7 @@ class Mod : GenericMod {
 		modVector.push_back(new SeaExplorationMod());
 		modVector.push_back(new LoreInteractionMod());
 		modVector.push_back(new CombatUpdateMod());
+		modVector.push_back(new CreatureUpdatesMod());
 
 		cube::ApplySettings(&modVector);
 		cube::SaveSettings(&modVector);
@@ -209,6 +211,78 @@ class Mod : GenericMod {
 		}
 
 		return;
+	}
+
+	void OnCreatureArmorCalculated(cube::Creature* creature, float* armor)
+	{
+		for (CubeMod* mod : g_Mods)
+		{
+			mod->OnCreatureArmorCalculated(creature, armor);
+		}
+	}
+
+	void OnCreatureCriticalCalculated(cube::Creature* creature, float* critical)
+	{
+		for (CubeMod* mod : g_Mods)
+		{
+			mod->OnCreatureCriticalCalculated(creature, critical);
+		}
+	}
+
+	void OnCreatureAttackPowerCalculated(cube::Creature* creature, float* power)
+	{
+		for (CubeMod* mod : g_Mods)
+		{
+			mod->OnCreatureAttackPowerCalculated(creature, power);
+		}
+	}
+
+	void OnCreatureSpellPowerCalculated(cube::Creature* creature, float* power)
+	{
+		for (CubeMod* mod : g_Mods)
+		{
+			mod->OnCreatureSpellPowerCalculated(creature, power);
+		}
+	}
+
+	void OnCreatureHasteCalculated(cube::Creature* creature, float* haste)
+	{
+		for (CubeMod* mod : g_Mods)
+		{
+			mod->OnCreatureHasteCalculated(creature, haste);
+		}
+	}
+
+	void OnCreatureHPCalculated(cube::Creature* creature, float* hp)
+	{
+		for (CubeMod* mod : g_Mods)
+		{
+			mod->OnCreatureHPCalculated(creature, hp);
+		}
+	}
+
+	void OnCreatureResistanceCalculated(cube::Creature* creature, float* resistance)
+	{
+		for (CubeMod* mod : g_Mods)
+		{
+			mod->OnCreatureResistanceCalculated(creature, resistance);
+		}
+	}
+
+	void OnCreatureRegenerationCalculated(cube::Creature* creature, float* regeneration)
+	{
+		for (CubeMod* mod : g_Mods)
+		{
+			mod->OnCreatureRegenerationCalculated(creature, regeneration);
+		}
+	}
+
+	void OnCreatureManaGenerationCalculated(cube::Creature* creature, float* manaGeneration)
+	{
+		for (CubeMod* mod : g_Mods)
+		{
+			mod->OnCreatureManaGenerationCalculated(creature, manaGeneration);
+		}
 	}
 };
 

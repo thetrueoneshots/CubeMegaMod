@@ -6,6 +6,16 @@ namespace cube
 {
 	namespace Enums
 	{
+		enum class ClassType
+		{
+			Warrior = 1,
+			Ranger,
+			Mage,
+			Rogue,
+			Monk, // Not yet implemented
+			Necromancer, // Not yet implemented
+		};
+
 		enum class EntityBehaviour
 		{
 			Player = 0,

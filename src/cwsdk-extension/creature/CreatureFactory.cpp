@@ -10,17 +10,16 @@
 long long cube::CreatureFactory::GenerateId()
 {
 	cube::Game* game = cube::GetGame();
-	//return 999 + game->host.world.creatures.size();
 
 	const auto& map = game->host.world.id_to_creature_map;
-	long long cnt = 9999;
+	long long cnt = 666666;
 	while (true) {
 		if (map.find(cnt) == map.end())
 		{
 			return cnt;
 		}
 
-		if (cnt > 100000)
+		if (cnt > 10666666)
 		{
 			return -1;
 		}

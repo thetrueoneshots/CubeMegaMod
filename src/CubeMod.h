@@ -39,7 +39,7 @@ public:
 		m_FileName = "StandardModClass";
 		m_ID = 0; 
 		m_Version = { 1, 0, 0 }; 
-		m_Enabled = false; 
+		m_Enabled = true; 
 	}
 
 	/*

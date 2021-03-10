@@ -42,6 +42,13 @@ If the doubletap functionality is active, the following abilities can be activat
 If it is disabled, it can be activated using leftControl + mentioned key.
 - The movement keys (WASD) can be pressed for movement abilities (WAD) and an attack ability (S). The costs of these abilities is currently 75 stamina.
 
+#### Creature updates [ID: 4]
+Stat updates to mobs and pets.
+- Buffed pet stats. (All pet stats doubled)
+- Nerfing ranged mobs.
+	- Nerfing mobs equiped with boomerangs. (Damage halved.)
+	- Nerfing mage mobs. (Damage halved.)
+
 ## Installing
 Download the latest version from the releases. Put the `CubeMegaMod-v.x.x.x.dll` of one of the releases in your mod folder. For usage of the mod, checkout the attached readme.
 If you have any trouble installing the mod, check out this guide: https://www.youtube.com/watch?v=Uuq47N3YT8I.
@@ -55,10 +62,10 @@ For v.1.2.0+, the usage is the following:
 - *(Disabled)* [Debug only] `/roots`: Adds 60 dragon roots to your inventory.
 - *(Disabled)* [Debug only] `/drop <0 - 4> <1 - inf>`: Tests for dropping items. First the type, then the count is specified.
 - *(Disabled)* [Debug only] `/ability <0-160>`: Executes an ability defined by the id.
-- *(Disabled)* `/enable doubletap`: Enables movement ability triggering with doubletap.
-- *(Disabled)* `/disable doubletap`: Disables movement ability triggering with doubletap.
-- *(Disabled)* `/enable autogoldusage`: Enables automatic gold consumption during the diving event.
-- *(Disabled)* `/disable autogoldusage`: Disables automatic gold consumption during the diving event.
+- `/enable doubletap`: Enables movement ability triggering with doubletap.
+- `/disable doubletap`: Disables movement ability triggering with doubletap.
+- `/enable autogoldusage`: Enables automatic gold consumption during the diving event.
+- `/disable autogoldusage`: Disables automatic gold consumption during the diving event.
 - `/mod <ID> <0 - 1>`: Turns feature with ID on (1) or off (0).
 
 ## Bugs
@@ -84,10 +91,6 @@ This is a list of the possible features I am considering for this mod. Everythin
 ### 4. Weapon upgrading.
   - Either use gems, gold, XP or something else to upgrade weapons.
 ### 5. Creature updates.
-  - Buffing pet stats. (They are currently quite weak)
-  - Nerfing ranged mobs.
-    - Nerfing mobs equiped with boomerangs.
-    - Nerfing mage mobs.
   - Nerfing poison DOT by mobs.
 ### 6. Buff gold gained from gold bags. (They are useless right now)
 ### 7. Inceasing item stack sizes.
