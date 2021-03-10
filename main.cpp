@@ -5,6 +5,7 @@
 
 #include "src/mods/SeaExplorationMod/SeaExplorationMod.h"
 #include "src/mods/LoreInteractionMod/LoreInteractionMod.h"
+#include "src/mods/CombatUpdatesMod/CombatUpdateMod.h"
 #include "src/CubeMod.h"
 
 GLOBAL std::vector<CubeMod*> g_Mods;
@@ -140,9 +141,6 @@ class Mod : GenericMod {
 		{
 			switch (e.type)
 			{
-			case hook::HookEvent::LevelUp: // OLD
-				cube::Helper::LevelUp(cube::GetGame()->GetPlayer());
-				break;
 			case hook::HookEvent::LoreInteraction:
 				for (CubeMod* mod : g_Mods) {
 					mod->OnLoreIncrease(game, e.data);
@@ -156,78 +154,10 @@ class Mod : GenericMod {
 		return;
 	}
 
-	// OLD
-	bool CheckMovementButtonPress(cube::DButton* button, cube::DButton* lCntr)
-	{
-		if (button->Pressed() == cube::DButton::State::DoubleTap && settings.m_DoubleTapActivated)
-		{
-			return true;
-		}
-
-		if (!settings.m_DoubleTapActivated && button->Pressed() != cube::DButton::State::None && lCntr->Pressed() == cube::DButton::State::Held)
-		{
-			return true;
-		}
-
-		return false;
-	}
-
 	void OnGetKeyboardState(BYTE* diKeys) override {
-		// OLD
-		static cube::DButton KeyW(17); //W
-		static cube::DButton KeyA(30); //A
-		static cube::DButton KeyS(31); //S
-		static cube::DButton KeyD(32); //D
-
-		static cube::DButton KeyLCntrl(29); //LCntrl // Todo: Debug
-
-		static cube::DButton Key1(2); //1
-		static cube::DButton Key2(3); //2
-
-		if (cube::Helper::InGUI(cube::GetGame()))
+		for (CubeMod* mod : g_Mods)
 		{
-			return;
-		}
-
-		KeyW.Update(diKeys);
-		KeyA.Update(diKeys);
-		KeyS.Update(diKeys);
-		KeyD.Update(diKeys);
-
-		KeyLCntrl.Update(diKeys);
-
-		Key1.Update(diKeys);
-		Key2.Update(diKeys);
-
-		cube::Creature* player = cube::GetGame()->GetPlayer();
-
-		if (Key1.Pressed() == cube::DButton::State::Pressed)
-		{
-			cube::ConvertMTSAbility().Execute(player);
-		}
-		if (Key2.Pressed() == cube::DButton::State::Pressed)
-		{
-			cube::HealAbility().Execute(player);
-		}
-
-		if (CheckMovementButtonPress(&KeyW, &KeyLCntrl))
-		{
-			cube::FarJumpAbility(0).Execute(player);
-		}
-
-		if (CheckMovementButtonPress(&KeyA, &KeyLCntrl))
-		{
-			cube::FarJumpAbility(1).Execute(player);
-		}
-
-		if (CheckMovementButtonPress(&KeyS, &KeyLCntrl))
-		{
-			cube::FarJumpAbility(3).Execute(player);
-		}
-
-		if (CheckMovementButtonPress(&KeyD, &KeyLCntrl))
-		{
-			cube::FarJumpAbility(2).Execute(player);
+			mod->OnGetKeyboardState(diKeys);
 		}
 	}
 
@@ -239,6 +169,7 @@ class Mod : GenericMod {
 		g_Base = (char*)CWBase();
 		g_Mods.push_back(new SeaExplorationMod());
 		g_Mods.push_back(new LoreInteractionMod());
+		g_Mods.push_back(new CombatUpdateMod());
 
 		// Setup handlers
 		SetupChestInteractionHandler();
@@ -248,9 +179,6 @@ class Mod : GenericMod {
 		{
 			mod->Initialize();
 		}
-
-		// OLD
-		//hook::InitializeAll(&hookEvents);
 
 		//settings = cube::ReadSettingsFile();
 		//cube::WriteSettingsFile(settings);

@@ -34,8 +34,7 @@ namespace hook
 {
 	enum class HookEvent
 	{
-		LevelUp = 0,
-		LoreInteraction
+		LoreInteraction = 0
 	};
 
 	struct HookEventData
