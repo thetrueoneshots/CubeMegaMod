@@ -6,6 +6,7 @@ class CombatUpdateMod : public CubeMod
 public:
 	CombatUpdateMod() {
 		m_Name = "Combat Update Mod";
+		m_ID = 3;
 		m_Version = { 1, 0, 0 };
 	}
 

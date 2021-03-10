@@ -27,7 +27,11 @@ class CubeMod : public GenericMod
 {
 public:
 	std::string m_Name;
+	int m_ID;
 	ModVersion m_Version;
+	bool m_Enabled;
+
+	CubeMod() { m_Name = "Standard Mod Class"; m_ID = 0; m_Version = { 1, 0, 0 }; m_Enabled = false; }
 
 	/*
 	* Triggers on interaction with chests created from a Creature.

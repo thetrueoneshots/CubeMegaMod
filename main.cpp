@@ -27,6 +27,7 @@ int DisplayOnlyInDebugMessage()
 /* Mod class containing all the functions for the mod.
 */
 class Mod : GenericMod {
+	std::vector<CubeMod*> modVector;
 	// OLD
 	std::vector<hook::HookEventData> hookEvents;
 	cube::FileVariables settings;
@@ -35,6 +36,22 @@ class Mod : GenericMod {
 	 * @return	{int}
 	*/
 	virtual int OnChat(std::wstring* message) override {
+		const wchar_t* msg = message->c_str();
+		int ID, value;
+		if (swscanf_s(msg, L"/mod %d %d", &ID, &value) == 2)
+		{
+			for (CubeMod* mod : modVector)
+			{
+				if (mod->m_ID == ID)
+				{
+					mod->m_Enabled = value == 0 ? false : true;
+					Popup("Notice", "Enabled mod");
+				}
+			}
+			cube::SaveSettings(&modVector);
+			return 1;
+		}
+
 		for (CubeMod* mod : g_Mods)
 		{
 			if (mod->OnChat(message))
@@ -44,7 +61,7 @@ class Mod : GenericMod {
 		}
 
 		// OLD
-		const wchar_t* msg = message->c_str();
+		/*const wchar_t* msg = message->c_str();
 
 		cube::Creature* player = cube::GetGame()->GetPlayer();
 		int index = 0;
@@ -124,7 +141,7 @@ class Mod : GenericMod {
 				return DisplayOnlyInDebugMessage();
 			}
 			cube::CreatureFactory::SpawnChest(player->entity_data.position, player->entity_data.current_region, index);
-		}
+		}*/
 		return 0;
 	}
 
@@ -167,9 +184,35 @@ class Mod : GenericMod {
 	*/
 	virtual void Initialize() override {
 		g_Base = (char*)CWBase();
-		g_Mods.push_back(new SeaExplorationMod());
-		g_Mods.push_back(new LoreInteractionMod());
-		g_Mods.push_back(new CombatUpdateMod());
+		modVector.push_back(new SeaExplorationMod());
+		modVector.push_back(new LoreInteractionMod());
+		modVector.push_back(new CombatUpdateMod());
+
+		cube::ApplySettings(&modVector);
+		cube::SaveSettings(&modVector);
+
+		// Add enabled mods to the global modlist.
+		for (int i = 0; i < modVector.size(); i++)
+		{
+			if (modVector.at(i)->m_Enabled)
+			{
+				g_Mods.push_back(modVector.at(i));
+			}
+		}
+
+		// Modified from https://github.com/ChrisMiuchiz/Cube-World-Mod-Launcher/blob/master/CubeModLoader/main.cpp.
+		std::string mods("CubeMegaMods Active:\n");
+		for (CubeMod* mod : g_Mods) {
+			mods += " - ";
+			mods += mod->m_Name;
+			mods += " [";
+			mods += mod->m_Version.ToString();
+			mods += "]\n";
+		}
+		if (g_Mods.size() == 0) {
+			mods += "<No mods>\n";
+		}
+		Popup("CubeMegaMods", mods.c_str());
 
 		// Setup handlers
 		SetupChestInteractionHandler();
@@ -179,9 +222,6 @@ class Mod : GenericMod {
 		{
 			mod->Initialize();
 		}
-
-		//settings = cube::ReadSettingsFile();
-		//cube::WriteSettingsFile(settings);
 
 		return;
 	}

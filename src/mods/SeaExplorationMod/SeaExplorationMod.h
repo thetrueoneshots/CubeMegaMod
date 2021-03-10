@@ -10,6 +10,7 @@ private:
 public:
 	SeaExplorationMod() {
 		m_Name = "Sea Exploration Mod";
+		m_ID = 1;
 		m_Version = { 1, 0, 0 };
 	}
 
