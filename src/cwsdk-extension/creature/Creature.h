@@ -14,7 +14,22 @@ namespace cube
 			Rogue,
 			Monk, // Not yet implemented
 			Necromancer, // Not yet implemented
+			ItemVendor = 128,
+			WeaponVendor = 129,
+			ArmorVendor = 130,
+			Analyzer = 131,
+			InnKeeper = 132,
+			Smithy = 133,
+			Carpenter = 134,
+			Tailor = 135,
+			Archeologist = 136,
+			DONT_USE_WEIRD_DOUBLING,
+			FlightMaster = 154,
+			GuildReceptionist = 155,
 			GemTrader = 156,
+			ShopSupplier = 157,
+			MasterSailor = 159,
+			MasterGlider = 160,
 		};
 
 		enum class EntityBehaviour

@@ -7,7 +7,7 @@
 #include "src/mods/LoreInteractionMod/LoreInteractionMod.h"
 #include "src/mods/CombatUpdatesMod/CombatUpdateMod.h"
 #include "src/mods/CreatureUpdatesMod/CreatureUpdatesMod.h"
-#include "src/mods/GemTraderMod/GemTraderMod.h"
+#include "src/mods/ShopUpdateMod/ShopUpdateMod.h"
 #include "src/CubeMod.h"
 
 GLOBAL std::vector<CubeMod*> g_Mods;
@@ -64,42 +64,27 @@ class Mod : GenericMod {
 			cube::SaveSettings(&modVector);
 			return 1;
 		}
-
+		if (swscanf_s(msg, L"/class %d", &ID) == 1)
+		{
+			cube::Creature* player = cube::GetGame()->GetPlayer();
+			cube::Creature* creature = cube::CreatureFactory::SpawnCreature(player->entity_data.position, player->entity_data.current_region,
+				304, (int)cube::Enums::EntityBehaviour::NPC, 1);
+			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::NeededForGemTrader;
+			creature->entity_data.classType = ID;//(int)cube::Enums::ClassType::GemTrader;
+			creature->entity_data.specialization = 1;
+			return 0;
+		}
+		/*
 		if (!wcscmp(msg, L"/supplier"))
 		{
 			cube::Creature* player = cube::GetGame()->GetPlayer();
 			cube::Creature* creature = cube::CreatureFactory::SpawnCreature(player->entity_data.position, player->entity_data.current_region,
 				304, (int)cube::Enums::EntityBehaviour::NPC, 1);
 			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::NeededForGemTrader;
-			creature->entity_data.classType = (int)cube::Enums::ClassType::GemTrader;
-			
-			
-			/*creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::IsUseable;
-			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::IsClassMaster;
-			creature->entity_data.classType = 0;
+			creature->entity_data.classType = 132;//(int)cube::Enums::ClassType::GemTrader;
 			creature->entity_data.specialization = 1;
-			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_01;
-			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_02;
-			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_03;
-			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_04;
-			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_05;
-			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_07;
-			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_08;
-			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_11;
-			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_12;
-			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_16;
-			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_19;
-			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_23;
-			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_24;
-			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_25;
-			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_27;
-			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_28;
-			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_29;
-			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_30;
-			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_31;*/
-
 			return 1;
-		}
+		}*/
 
 		// Test
 		if (!wcscmp(msg, L"/test"))
@@ -231,7 +216,7 @@ class Mod : GenericMod {
 		modVector.push_back(new LoreInteractionMod());
 		modVector.push_back(new CombatUpdateMod());
 		modVector.push_back(new CreatureUpdatesMod());
-		modVector.push_back(new GemTraderMod());
+		modVector.push_back(new ShopUpdateMod());
 
 		cube::ApplySettings(&modVector);
 		cube::SaveSettings(&modVector);

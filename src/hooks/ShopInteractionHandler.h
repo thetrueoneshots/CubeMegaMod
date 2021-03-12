@@ -80,16 +80,21 @@ void SetupShopInteractionHandler() {
 	ASMShopInteraction_bail = CWOffset(0xB7709);
 
 	// Patch shop deleting added items
-	auto patch_1 = 0x2ACC1C;
-	auto patch_2 = 0x2ACC2A;
+	auto item_vendor_p1 = 0x2ACE17;
+	auto item_vendor_p2 = 0x2ACE25;
+
+	auto gem_trader_p1 = 0x2ACC1C;
+	auto gem_trader_p2 = 0x2ACC2A;
 
 	for (int i = 0; i < 5; i++)
 	{
-		WriteByte(CWOffset(patch_1 + i), 0x90);
+		WriteByte(CWOffset(gem_trader_p1 + i), 0x90);
+		WriteByte(CWOffset(item_vendor_p1 + i), 0x90);
 	}
 
 	for (int i = 0; i < 4; i++)
 	{
-		WriteByte(CWOffset(patch_2 + i), 0x90);
+		WriteByte(CWOffset(gem_trader_p2 + i), 0x90);
+		WriteByte(CWOffset(item_vendor_p2 + i), 0x90);
 	}
 }

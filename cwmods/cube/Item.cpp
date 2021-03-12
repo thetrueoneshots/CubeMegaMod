@@ -18,7 +18,7 @@ void cube::Item::ctor()
 	this->modifier = 0;
 	this->region = IntVector2(0, 0);
 	this->material = 0;
-	this->formula_category = 1;
+	this->formula_category = 0;
 	this->num_spirits = 0;
 
 	for (int i = 0; i < 32; i++)

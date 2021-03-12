@@ -1,12 +1,12 @@
 #pragma once
 #include "../../CubeMod.h"
 
-class GemTraderMod : public CubeMod
+class ShopUpdateMod : public CubeMod
 {
 public:
-	GemTraderMod() {
-		m_Name = "Gem Trader Mod";
-		m_FileName = "GemTraderMod";
+	ShopUpdateMod() {
+		m_Name = "Shop Update Mod";
+		m_FileName = "ShopUpdateMod";
 		m_ID = 5;
 		m_Version = { 1, 0, 0 };
 	}
