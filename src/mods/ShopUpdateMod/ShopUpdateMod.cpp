@@ -35,6 +35,13 @@ int ShopUpdateMod::OnShopInteraction(cube::Game* game, std::vector<std::vector<c
 					if (!cube::Helper::CWGetItemsSold(game->world, item, id))
 					{
 						itemVector->at(0).push_back(cube::ItemStack(1, item));
+
+						// Test
+						wchar_t buffer[250];
+						swprintf_s(buffer, 250, L"Player ptr: %012X\n", game->GetPlayer());
+						game->PrintMessage(buffer, 0, 255, 0);
+						swprintf_s(buffer, 250, L"Item ptr: %012X\n", &itemVector->at(0).at(0).item);
+						game->PrintMessage(buffer, 0, 255, 0);
 					}
 				}
 			}

@@ -15,6 +15,7 @@ GLOBAL char* g_Base;
 
 #include "src/hooks/ChestInteractionHandler.h"
 #include "src/hooks/ShopInteractionHandler.h"
+#include "src/hooks/ItemPriceHandler.h"
 #include "src/hooks/lore_increase.h"
 
 // OLD
@@ -247,6 +248,7 @@ class Mod : GenericMod {
 		// Setup handlers
 		SetupChestInteractionHandler();
 		SetupShopInteractionHandler();
+		SetupItemPriceHandler();
 		IncreaseLoreInitialize(&hookEvents); // Todo: Rename handler
 
 		for (CubeMod* mod : g_Mods)
