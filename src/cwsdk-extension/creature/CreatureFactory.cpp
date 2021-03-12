@@ -12,7 +12,7 @@ long long cube::CreatureFactory::GenerateId()
 	cube::Game* game = cube::GetGame();
 
 	const auto& map = game->host.world.id_to_creature_map;
-	long long cnt = 666666;
+	long long cnt = cube::Helper::RandomInt();
 	while (true) {
 		if (map.find(cnt) == map.end())
 		{

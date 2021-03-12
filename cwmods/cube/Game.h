@@ -243,9 +243,9 @@ namespace cube {
 			int field_1E8C;
 			int field_1E90;
 			int field_1E94;
-			int field_1E98;
+			int field_1E98; // Id of shopkeeper?
 			int field_1E9C;
-			int field_1EA0;
+			int field_1EA0; // Class type of shopkeeper?
 			Matrix4 some_camera_matrix_0;
 			Matrix4 some_camera_matrix_1;
 			Matrix4 some_camera_matrix_2;

@@ -13,6 +13,8 @@ namespace cube::Helper
 		Consumable,
 	};
 
+	int CWGetItemsSold(cube::World* world, cube::Item item, long long seller_id);
+
 	void AnnounceItem(cube::Game* game, cube::Item* item, unsigned int count, cube::Creature* creature);
 	void LevelUp(cube::Creature* player);
 	cube::Item GenerateItem(ItemGenerationType type, IntVector2 region = IntVector2(0, 0));

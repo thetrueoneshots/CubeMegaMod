@@ -7,12 +7,14 @@
 #include "src/mods/LoreInteractionMod/LoreInteractionMod.h"
 #include "src/mods/CombatUpdatesMod/CombatUpdateMod.h"
 #include "src/mods/CreatureUpdatesMod/CreatureUpdatesMod.h"
+#include "src/mods/GemTraderMod/GemTraderMod.h"
 #include "src/CubeMod.h"
 
 GLOBAL std::vector<CubeMod*> g_Mods;
 GLOBAL char* g_Base;
 
 #include "src/hooks/ChestInteractionHandler.h"
+#include "src/hooks/ShopInteractionHandler.h"
 #include "src/hooks/lore_increase.h"
 
 // OLD
@@ -62,6 +64,61 @@ class Mod : GenericMod {
 			cube::SaveSettings(&modVector);
 			return 1;
 		}
+
+		if (!wcscmp(msg, L"/supplier"))
+		{
+			cube::Creature* player = cube::GetGame()->GetPlayer();
+			cube::Creature* creature = cube::CreatureFactory::SpawnCreature(player->entity_data.position, player->entity_data.current_region,
+				304, (int)cube::Enums::EntityBehaviour::NPC, 1);
+			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::NeededForGemTrader;
+			creature->entity_data.classType = (int)cube::Enums::ClassType::GemTrader;
+			
+			
+			/*creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::IsUseable;
+			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::IsClassMaster;
+			creature->entity_data.classType = 0;
+			creature->entity_data.specialization = 1;
+			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_01;
+			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_02;
+			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_03;
+			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_04;
+			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_05;
+			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_07;
+			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_08;
+			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_11;
+			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_12;
+			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_16;
+			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_19;
+			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_23;
+			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_24;
+			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_25;
+			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_27;
+			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_28;
+			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_29;
+			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_30;
+			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::Unk_31;*/
+
+			return 1;
+		}
+
+		// Test
+		if (!wcscmp(msg, L"/test"))
+		{
+			wchar_t buffer[250];
+			swprintf_s(buffer, 250, L"Player: %#012X\n", cube::GetGame()->GetPlayer());
+			cube::GetGame()->PrintMessage(buffer, 0, 255, 100);
+
+			for (cube::Creature* creature : cube::GetGame()->host.world.creatures)
+			{
+				if (creature->entity_data.race == 304)
+				{
+					swprintf_s(buffer, 250, L"Supplier gnome: %#012X\n", creature);
+					cube::GetGame()->PrintMessage(buffer, 0, 255, 100);
+				}
+			}
+			return 1;
+		}
+		
 
 		for (CubeMod* mod : g_Mods)
 		{
@@ -174,6 +231,7 @@ class Mod : GenericMod {
 		modVector.push_back(new LoreInteractionMod());
 		modVector.push_back(new CombatUpdateMod());
 		modVector.push_back(new CreatureUpdatesMod());
+		modVector.push_back(new GemTraderMod());
 
 		cube::ApplySettings(&modVector);
 		cube::SaveSettings(&modVector);
@@ -203,6 +261,7 @@ class Mod : GenericMod {
 
 		// Setup handlers
 		SetupChestInteractionHandler();
+		SetupShopInteractionHandler();
 		IncreaseLoreInitialize(&hookEvents); // Todo: Rename handler
 
 		for (CubeMod* mod : g_Mods)

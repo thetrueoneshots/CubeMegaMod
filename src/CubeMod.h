@@ -50,7 +50,7 @@ public:
 	* @param	{int}				type		Chest type [0-3].
 	* @return	{int}							[1 -> open chest, 0 -> do not open chest]
 	*/
-	inline virtual int OnChestInteraction(cube::Game* game, cube::Creature* creature, int type) { return 0; };
+	inline virtual int OnChestInteraction(cube::Game* game, cube::Creature* creature, int type) { return 0; }
 
 	/*
 	* Triggers on increase of lore.
@@ -59,7 +59,17 @@ public:
 	* @param	{int}				value		New percentage value of the lore.
 	* @return	{void}
 	*/
-	inline virtual void OnLoreIncrease(cube::Game* game, int value) {};
+	inline virtual void OnLoreIncrease(cube::Game* game, int value) {}
+
+	/*
+	* Triggers on interaction with the shop
+	*
+	* @param	{cube::Game*}								game		Pointer to the game.
+	* @param	{std::vector<cube::ItemStack>*}				itemVector	Pointer to the shop vector.
+	* * @param	{int}										classType	Class of the shopkeeper interacted with.
+	* @return	{void}
+	*/
+	inline virtual int OnShopInteraction(cube::Game* game, std::vector<std::vector<cube::ItemStack>>* itemVector, int classType, long long id) { return 0; }
 
 	inline void Save(void* data, int size)
 	{

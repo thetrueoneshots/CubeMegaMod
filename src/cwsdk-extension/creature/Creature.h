@@ -14,6 +14,7 @@ namespace cube
 			Rogue,
 			Monk, // Not yet implemented
 			Necromancer, // Not yet implemented
+			GemTrader = 156,
 		};
 
 		enum class EntityBehaviour
@@ -56,7 +57,7 @@ namespace cube
 			Unk_02,
 			Unk_03,
 			Unk_04,
-			Unk_05,
+			NeededForGemTrader,
 			IsClassMaster,
 			Unk_07,
 			Unk_08,

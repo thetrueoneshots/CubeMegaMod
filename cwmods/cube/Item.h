@@ -22,6 +22,7 @@ class Item {
 
         Item();
         Item(char category, int id);
+        void ctor();
 };
 }
 

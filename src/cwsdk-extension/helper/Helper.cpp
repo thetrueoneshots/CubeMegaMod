@@ -2,6 +2,11 @@
 
 #define DEBUG_HELPER 0
 
+int cube::Helper::CWGetItemsSold(cube::World* world, cube::Item item, long long seller_id)
+{	
+	return((int (*)(cube::World*, cube::Item, long long))CWOffset(0x2A0C80))(world, item, seller_id);
+}
+
 void cube::Helper::AnnounceItem(cube::Game* game, cube::Item* item, unsigned int count, cube::Creature* creature)
 {
 	((void (*)(cube::Game*, cube::Item*, unsigned int, cube::Creature*))CWOffset(0x9D6F0))(game, item, count, creature);
@@ -68,6 +73,7 @@ cube::Item cube::Helper::GenerateItem(ItemGenerationType type, IntVector2 region
 		item.id = random % 7;
 		item.modifier = RandomInt() + region.x + region.y;
 		item.rarity = 5;
+		item.formula_category = RandomInt();
 		break;
 	case ItemGenerationType::Pet:
 		item.category = 20;
