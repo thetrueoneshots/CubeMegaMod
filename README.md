@@ -9,7 +9,7 @@ I am not to be held responsible for any damage because of usage of this mod. Use
 **Be safe and back up your save data when playing with mods**
 
 ### Features
-Features of this mod include sea exploration, lore interactions and combat improvements.
+Features of this mod include sea exploration, lore interactions and combat improvements. This mods also allowins the user to select which parts of the mod they want to have enabled while playing the game. These preferences will be saved and taken next time you start up the game.
 
 **NOTE THAT EVERY SEPERATE FEATURE CAN BE DISABLED WITH THE CHAT**
 
@@ -49,6 +49,10 @@ Stat updates to mobs and pets.
 	- Nerfing mobs equiped with boomerangs. (Damage halved.)
 	- Nerfing mage mobs. (Damage halved.)
 
+### Supplier Gnome Usefullness [ID: 5]
+- Sells 1 artifact for a high price.
+- Sells 5 healing potions, to support non healing classes in desert and fireland regions.
+
 ## Installing
 Download the latest version from the releases. Put the `CubeMegaMod-v.x.x.x.dll` of one of the releases in your mod folder. For usage of the mod, checkout the attached readme.
 If you have any trouble installing the mod, check out this guide: https://www.youtube.com/watch?v=Uuq47N3YT8I.
@@ -78,13 +82,9 @@ Bugs known:
 This is a list of the possible features I am considering for this mod. Everything with a preceding *[possible]* is simply an idea that I might take a look into. Everything without the preceding possible is likely to be implemented at one point in this mod.
 
 ### 1. User mod selection.
-  - Allowing the user to select which parts of the mod they want to have enabled while playing the game.
-  - Preferences will be saved
   - *[Possible]* Automatic updating from the github repo.
 ### 2. Increased Supplier Gnome Usefullness.
-  - Selling artifacts for high prices.
   - Extra usages for gems, such as leveling up weapons.
-  - Selling healing items, to support non healing classes in desert and fireland regions.
 ### 3. *[Possible]* Spirit cubes.
   - *[Possible]* Bringing back the old spirit cubes, if they can still be recovered from existing game code.
   - *[Possible]* Implement new kinds of spirit cubes. This can be: water spirit (the healing puddles as a weapon effect or chance to spawn bubbles on hit), shadow spirit (a chance to hit twice, much like the ranger's shadow), earth spirit (temporarily immobilizes the enemy, like the scout sand trap).
