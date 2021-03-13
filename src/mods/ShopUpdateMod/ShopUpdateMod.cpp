@@ -8,12 +8,14 @@ int ShopUpdateMod::OnShopInteraction(cube::Game* game, std::vector<std::vector<c
 		{
 			if (classType == (int)cube::Enums::ClassType::GemTrader)
 			{
-				// Add 5 potions of rarity 5
+				// Add 3 potions of rarity 1 - 4
+
+				for (int i = 0; i < 4; i++)
 				{
 					cube::Item item = cube::Item(1, 1);
-					item.rarity = 4;
+					item.rarity = i;
 
-					int potionCount = 5;
+					int potionCount = 3;
 					int sold = cube::Helper::CWGetItemsSold(game->world, item, id);
 
 					if (sold < potionCount)

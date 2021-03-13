@@ -120,6 +120,9 @@ This is a list of the possible features I am considering for this mod. Everythin
   - CubePatch
   - CubeTravel
   - MonkClass
+### 15. Shop updates
+  - Upgrading weapons for gold in a vendor / shop / identifier.
+  - New crafting recipes for crafting higher tiered potions.
 
 
 

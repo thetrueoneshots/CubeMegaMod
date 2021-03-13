@@ -12,9 +12,29 @@ extern "C" void OnItemPriceHandler(cube::Item* item, int* price) {
 	//for (CubeMod* mod : g_Mods) {
 	//	mod->OnItemPrice(item, price);
 	//}
+	// Todo: Create a CubeMod function that gets called for every mod.
 	if (item->category == 23)
 	{
 		*price = 1000;
+	}
+	else if (item->category == 1 && item->id == 1)
+	{
+		*price = 5 * (item->rarity + 1);
+	}
+	else if (item->category == 24)
+	{
+		if (item->id > 13 && item->id < 18)
+		{
+			*price = 25 * (item->id - 13);
+		}
+		else if (item->id == 12)
+		{
+			*price = 25;
+		}
+		else
+		{
+			*price = 75;
+		}
 	}
 }
 
