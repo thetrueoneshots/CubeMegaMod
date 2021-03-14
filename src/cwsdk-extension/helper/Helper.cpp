@@ -145,6 +145,16 @@ void cube::Helper::DropItem(cube::Creature* creature, ItemGenerationType type, i
 	}
 }
 
+int cube::Helper::CheckIfCreatureExists(cube::Game* game, __int64 id)
+{
+	return 0;
+}
+
+__int64 cube::Helper::UpdateCreatureID(cube::Game* game, __int64 id)
+{
+
+}
+
 void cube::Helper::LoreInteraction(cube::Creature* player, int percentage)
 {
 	int chance = RandomInt() % 100;

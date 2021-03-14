@@ -21,6 +21,9 @@ namespace cube::Helper
 	void DropItem(cube::Creature* creature, const cube::Item& item, int amount = 1);
 	void DropItem(cube::Creature* creature, ItemGenerationType type, int amount = 1);
 
+	int CheckIfCreatureExists(cube::Game* game, __int64 id);
+	__int64 UpdateCreatureID(cube::Game* game, __int64 id);
+
 	inline bool InGUI(cube::Game* game)
 	{
 		cube::GUI* gui = &game->gui;

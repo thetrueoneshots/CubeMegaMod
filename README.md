@@ -49,9 +49,12 @@ Stat updates to mobs and pets.
 	- Nerfing mobs equiped with boomerangs. (Damage halved.)
 	- Nerfing mage mobs. (Damage halved.)
 
-### Supplier Gnome Usefullness [ID: 5]
-- Sells 1 artifact for a high price.
-- Sells 5 healing potions, to support non healing classes in desert and fireland regions.
+### Shop Updates [ID: 5]
+- Gem trader shop:
+	- Sells 1 artifact for a 1000 gold.
+	- Sells healing potions, to support non healing classes in desert and fireland regions.
+- Item vendor shop:
+	- Sells special movement items (75g), a void stone (50g) and crafting books (25g, 50g, 75g, 100g).
 
 ## Installing
 Download the latest version from the releases. Put the `CubeMegaMod-v.x.x.x.dll` of one of the releases in your mod folder. For usage of the mod, checkout the attached readme.

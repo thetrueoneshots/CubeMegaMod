@@ -7,23 +7,78 @@
 #include "Creature.h"
 #include "../helper/Helper.h"
 
-long long cube::CreatureFactory::GenerateId()
+static std::vector<__int64> s_InvicibleIds;
+
+void cube::CreatureFactory::AddInvisID(__int64 id)
 {
+	for (auto i : s_InvicibleIds)
+	{
+		if (i == id)
+		{
+			return;
+		}
+	}
+	s_InvicibleIds.push_back(id);
+}
+
+void cube::CreatureFactory::PrintInvisIDs()
+{
+}
+
+__int64 cube::CreatureFactory::GenerateId()
+{
+	const static bool DEBUG_ID_GENERATION = false;
 	cube::Game* game = cube::GetGame();
 
-	const auto& map = game->host.world.id_to_creature_map;
-	long long cnt = cube::Helper::RandomInt();
+	auto map = &game->host.world.id_to_creature_map;
+	auto list = &game->host.world.creatures;
+
+	if (DEBUG_ID_GENERATION)
+	{
+		wchar_t buffer[250];
+		swprintf_s(buffer, 250, L"Size of map: %ld\n", map->size());
+		game->PrintMessage(buffer);
+		swprintf_s(buffer, 250, L"Size of list: %ld\n", list->size());
+		game->PrintMessage(buffer);
+	}
+
+	__int64 cnt = 9999;
 	while (true) {
-		if (map.find(cnt) == map.end())
+		if (map->find(cnt) == map->end())
 		{
-			return cnt;
+			bool unavailable = false;
+			for (auto p : *list)
+			{
+				if (p->id == cnt)
+				{
+					unavailable = true;
+					break;
+				}
+			}
+
+			if (!unavailable)
+			{
+				for (auto i : s_InvicibleIds)
+				{
+					if (i == cnt)
+					{
+						unavailable = true;
+						break;
+					}
+				}
+			}
+
+			if (!unavailable)
+			{
+				return cnt;
+			}
 		}
 
 		if (cnt > 10666666)
 		{
 			return -1;
 		}
-		cnt++;
+		cnt += 99;
 	}
 	
 }
@@ -39,6 +94,7 @@ void cube::CreatureFactory::SetAppearance(cube::Creature* creature, int entityTy
 void cube::CreatureFactory::AddCreatureToWorld(cube::Creature* creature)
 {
 	cube::Game* game = cube::GetGame();
+
 	game->host.world.creatures.push_back(creature);
 	game->host.world.id_to_creature_map.insert_or_assign(creature->id, creature);
 }
@@ -52,6 +108,15 @@ cube::Creature* cube::CreatureFactory::SpawnCreature(const LongVector3& position
 		creature->entity_data.current_region = region;
 		creature->entity_data.yaw = Helper::RandomZeroToOne() * 360;
 		cube::CreatureFactory::SetAppearance(creature, entityType, entityBehaviour, level);
+		
+		auto inv = &creature->inventory_tabs;
+		for (auto& vector : *inv)
+		{
+			for (auto& itemstack : vector)
+			{
+				itemstack.item.region = creature->entity_data.current_region;
+			}
+		}
 		cube::CreatureFactory::AddCreatureToWorld(creature);
 	}
 	return creature;

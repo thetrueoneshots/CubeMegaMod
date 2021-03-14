@@ -11,6 +11,9 @@ namespace cube
 	class CreatureFactory
 	{
 	public:
+		static void AddInvisID(__int64 id);
+		static void PrintInvisIDs();
+
 		static long long GenerateId();
 
 		static void SetAppearance(cube::Creature* creature, int entityType, int entityBehaviour, int level);
