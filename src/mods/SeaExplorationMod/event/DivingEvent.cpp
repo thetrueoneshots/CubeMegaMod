@@ -21,8 +21,14 @@ cube::DivingEvent::DivingEvent(bool* autoGoldUsage)
 
 cube::DivingEvent::~DivingEvent()
 {
-	auto map = &cube::GetGame()->host.world.id_to_creature_map;
-	auto list = &cube::GetGame()->host.world.creatures;
+	cube::Game* game = cube::GetGame();
+	if (game == nullptr)
+	{
+		return;
+	}
+
+	auto map = &game->host.world.id_to_creature_map;
+	auto list = &game->host.world.creatures;
 	if (m_ItemEffectTimer != nullptr)
 	{
 		delete m_ItemEffectTimer;
@@ -35,7 +41,6 @@ cube::DivingEvent::~DivingEvent()
 			auto creature = map->find(id);
 			if (creature != map->end())
 			{
-				creature->second->entity_data.HP = 0;
 				map->erase(id);
 			}
 		}
@@ -46,7 +51,6 @@ cube::DivingEvent::~DivingEvent()
 		auto creature = map->find(id);
 		if (creature != map->end())
 		{
-			creature->second->entity_data.HP = 0;
 			map->erase(id);
 		}
 	}
@@ -62,9 +66,6 @@ cube::DivingEvent::~DivingEvent()
 	}
 
 	SetDiving(false);
-
-	cube::GetGame()->PrintMessage(L"[Event Ended] ", 100, 100, 255);
-	cube::GetGame()->PrintMessage(L"Diving Event\n");
 }
 
 /*

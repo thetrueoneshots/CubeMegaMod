@@ -14,6 +14,7 @@ int ShopUpdateMod::OnShopInteraction(cube::Game* game, std::vector<std::vector<c
 			{
 			case (int)cube::Enums::ClassType::GemTrader:
 				UpdateGemTraderShop(game, itemVector, id);
+				return 1;
 				break;
 			case (int)cube::Enums::ClassType::ItemVendor:
 				UpdateItemVendorShop(game, itemVector, id);
@@ -31,25 +32,45 @@ int ShopUpdateMod::OnShopInteraction(cube::Game* game, std::vector<std::vector<c
 
 static void UpdateGemTraderShop(cube::Game* game, std::vector<std::vector<cube::ItemStack>>* itemVector, long long id)
 {
+	std::srand(id);
+	unsigned int chanceSeed = std::rand() % id;
+	std::srand(chanceSeed);
+	unsigned int chance = std::rand();
+	std::srand(id);
+	if (chance % 2 == 0)
+	{
+		std::srand(id);
+		cube::Item item = cube::SpiritCube::Create((cube::SpiritCube::Type)((int)cube::SpiritCube::Type::FireSpirit + (std::rand() % 4)));
+
+		std::srand(std::rand());		
+		int count = 1 + std::rand() % 3;
+		std::srand(id);
+		int sold = cube::Helper::CWGetItemsSold(game->world, item, id);
+
+		if (sold < count)
+		{
+			itemVector->at(0).push_back(cube::ItemStack(count - sold, item));
+		}
+	}
+
 	// Add 3 potions of rarity 1 - 4
 	for (int i = 0; i < 4; i++)
 	{
 		cube::Item item = cube::Item(1, 1);
 		item.rarity = i;
 
-		int potionCount = 3;
+		int count = 3;
 		int sold = cube::Helper::CWGetItemsSold(game->world, item, id);
 
-		if (sold < potionCount)
+		if (sold < count)
 		{
-			itemVector->at(0).push_back(cube::ItemStack(potionCount - sold, item));
+			itemVector->at(0).push_back(cube::ItemStack(count - sold, item));
 		}
 	}
 
 	// Add 1 artifact
 	{
 		// Set the random seed to the id of the creature to generate the same items for the same creature every time.
-		std::srand(id);
 		cube::Item item = cube::Item(23, std::rand() % 7);
 		item.region = IntVector2(std::rand(), std::rand());
 		item.modifier = std::rand();
@@ -59,13 +80,6 @@ static void UpdateGemTraderShop(cube::Game* game, std::vector<std::vector<cube::
 		if (!cube::Helper::CWGetItemsSold(game->world, item, id))
 		{
 			itemVector->at(0).push_back(cube::ItemStack(1, item));
-
-			// Test
-			wchar_t buffer[250];
-			swprintf_s(buffer, 250, L"Player ptr: %012X\n", game->GetPlayer());
-			game->PrintMessage(buffer, 0, 255, 0);
-			swprintf_s(buffer, 250, L"Item ptr: %012X\n", &itemVector->at(0).at(0).item);
-			game->PrintMessage(buffer, 0, 255, 0);
 		}
 	}
 }
@@ -91,12 +105,14 @@ static void UpdateItemVendorShop(cube::Game* game, std::vector<std::vector<cube:
 }
 static void UpdateWeaponVendorShop(cube::Game* game, std::vector<std::vector<cube::ItemStack>>* itemVector, long long id)
 {
-	// Add 4 spirit cubes
-	for (int i = 0; i < 4; i++)
+	std::srand(id + game->host.world.state.day);
+	// Add 1 spirit cube
+	// for (int i = 0; i < 4; i++)
 	{
-		cube::Item item = cube::SpiritCube::Create((cube::SpiritCube::Type)((int)cube::SpiritCube::Type::FireSpirit + i));
+		cube::Item item = cube::SpiritCube::Create((cube::SpiritCube::Type)((int)cube::SpiritCube::Type::FireSpirit + std::rand() % 4));
 
-		int count = 5;
+		std::srand(std::rand());
+		int count = 1 + std::rand() % 3;
 		int sold = cube::Helper::CWGetItemsSold(game->world, item, id);
 
 		if (sold < count)
@@ -104,4 +120,5 @@ static void UpdateWeaponVendorShop(cube::Game* game, std::vector<std::vector<cub
 			itemVector->at(0).push_back(cube::ItemStack(count - sold, item));
 		}
 	}
+	std::srand(id);
 }

@@ -71,7 +71,7 @@ int SeaExplorationMod::OnChestInteraction(cube::Game* game, cube::Creature* crea
 
 void SeaExplorationMod::OnGameTick(cube::Game* game)
 {
-	if (cube::Helper::InGUI(game))
+	if (cube::Helper::InGUI(game) || game->host.running == false)
 	{
 		return;
 	}

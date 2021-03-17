@@ -65,6 +65,7 @@ class Mod : GenericMod {
 			cube::SaveSettings(&modVector);
 			return 1;
 		}
+
 		if (swscanf_s(msg, L"/class %d", &ID) == 1)
 		{
 			cube::Creature* player = cube::GetGame()->GetPlayer();
@@ -75,17 +76,6 @@ class Mod : GenericMod {
 			creature->entity_data.specialization = 1;
 			return 0;
 		}
-		/*
-		if (!wcscmp(msg, L"/supplier"))
-		{
-			cube::Creature* player = cube::GetGame()->GetPlayer();
-			cube::Creature* creature = cube::CreatureFactory::SpawnCreature(player->entity_data.position, player->entity_data.current_region,
-				304, (int)cube::Enums::EntityBehaviour::NPC, 1);
-			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::NeededForGemTrader;
-			creature->entity_data.classType = 132;//(int)cube::Enums::ClassType::GemTrader;
-			creature->entity_data.specialization = 1;
-			return 1;
-		}*/
 
 		// Test
 		if (!wcscmp(msg, L"/test"))
@@ -114,63 +104,6 @@ class Mod : GenericMod {
 			}
 		}
 
-		// OLD
-		/*const wchar_t* msg = message->c_str();
-
-		cube::Creature* player = cube::GetGame()->GetPlayer();
-		int index = 0;
-		int count = 1;
-		if (swscanf_s(msg, L"/ability %d", &index) == 1)
-		{
-			if (!DEBUG)
-			{
-				return DisplayOnlyInDebugMessage();
-			}
-			cube::Ability::CWAbility(player, index);
-			return 1;
-		}
-
-		if (swscanf_s(msg, L"/drop %d %d", &index, &count) == 2 || swscanf_s(msg, L"/drop %d", &index) == 1)
-		{
-			if (!DEBUG)
-			{
-				return DisplayOnlyInDebugMessage();
-			}
-			cube::Helper::DropItem(
-				player, 
-				(cube::Helper::ItemGenerationType)index,
-				count
-			);
-			return 1;
-		}
-
-		if (!wcscmp(msg, L"/fish") || swscanf_s(msg, L"/fish %d", &index) == 1)
-		{
-			if (!DEBUG)
-			{
-				return DisplayOnlyInDebugMessage();
-			}
-			cube::CreatureFactory::SpawnFishes(index);
-		}
-		else if (!wcscmp(msg, L"/roots"))
-		{
-			if (!DEBUG)
-			{
-				return DisplayOnlyInDebugMessage();
-			}
-			// Adding 3 Dragon roots
-			cube::Item item = cube::Item(11, 36);
-			cube::ItemStack stack = cube::ItemStack(60, item);
-			cube::GetGame()->GetPlayer()->inventory_tabs.at(cube::Inventory::IngredientsTab).push_back(stack);
-		}
-		else if (!wcscmp(msg, L"/chest") || swscanf_s(msg, L"/chest %d", &index) == 1)
-		{
-			if (!DEBUG)
-			{
-				return DisplayOnlyInDebugMessage();
-			}
-			cube::CreatureFactory::SpawnChest(player->entity_data.position, player->entity_data.current_region, index);
-		}*/
 		return 0;
 	}
 
