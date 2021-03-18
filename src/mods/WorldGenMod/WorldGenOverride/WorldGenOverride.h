@@ -7,20 +7,21 @@
 #include "../Noise/SimplexNoise.h"
 #include "cwsdk.h"
 #include "../src/hooks.h"
+#include <math.h> 
 
-const static float SCL = 0.3f;
+const static float SCL = 1.f;
 
 int DistanceSquared(IntVector2 p1, IntVector2 p2)
 {
-	auto dx = p1.x - p2.x;
-	auto dy = p1.y - p2.y;
+	int dx = p1.x - p2.x;
+	int dy = p1.y - p2.y;
 	return dx * dx + dy * dy;
 }
 
 int GetBiomeType(int x, int y)
 {
-	int dx = std::floor(x / 8);
-	int dy = std::floor(y / 8);
+	int dx = std::floor(x / 7);
+	int dy = std::floor(y / 7);
 
 	int seed = SimplexNoise::noise(dx, dy) * INT_MAX;
 	std::srand(seed);
@@ -30,16 +31,16 @@ int GetBiomeType(int x, int y)
 int GetHeight(int x, int y)
 {
 	const static float MULT = std::sqrt(3 * 3 + 3 * 3);
-	int dx = std::abs(x % 8 - 4);
-	int dy = std::abs(y % 8 - 4);
-	float dist = std::sqrt(DistanceSquared(IntVector2(dx, dy), IntVector2(0, 0)));
-	float multiplier = (MULT - dist) / MULT;
-	float height = multiplier * (2.f + SimplexNoise::noise(x * SCL, y * SCL)) / 3.f;
-	if (height > 0.3f)
+	int dx = std::abs((x % 7) - 3);
+	int dy = std::abs((y % 7) - 3);
+	double dist = std::sqrt(DistanceSquared(IntVector2(dx, dy), IntVector2(0, 0)));
+	double multiplier = (MULT - dist) / MULT;
+	double height = multiplier * (2.f + SimplexNoise::noise(x * SCL, y * SCL)) / 3.f;
+	if (height > 0.5f)
 	{
 		return 2;
 	}
-	else if (height > 0.1f)
+	else if (height > 0.25f)
 	{
 		return 1;
 	}
