@@ -8,6 +8,7 @@
 #include "src/mods/CombatUpdatesMod/CombatUpdateMod.h"
 #include "src/mods/CreatureUpdatesMod/CreatureUpdatesMod.h"
 #include "src/mods/ShopUpdateMod/ShopUpdateMod.h"
+#include "src/mods/WorldGenMod/WorldGenMod.h"
 #include "src/CubeMod.h"
 
 GLOBAL std::vector<CubeMod*> g_Mods;
@@ -154,6 +155,7 @@ class Mod : GenericMod {
 		modVector.push_back(new CombatUpdateMod());
 		modVector.push_back(new CreatureUpdatesMod());
 		modVector.push_back(new ShopUpdateMod());
+		modVector.push_back(new WorldGenMod());
 
 		cube::ApplySettings(&modVector);
 		cube::SaveSettings(&modVector);
@@ -170,7 +172,9 @@ class Mod : GenericMod {
 		// Modified from https://github.com/ChrisMiuchiz/Cube-World-Mod-Launcher/blob/master/CubeModLoader/main.cpp.
 		std::string mods("CubeMegaMods Active:\n");
 		for (CubeMod* mod : g_Mods) {
-			mods += " - ";
+			mods += " - (ID: ";
+			mods += std::to_string(mod->m_ID);
+			mods += ") ";
 			mods += mod->m_Name;
 			mods += " [";
 			mods += mod->m_Version.ToString();

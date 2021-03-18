@@ -287,6 +287,8 @@ namespace cube {
             void PrintMessage(const wchar_t* message, char red, char green, char blue);
 			void PlaySoundEffect(SoundEffect sound_id, LongVector3& position, float volume=1.0, float speed=1.0, bool unkbool=true);
 			void PlaySoundEffect(SoundEffect sound_id, float volume = 1.0, float speed = 1.0, bool unkbool = true);
+
+			static void SetRestrictedSpawnRegions(bool enabled);
         };
 }
 

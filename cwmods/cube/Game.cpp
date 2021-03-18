@@ -102,6 +102,19 @@ void cube::Game::PlaySoundEffect(SoundEffect sound_id, float volume, float speed
 	this->PlaySoundEffect(sound_id, this->global_camera_position, volume, speed, unkbool);
 }
 
+void cube::Game::SetRestrictedSpawnRegions(bool enabled)
+{
+	const static auto offset = 0x2D1291;
+	if (!enabled)
+	{
+		WriteByte(CWOffset(offset + 0x01), 0x80);
+	}
+	else
+	{
+		WriteByte(CWOffset(offset + 0x01), 0x85);
+	}
+}
+
 // This never worked properly, but I'll leave it here to demonstrate a little about how remeshing works
 /*void cube::Game::RemeshZone(int x, int y) {
 	EnterCriticalSection(&world->zones_critical_section);
