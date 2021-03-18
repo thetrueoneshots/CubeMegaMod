@@ -23,10 +23,16 @@ const static auto BOUNDS_CHECK_DIST_MULTIPLIER = 2;
 const static long long CREATURE_SPAWN_RANGE = 5000000;
 const static double BOUNDS_CHECK_INTERVAL = 5;
 
+struct IdCreaturePair
+{
+	__int64 id;
+	cube::Creature* creature;
+};
+
 struct SpawnMoment
 {
 	LongVector3 position;
-	std::vector<__int64> creature_ids;
+	std::vector<IdCreaturePair> creature_ids;
 };
 
 static long long DistanceSquared(const LongVector3& p1, const LongVector3& p2);
@@ -44,8 +50,8 @@ namespace cube
 		cube::Timer m_BoundsTimer;
 
 		std::vector<SpawnMoment> m_SpawnedCreatures;
-		std::vector<__int64> m_SpawnedTreasures;
-		std::vector<__int64> m_SpawnedBosses;
+		std::vector<IdCreaturePair> m_SpawnedTreasures;
+		std::vector<IdCreaturePair> m_SpawnedBosses;
 
 		bool* autoGoldUsage;
 
@@ -55,6 +61,7 @@ namespace cube
 
 		void Update() override;
 	private:
+		void UpdateIds();
 		void SetDiving(bool diving);
 
 		// Consumtion logic

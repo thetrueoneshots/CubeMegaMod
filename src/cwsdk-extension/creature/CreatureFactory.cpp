@@ -25,9 +25,58 @@ void cube::CreatureFactory::PrintInvisIDs()
 {
 }
 
+__int64 cube::CreatureFactory::CheckAndUpdateID(__int64 id)
+{
+	cube::Game* game = cube::GetGame();
+	if (!game->host.running)
+	{
+		return id;
+	}
+
+	auto map = &game->host.world.id_to_creature_map;
+	auto list = &game->host.world.creatures;
+
+	auto local_list = &game->world->creatures;
+
+	if (map->find(id) == map->end())
+	{
+		for (auto creature : *list)
+		{
+			if (creature->id == id)
+			{
+				AddInvisID(id);
+				__int64 newId = GenerateId();
+				creature->id = newId;
+				map->insert_or_assign(newId, creature);
+				return newId;
+			}
+		}
+		
+		for (auto creature : *local_list)
+		{
+			if (creature->id == id)
+			{
+				creature->entity_data.HP = 0;
+			}
+		}
+	}
+
+	return id;
+}
+
 __int64 cube::CreatureFactory::GenerateId()
 {
-	const static bool DEBUG_ID_GENERATION = false;
+	cube::Game* game = cube::GetGame();
+	auto list = &game->host.world.creatures;
+	__int64 min = LONG_LONG_MAX;
+	for (auto creature : *list)
+	{
+		long long id = creature->id;
+		min = id < min ? id : min;
+	}
+	min--;
+	return min;
+	/*const static bool DEBUG_ID_GENERATION = false;
 	cube::Game* game = cube::GetGame();
 
 	auto map = &game->host.world.id_to_creature_map;
@@ -36,13 +85,16 @@ __int64 cube::CreatureFactory::GenerateId()
 	if (DEBUG_ID_GENERATION)
 	{
 		wchar_t buffer[250];
-		swprintf_s(buffer, 250, L"Size of map: %ld\n", map->size());
+		swprintf_s(buffer, 250, L"Size of invis_ids: %ld\n", s_InvicibleIds.size());
 		game->PrintMessage(buffer);
-		swprintf_s(buffer, 250, L"Size of list: %ld\n", list->size());
-		game->PrintMessage(buffer);
+		//swprintf_s(buffer, 250, L"Size of map: %ld\n", map->size());
+		//game->PrintMessage(buffer);
+		//swprintf_s(buffer, 250, L"Size of list: %ld\n", list->size());
+		//game->PrintMessage(buffer);
 	}
 
-	__int64 cnt = 9999;
+	IntVector2 region = game->GetPlayer()->entity_data.current_region;
+	__int64 cnt = INT_MIN + 1000;
 	while (true) {
 		if (map->find(cnt) == map->end())
 		{
@@ -74,13 +126,13 @@ __int64 cube::CreatureFactory::GenerateId()
 			}
 		}
 
-		if (cnt > 10666666)
+		if (cnt > -10666666)
 		{
 			return -1;
 		}
-		cnt += 99;
+		cnt++;
 	}
-	
+	*/
 }
 
 void cube::CreatureFactory::SetAppearance(cube::Creature* creature, int entityType, int entityBehaviour, int level)

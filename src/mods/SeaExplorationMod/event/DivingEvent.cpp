@@ -22,7 +22,12 @@ cube::DivingEvent::DivingEvent(bool* autoGoldUsage)
 cube::DivingEvent::~DivingEvent()
 {
 	cube::Game* game = cube::GetGame();
-	if (game == nullptr)
+	if (game == nullptr || game->host.running == false)
+	{
+		return;
+	}
+
+	if (!TryEnterCriticalSection(&game->host.cube_host_lock_1))
 	{
 		return;
 	}
@@ -36,36 +41,40 @@ cube::DivingEvent::~DivingEvent()
 
 	for (auto p : m_SpawnedCreatures)
 	{
-		for (auto id : p.creature_ids)
+		for (auto pair : p.creature_ids)
 		{
-			auto creature = map->find(id);
+			auto creature = map->find(pair.id);
 			if (creature != map->end())
 			{
-				map->erase(id);
+				creature->second->entity_data.HP = 0;
+				map->erase(pair.id);
 			}
 		}
 	}
 
-	for (auto id : m_SpawnedTreasures)
+	for (auto pair : m_SpawnedTreasures)
 	{
-		auto creature = map->find(id);
-		if (creature != map->end())
-		{
-			map->erase(id);
-		}
-	}
-
-	for (auto id : m_SpawnedBosses)
-	{
-		auto creature = map->find(id);
+		auto creature = map->find(pair.id);
 		if (creature != map->end())
 		{
 			creature->second->entity_data.HP = 0;
-			map->erase(id);
+			map->erase(pair.id);
+		}
+	}
+
+	for (auto pair : m_SpawnedBosses)
+	{
+		auto creature = map->find(pair.id);
+		if (creature != map->end())
+		{
+			creature->second->entity_data.HP = 0;
+			map->erase(pair.id);
 		}
 	}
 
 	SetDiving(false);
+
+	LeaveCriticalSection(&game->host.cube_host_lock_1);
 }
 
 /*
@@ -107,6 +116,26 @@ void cube::DivingEvent::Update()
 
 	// Check for fishes and treasures to be deleted
 	HandleBoundsCheckTimer();
+	
+	UpdateIds();
+}
+
+void cube::DivingEvent::UpdateIds()
+{
+	for (auto& p : m_SpawnedCreatures)
+	{
+		for (int i = 0; i < p.creature_ids.size(); i++)
+		{
+			p.creature_ids[i].id = cube::CreatureFactory::CheckAndUpdateID(p.creature_ids[i].id);
+			if (p.creature_ids[i].id == -1)
+			{
+				p.creature_ids.erase(p.creature_ids.begin() + i);
+				p.creature_ids[i].creature->entity_data.HP = 0;
+				i--;
+			}
+		}
+	}
+	
 }
 
 void cube::DivingEvent::SetDiving(bool diving)
@@ -196,10 +225,10 @@ void cube::DivingEvent::SpawnFishes(const LongVector3& position)
 {
 	std::vector<cube::Creature*> creatures = cube::CreatureFactory::SpawnFishes(FISH_SPAWN_AMOUNT, CREATURE_SPAWN_RANGE);
 
-	std::vector<__int64> ids;
+	std::vector<IdCreaturePair> ids;
 	for (auto creature : creatures)
 	{
-		ids.push_back(creature->id);
+		ids.push_back({ creature->id, creature });
 	}
 	m_SpawnedCreatures.push_back({ position, ids });
 }
@@ -248,7 +277,7 @@ void cube::DivingEvent::SpawnTreasures(const LongVector3& position)
 
 	if (creature != nullptr)
 	{
-		m_SpawnedTreasures.push_back(creature->id);
+		m_SpawnedTreasures.push_back({ creature->id, creature });
 		cube::GetGame()->PrintMessage(L"A treasure chest appeared!\n", 255, 165, 0);
 	}
 }
@@ -307,7 +336,7 @@ void cube::DivingEvent::SpawnBoss(const LongVector3& position)
 		cube::Creature* boss = cube::CreatureFactory::SpawnBoss(offset, cube::GetGame()->GetPlayer()->entity_data.current_region);
 		if (boss != nullptr)
 		{
-			m_SpawnedBosses.push_back(boss->id);
+			m_SpawnedBosses.push_back({ boss->id, boss });
 			cube::GetGame()->PrintMessage(L"An underwater boss appeared!\n", 255, 165, 0);
 		}
 	}
@@ -351,14 +380,14 @@ void cube::DivingEvent::BoundCheckFishes(const LongVector3& position)
 			continue;
 		}
 
-		for (auto id : p.creature_ids)
+		for (auto pair : p.creature_ids)
 		{
 			
-			auto creature = map->find(id);
+			auto creature = map->find(pair.id);
 			if (creature != map->end())
 			{
 				creature->second->entity_data.HP = 0;
-				map->erase(id);
+				map->erase(pair.id);
 			}
 		}
 
@@ -400,8 +429,8 @@ void cube::DivingEvent::BoundCheckTreasures(const LongVector3& position)
 	std::vector<int> toBeErased;
 	for (int i = 0; i < m_SpawnedTreasures.size(); i++)
 	{
-		auto id = m_SpawnedTreasures.at(i);
-		auto creature = map->find(id);
+		auto pair = m_SpawnedTreasures.at(i);
+		auto creature = map->find(pair.id);
 		if (creature != map->end())
 		{
 			if (DistanceSquared(creature->second->entity_data.position, position) < distTreasure)
@@ -409,7 +438,7 @@ void cube::DivingEvent::BoundCheckTreasures(const LongVector3& position)
 				continue;
 			}
 			creature->second->entity_data.HP = 0;
-			map->erase(id);
+			map->erase(pair.id);
 
 			toBeErased.push_back(i);
 		}
@@ -444,9 +473,9 @@ void cube::DivingEvent::BoundCheckBosses(const LongVector3& position)
 	std::vector<int> toBeErased;
 	for (int i = 0; i < m_SpawnedBosses.size(); i++)
 	{
-		auto id = m_SpawnedBosses.at(i);
+		auto pair = m_SpawnedBosses.at(i);
 
-		auto creature = map->find(id);
+		auto creature = map->find(pair.id);
 		if (creature != map->end())
 		{
 			auto p = creature->second;

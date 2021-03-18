@@ -72,9 +72,9 @@ namespace cube::Helper
 		static long long count = 0;
 		int random = rand();
 		count += random;
-		if (count >= 1000 * INT_MAX)
+		if (count >= (long long)1000 * INT_MAX)
 		{
-			count -= 1000 * INT_MAX;
+			count -= (long long)1000 * INT_MAX;
 		}
 		std::srand(random + count);
 		return random;

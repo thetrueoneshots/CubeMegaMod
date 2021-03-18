@@ -86,11 +86,14 @@ class Mod : GenericMod {
 
 			for (cube::Creature* creature : cube::GetGame()->host.world.creatures)
 			{
-				if (creature->entity_data.race == 304)
-				{
-					swprintf_s(buffer, 250, L"Supplier gnome: %#012X\n", creature);
-					cube::GetGame()->PrintMessage(buffer, 0, 255, 100);
-				}
+				swprintf_s(buffer, 250, L"Creature (%ld, %d)\n", creature->id, creature->entity_data.race);
+				cube::GetGame()->PrintMessage(buffer, 0, 255, 100);
+
+				//if (creature->entity_data.race == 304)
+				//{
+				//	swprintf_s(buffer, 250, L"Supplier gnome: %#012X\n", creature);
+				//	cube::GetGame()->PrintMessage(buffer, 0, 255, 100);
+				//}
 			}
 			return 1;
 		}

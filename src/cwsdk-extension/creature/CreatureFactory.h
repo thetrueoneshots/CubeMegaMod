@@ -14,6 +14,8 @@ namespace cube
 		static void AddInvisID(__int64 id);
 		static void PrintInvisIDs();
 
+		static __int64 CheckAndUpdateID(__int64 id);
+
 		static long long GenerateId();
 
 		static void SetAppearance(cube::Creature* creature, int entityType, int entityBehaviour, int level);
