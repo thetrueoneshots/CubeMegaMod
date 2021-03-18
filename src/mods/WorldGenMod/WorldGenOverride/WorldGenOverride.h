@@ -31,8 +31,8 @@ int GetBiomeType(int x, int y)
 int GetHeight(int x, int y)
 {
 	const static float MULT = std::sqrt(3 * 3 + 3 * 3);
-	int dx = std::abs((x % 7) - 3);
-	int dy = std::abs((y % 7) - 3);
+	int dx = std::abs((std::abs(x) % 7) - 3);
+	int dy = std::abs((std::abs(y) % 7) - 3);
 	double dist = std::sqrt(DistanceSquared(IntVector2(dx, dy), IntVector2(0, 0)));
 	double multiplier = (MULT - dist) / MULT;
 	double height = multiplier * (2.f + SimplexNoise::noise(x * SCL, y * SCL)) / 3.f;
