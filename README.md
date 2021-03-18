@@ -129,6 +129,8 @@ This is a list of the possible features I am considering for this mod. Everythin
 ### 14. Shop updates
   - Upgrading weapons for gold in a vendor / shop / identifier.
   - New crafting recipes for crafting higher tiered potions.
+### 15. Character creation updates
+  - Allowing more races like necromancer and spike creatures e.t.c.
 
 
 

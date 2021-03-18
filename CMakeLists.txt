@@ -49,5 +49,5 @@ add_library (CubeMegaMod-v1.3.1 SHARED "main.cpp"
 "src/mods/ShopUpdateMod/ShopUpdateMod.cpp"
 "src/hooks/ItemPriceHandler.h" 
 "src/mods/WorldGenMod/WorldGenMod.cpp" 
-"src/mods/WorldGenMod/WorldGenMod.h")
+"src/mods/WorldGenMod/WorldGenMod.h" "src/mods/WorldGenMod/WorldGenOverride/WorldGenOverride.h" "src/mods/WorldGenMod/Noise/SimplexNoise.h" "src/mods/WorldGenMod/Noise/SimplexNoise.cpp")
 target_link_libraries (CubeMegaMod-v1.3.1 LINK_PUBLIC CWSDK)
