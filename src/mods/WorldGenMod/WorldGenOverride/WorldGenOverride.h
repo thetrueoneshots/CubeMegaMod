@@ -9,8 +9,6 @@
 #include "../src/hooks.h"
 #include <math.h> 
 
-const static float SCL = 1.f;
-
 int DistanceSquared(IntVector2 p1, IntVector2 p2)
 {
 	int dx = p1.x - p2.x;
@@ -23,7 +21,7 @@ int GetBiomeType(int x, int y)
 	int dx = std::floor(x / 7);
 	int dy = std::floor(y / 7);
 
-	int seed = SimplexNoise::noise(dx, dy) * INT_MAX;
+	int seed = (dx << 16) + dy;
 	std::srand(seed);
 	return std::rand() % 6;
 }
@@ -35,7 +33,7 @@ int GetHeight(int x, int y)
 	int dy = std::abs((std::abs(y) % 7) - 3);
 	double dist = std::sqrt(DistanceSquared(IntVector2(dx, dy), IntVector2(0, 0)));
 	double multiplier = (MULT - dist) / MULT;
-	double height = multiplier * (2.f + SimplexNoise::noise(x * SCL, y * SCL)) / 3.f;
+	double height = multiplier * (2.f + SimplexNoise::noise(x, y)) / 3.f;
 	if (height > 0.5f)
 	{
 		return 2;
@@ -48,18 +46,19 @@ int GetHeight(int x, int y)
 }
 
 extern "C" int GetRegionType(int x, int y) {
+	using namespace cube;
 	static const int REGION_TYPES[6][2] = {
-		{2, 7},
-		{8, 4},
-		{10, 3},
-		{11, 6},
-		{9, 13},
-		{12, 5},
+		{(int)Zone::RegionType::Hills, (int)Zone::RegionType::Mountains},
+		{(int)Zone::RegionType::Wetlands, (int)Zone::RegionType::Jungle},
+		{(int)Zone::RegionType::Savannah, (int)Zone::RegionType::Woodlands},
+		{(int)Zone::RegionType::Snowlands, (int)Zone::RegionType::SnowForest},
+		{(int)Zone::RegionType::Desert, (int)Zone::RegionType::Firelands},
+		{(int)Zone::RegionType::Deadlands, (int)Zone::RegionType::Darkwoods},
 	};
 
 	if (GetHeight(x, y) == 0)
 	{
-		return 1;
+		return (int)Zone::RegionType::Ocean;
 	}
 
 	return REGION_TYPES[GetBiomeType(x, y)][GetHeight(x, y) - 1];
