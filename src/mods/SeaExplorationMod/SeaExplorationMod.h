@@ -20,6 +20,7 @@ public:
 		m_FileName = "SeaExplorationMod";
 		m_ID = 1;
 		m_Version = { 1, 2, 0 };
+		m_DivingEvent = nullptr;
 
 		m_Data = { true };
 		Load(&m_Data, sizeof(m_Data));

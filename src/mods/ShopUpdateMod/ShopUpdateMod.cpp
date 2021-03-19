@@ -2,7 +2,6 @@
 
 static void UpdateGemTraderShop(cube::Game* game, std::vector<std::vector<cube::ItemStack>>* itemVector, long long id);
 static void UpdateItemVendorShop(cube::Game* game, std::vector<std::vector<cube::ItemStack>>* itemVector, long long id);
-static void UpdateWeaponVendorShop(cube::Game* game, std::vector<std::vector<cube::ItemStack>>* itemVector, long long id);
 
 int ShopUpdateMod::OnShopInteraction(cube::Game* game, std::vector<std::vector<cube::ItemStack>>* itemVector, int classType, long long id)
 {
@@ -18,9 +17,6 @@ int ShopUpdateMod::OnShopInteraction(cube::Game* game, std::vector<std::vector<c
 				break;
 			case (int)cube::Enums::ClassType::ItemVendor:
 				UpdateItemVendorShop(game, itemVector, id);
-				break;
-			case (int)cube::Enums::ClassType::WeaponVendor:
-				UpdateWeaponVendorShop(game, itemVector, id);
 				break;
 			default:
 				break;
@@ -87,7 +83,7 @@ static void UpdateItemVendorShop(cube::Game* game, std::vector<std::vector<cube:
 {
 	std::srand(id);
 	const static int SPECIALS[] = {
-		1, 2, 3, 18, 12, 14, 15, 16, 17,
+		1, 2, 3, 18, 12,
 	};
 
 	int max = sizeof(SPECIALS) / sizeof(*SPECIALS);
@@ -102,13 +98,9 @@ static void UpdateItemVendorShop(cube::Game* game, std::vector<std::vector<cube:
 			itemVector->at(0).push_back(cube::ItemStack(1, item));
 		}
 	}
-}
-static void UpdateWeaponVendorShop(cube::Game* game, std::vector<std::vector<cube::ItemStack>>* itemVector, long long id)
-{
-	std::srand(id + game->host.world.state.day);
-	// Add 1 spirit cube
-	// for (int i = 0; i < 4; i++)
+
 	{
+		std::srand(id + game->host.world.state.day);
 		cube::Item item = cube::SpiritCube::Create((cube::SpiritCube::Type)((int)cube::SpiritCube::Type::FireSpirit + std::rand() % 4));
 
 		std::srand(std::rand());
@@ -120,5 +112,4 @@ static void UpdateWeaponVendorShop(cube::Game* game, std::vector<std::vector<cub
 			itemVector->at(0).push_back(cube::ItemStack(count - sold, item));
 		}
 	}
-	std::srand(id);
 }
