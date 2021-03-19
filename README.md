@@ -131,6 +131,12 @@ This is a list of the possible features I am considering for this mod. Everythin
   - New crafting recipes for crafting higher tiered potions.
 ### 15. Character creation updates
   - Allowing more races like necromancer and spike creatures e.t.c.
+### 16. New Quest types:
+  - A delivery quest: Person X of type Z needs special materials from a neighbouring village.
+Talking another person of type Z gets you those materials. You need to bring them back and give them to the quest giver.
+  - A kill quest: Kill X creatures of type Y or faction Z.
+  - A gathering quest: Person X requires Y materials of type Z.
+Delivering that gives a larger reward than the value of said materials.
 
 
 
