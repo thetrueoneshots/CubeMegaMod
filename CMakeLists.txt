@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 3.8)
 project(project_CubeMegaMod)
 add_subdirectory(cwmods)
-add_library (CubeMegaMod-v1.3.1 SHARED "main.cpp" 
+add_library (CubeMegaMod-v1.4.0 SHARED "main.cpp" 
 "src/cwsdk-extension.h"  
 "src/hooks.h" 
 "src/hooks.cpp" 
@@ -50,4 +50,4 @@ add_library (CubeMegaMod-v1.3.1 SHARED "main.cpp"
 "src/hooks/ItemPriceHandler.h" 
 "src/mods/WorldGenMod/WorldGenMod.cpp" 
 "src/mods/WorldGenMod/WorldGenMod.h" "src/mods/WorldGenMod/WorldGenOverride/WorldGenOverride.h" "src/mods/WorldGenMod/Noise/SimplexNoise.h" "src/mods/WorldGenMod/Noise/SimplexNoise.cpp")
-target_link_libraries (CubeMegaMod-v1.3.1 LINK_PUBLIC CWSDK)
+target_link_libraries (CubeMegaMod-v1.4.0 LINK_PUBLIC CWSDK)
