@@ -55,6 +55,7 @@ Stat updates to mobs and pets.
 	- Sells healing potions, to support non healing classes in desert and fireland regions (5g-20g).
 	- Has a chance of selling spirit cubes (25g).
 	- The old gems that were sold are removed.
+![https://imgur.com/a/ivHSOIM](https://i.imgur.com/FxqLoov.png "Gem trader shop")
 - Item vendor:
 	- Sells special movement items (75g)
 	- Sells a void stone (50g).
