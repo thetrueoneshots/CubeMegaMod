@@ -48,6 +48,7 @@ Stat updates to mobs and pets.
 - Nerfing ranged mobs.
 	- Nerfing mobs equiped with boomerangs. (Damage halved.)
 	- Nerfing mage mobs. (Damage halved.)
+- Creating a new character makes you start with 40g for a bit smoother start.
 
 ### Shop Updates [ID: 5]
 - Gem trader shop:
@@ -107,7 +108,7 @@ This is a list of the possible features I am considering for this mod. Everythin
 ### 5. Buff gold gained from gold bags. (They are useless right now)
 ### 6. Inceasing item stack sizes.
   - Gaining increased stack / 'pouch' sizes by buying them, gaining them with events or as an effect of certain artifacts.
-### 8. Combat updates (not all of them may be implemented)
+### 7. Combat updates (not all of them may be implemented)
   - An ability that gives 1-2% of hp at the cost of the amount of hp recovered in coins. Is a hold ability to support non-healing classes.
   - Mapping the movement abilities to better keys (currently left control)
   - Spending 50% of your hp to gain a damage buff.
@@ -118,25 +119,23 @@ This is a list of the possible features I am considering for this mod. Everythin
   - Converting mana to stamina / other way around.
   - Converting HP to mana / stamina.
   - Mapping the abilities to the appropriate keys (currently 1 - 9)
-### 9. Increased starting gold (~40), to allow for a faster start (Buying some gear, a flask and a pet food at the start)
-### 10. Buffing climbing speed by think of 100%. (The jumping hack is faster than climbing)
-### 11. New classes.
+### 8. Buffing climbing speed by think of 100%. (The jumping hack is faster than climbing)
+### 9. New classes.
   - Adding the monk class in the mod.
   - Creating a new necromancer class.
   - [Possible] Creating a woodland / druid class.
-### 12. Buying artifacts with gold. (To make gold more useful again. Also done by the diving event and gold->hp ability)
-### 13. Incorporate previous mods into the mod.
+### 10. Incorporate previous mods into the mod.
   - Cubegression
   - GuardianFix
   - CubePatch
   - CubeTravel
   - MonkClass
-### 14. Shop updates
+### 11. Shop updates
   - Upgrading weapons for gold in a vendor / shop / identifier.
   - New crafting recipes for crafting higher tiered potions.
-### 15. Character creation updates
+### 12. Character creation updates
   - Allowing more races like necromancer and spike creatures e.t.c.
-### 16. New Quest types:
+### 13. New Quest types:
   - A delivery quest: Person X of type Z needs special materials from a neighbouring village.
 Talking another person of type Z gets you those materials. You need to bring them back and give them to the quest giver.
   - A kill quest: Kill X creatures of type Y or faction Z.
