@@ -44,19 +44,28 @@ If it is disabled, it can be activated using leftControl + mentioned key.
 
 #### Creature updates [ID: 4]
 Stat updates to mobs and pets.
-- Buffed pet stats. (All pet stats doubled)
+- Buffed pet stats. (All pet stats increased with 50%)
 - Nerfing ranged mobs.
 	- Nerfing mobs equiped with boomerangs. (Damage halved.)
 	- Nerfing mage mobs. (Damage halved.)
 
 ### Shop Updates [ID: 5]
 - Gem trader shop:
-	- Sells 1 artifact for a 1000 gold.
-	- Sells healing potions, to support non healing classes in desert and fireland regions.
+	- Sells a random artifact (1000g).
+	- Sells healing potions, to support non healing classes in desert and fireland regions (5g-20g).
+	- Has a chance of selling spirit cubes (25g).
+	- The old gems that were sold are removed.
 - Item vendor:
-	- Sells special movement items (75g), a void stone (50g) and crafting books (25g, 50g, 75g, 100g).
-- Weapon vendor:
-    - Sells 5 spirit cubes of each type for 25g each.
+	- Sells special movement items (75g)
+	- Sells a void stone (50g).
+	- Sells a random amount of spirit cubes, amount and type vary each day (25g).
+![https://imgur.com/a/x2FOGbV](https://i.imgur.com/XkZDkxd.png "Item vendor shop")
+
+
+### World Generation Updates [ID: 6]
+- Starting region can now by any of the normal temperature regions, such as hills, oceans, mountains, woodlands e.t.c.
+- World now consists of bigger islands with similar biomes. The world should still be compatible with old save data, but please back it up to be sure no save data is lost.
+![https://imgur.com/a/vh4U86s](https://i.imgur.com/yjl5c8m.png "New world generation")
 
 ### Spirit Cubes [ID: -]
 Spirit cubes are available again in the game. They can be bought from the weapon vendor for 25g each! Checkout the 
@@ -70,20 +79,16 @@ If you have any trouble installing the mod, check out this guide: https://www.yo
 For v.1.2.0+, the usage is the following:
 
 ### Commands
-- *(Disabled)* [Debug only] `/fish <0 - inf>`: Spawns which will spawn the defined amount of fish around you. (Gets really slow with high amounts of creatures, because Wollay)
-- *(Disabled)* [Debug only] `/chest <0 - 3>`: Spawns a chests with defined type.
-- *(Disabled)* [Debug only] `/roots`: Adds 60 dragon roots to your inventory.
-- *(Disabled)* [Debug only] `/drop <0 - 4> <1 - inf>`: Tests for dropping items. First the type, then the count is specified.
-- *(Disabled)* [Debug only] `/ability <0-160>`: Executes an ability defined by the id.
 - `/enable doubletap`: Enables movement ability triggering with doubletap.
 - `/disable doubletap`: Disables movement ability triggering with doubletap.
-- `/enable autogoldusage`: Enables automatic gold consumption during the diving event.
-- `/disable autogoldusage`: Disables automatic gold consumption during the diving event.
 - `/mod <ID> <0 - 1>`: Turns feature with ID on (1) or off (0).
+- *(No longer supported)*`/enable autogoldusage`: Enables automatic gold consumption during the diving event.
+- *(No longer supported)*`/disable autogoldusage`: Disables automatic gold consumption during the diving event.
+
 
 ## Bugs
 Bugs known:
-- Underwater bosses sometimes drop random region gear.
+- Underwater creatures drop gear from random regions.
 - Invisible creatures / chests (but visible on map).
 - Dissapearing creatures / chest.
 
@@ -101,7 +106,6 @@ This is a list of the possible features I am considering for this mod. Everythin
 ### 5. Buff gold gained from gold bags. (They are useless right now)
 ### 6. Inceasing item stack sizes.
   - Gaining increased stack / 'pouch' sizes by buying them, gaining them with events or as an effect of certain artifacts.
-### 7. Random starting regions. (Not always the basic area)
 ### 8. Combat updates (not all of them may be implemented)
   - An ability that gives 1-2% of hp at the cost of the amount of hp recovered in coins. Is a hold ability to support non-healing classes.
   - Mapping the movement abilities to better keys (currently left control)
@@ -137,9 +141,6 @@ Talking another person of type Z gets you those materials. You need to bring the
   - A kill quest: Kill X creatures of type Y or faction Z.
   - A gathering quest: Person X requires Y materials of type Z.
 Delivering that gives a larger reward than the value of said materials.
-
-
-
 
 ## Final words
 Special thanks **Chris** for his work for the modding community and **Timothy(GrayShadoz - Youtube)** for his effort to make cubeworld videos (including of all of my mods).
