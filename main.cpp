@@ -98,6 +98,13 @@ class Mod : GenericMod {
 			}
 			return 1;
 		}
+
+		if (!wcscmp(msg, L"/id"))
+		{
+			wchar_t buffer[250];
+			swprintf_s(buffer, 250, L"Next id: %d \n", cube::CreatureFactory::GenerateId());
+			cube::GetGame()->PrintMessage(buffer, 12, 167, 199);
+		}
 		
 
 		for (CubeMod* mod : g_Mods)

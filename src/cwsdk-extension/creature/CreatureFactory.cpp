@@ -72,9 +72,17 @@ __int64 cube::CreatureFactory::GenerateId()
 	for (auto creature : *list)
 	{
 		long long id = creature->id;
+		if (id == 1)
+		{
+			continue;
+		}
 		min = id < min ? id : min;
 	}
 	min--;
+	if (std::abs(min) <= 1)
+	{
+		return -2;
+	}
 	return min;
 	/*const static bool DEBUG_ID_GENERATION = false;
 	cube::Game* game = cube::GetGame();

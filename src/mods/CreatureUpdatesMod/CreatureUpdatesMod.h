@@ -11,6 +11,8 @@ public:
 		m_Version = { 1, 0, 0 };
 	}
 
+	void Initialize();
+
 	Priority OnCreatureArmorCalculatedPriority = NormalPriority;
 	void OnCreatureArmorCalculated(cube::Creature* creature, float* armor);
 

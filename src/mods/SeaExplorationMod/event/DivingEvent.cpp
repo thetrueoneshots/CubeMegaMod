@@ -13,9 +13,6 @@ cube::DivingEvent::DivingEvent(bool* autoGoldUsage)
 	m_BossTimer = cube::Timer(BOSS_SPAWN_INTERVAL, m_CurrentTime);
 	m_BoundsTimer = cube::Timer(BOUNDS_CHECK_INTERVAL, m_CurrentTime);
 
-	cube::GetGame()->PrintMessage(L"[Event Started] ", 100, 100, 255);
-	cube::GetGame()->PrintMessage(L"Diving Event\n");
-
 	SetDiving(true);
 }
 
@@ -32,9 +29,7 @@ cube::DivingEvent::~DivingEvent()
 		game->PrintMessage(L"Error lock 1\n", 255, 0, 0);
 		return;
 	}
-	//CRITICAL_SECTION zones_mesh_critical_section;
-	//CRITICAL_SECTION zones_critical_section;
-	//CRITICAL_SECTION critical_section_2;
+
 	if (!TryEnterCriticalSection(&game->host.world.zones_mesh_critical_section))
 	{
 		game->PrintMessage(L"Error lock 2\n", 255, 0, 0);

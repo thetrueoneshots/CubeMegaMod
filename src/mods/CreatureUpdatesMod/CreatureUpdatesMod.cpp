@@ -8,6 +8,25 @@ static void BuffPet(cube::Creature* creature, float* stat)
 	}
 }
 
+void CreatureUpdatesMod::Initialize()
+{
+	auto offset = 0x83590;
+	int data[] = {
+		0xB8,
+		0x28,
+		0x00,
+		0x00,
+		0x00,
+		0x90,
+	};
+
+	int cnt = sizeof(data) / sizeof(*data);
+	for (int i = 0; i < cnt; i++)
+	{
+		WriteByte(CWOffset(offset + i), data[i]);
+	}
+}
+
 void CreatureUpdatesMod::OnCreatureArmorCalculated(cube::Creature* creature, float* armor)
 {
 	BuffPet(creature, armor);
