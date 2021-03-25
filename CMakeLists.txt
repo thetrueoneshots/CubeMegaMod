@@ -55,5 +55,5 @@ add_library (CubeMegaMod-v1.4.0 SHARED "main.cpp"
 "src/mods/WorldGenMod/WorldGenMod.h" 
 "src/mods/WorldGenMod/WorldGenOverride/WorldGenOverride.h" 
 "src/mods/WorldGenMod/Noise/SimplexNoise.h" 
-"src/mods/WorldGenMod/Noise/SimplexNoise.cpp")
+"src/mods/WorldGenMod/Noise/SimplexNoise.cpp" "src/hooks/ItemDropPatch.h")
 target_link_libraries (CubeMegaMod-v1.4.0 LINK_PUBLIC CWSDK)

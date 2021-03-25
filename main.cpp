@@ -19,6 +19,7 @@ GLOBAL char* g_Base;
 #include "src/hooks/ShopInteractionHandler.h"
 #include "src/hooks/ItemPriceHandler.h"
 #include "src/hooks/lore_increase.h"
+#include "src/hooks/ItemDropPatch.h"
 
 // OLD
 #define DEBUG 1
@@ -209,6 +210,7 @@ class Mod : GenericMod {
 		SetupShopInteractionHandler();
 		SetupItemPriceHandler();
 		IncreaseLoreInitialize(&hookEvents); // Todo: Rename handler
+		ItemDropPatchInitialize();
 
 		for (CubeMod* mod : g_Mods)
 		{
