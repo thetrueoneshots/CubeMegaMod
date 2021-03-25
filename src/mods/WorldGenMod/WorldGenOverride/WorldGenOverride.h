@@ -6,7 +6,6 @@
 
 #include "../Noise/SimplexNoise.h"
 #include "cwsdk.h"
-#include "../src/hooks.h"
 #include <math.h> 
 
 int DistanceSquared(IntVector2 p1, IntVector2 p2)

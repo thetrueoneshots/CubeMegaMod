@@ -1,5 +1,6 @@
 #pragma once
 #include "../../CubeMod.h"
+#include "../../hooks.h"
 
 class WorldGenMod : public CubeMod
 {
