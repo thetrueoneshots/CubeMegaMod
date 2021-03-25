@@ -17,12 +17,10 @@ int DistanceSquared(IntVector2 p1, IntVector2 p2)
 
 int GetBiomeType(int x, int y)
 {
-	int dx = std::floor(x / 7);
-	int dy = std::floor(y / 7);
+	int dx = std::floor(x / 7.f);
+	int dy = std::floor(y / 7.f);
 
-	int seed = (dx << 16) + dy;
-	std::srand(seed);
-	return std::rand() % 6;
+	return std::round(SimplexNoise::noise(dx, dy) * 5.f);
 }
 
 int GetHeight(int x, int y)
@@ -33,6 +31,7 @@ int GetHeight(int x, int y)
 	double dist = std::sqrt(DistanceSquared(IntVector2(dx, dy), IntVector2(0, 0)));
 	double multiplier = (MULT - dist) / MULT;
 	double height = multiplier * (2.f + SimplexNoise::noise(x, y)) / 3.f;
+
 	if (height > 0.5f)
 	{
 		return 2;
