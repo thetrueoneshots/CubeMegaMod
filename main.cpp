@@ -9,6 +9,7 @@
 #include "src/mods/CreatureUpdatesMod/CreatureUpdatesMod.h"
 #include "src/mods/ShopUpdateMod/ShopUpdateMod.h"
 #include "src/mods/WorldGenMod/WorldGenMod.h"
+#include "src/mods/BeginnerModeMod/BeginnerModeMod.h"
 #include "src/CubeMod.h"
 
 GLOBAL std::vector<CubeMod*> g_Mods;
@@ -99,11 +100,21 @@ class Mod : GenericMod {
 			return 1;
 		}
 
-		if (!wcscmp(msg, L"/id"))
+		if (!wcscmp(msg, L"/up"))
 		{
-			wchar_t buffer[250];
-			swprintf_s(buffer, 250, L"Next id: %d \n", cube::CreatureFactory::GenerateId());
-			cube::GetGame()->PrintMessage(buffer, 12, 167, 199);
+			cube::Game* game = cube::GetGame();
+			//auto zone = game->world->zones.find(game->GetPlayer()->entity_data.current_region);
+			auto it = game->world->zones.begin();
+			while (it != game->world->zones.end())
+			{
+				game->PrintMessage(L"Found zone!\n");
+				//for (cube::Field& field : zone->second->fields)
+				for (int i = 0; i < 4096; i++)
+				{
+					it->second->fields[i].base_z++;
+				}
+				it++;
+			}
 		}
 		
 
@@ -163,6 +174,7 @@ class Mod : GenericMod {
 		modVector.push_back(new CreatureUpdatesMod());
 		modVector.push_back(new ShopUpdateMod());
 		modVector.push_back(new WorldGenMod());
+		modVector.push_back(new BeginnerModeMod());
 
 		cube::ApplySettings(&modVector);
 		cube::SaveSettings(&modVector);

@@ -70,15 +70,15 @@ namespace cube
 			IsFourFooted = 0,
 			Unk_01,
 			Unk_02,
-			Unk_03,
-			Unk_04,
+			Unk_03, //Is checked when dropping items (maybe some kind of drop thingy?)
+			Unk_04, //Is checked when dropping items (maybe some kind of drop thingy?)
 			NeededForGemTrader,
 			IsClassMaster,
 			Unk_07,
 			Unk_08,
 			IsNamedBoss,
 			HasGlowingHair,
-			Unk_11,
+			Unk_11, //Is checked when dropping items (maybe some kind of drop thingy?)
 			Unk_12,
 			IsNotTalking,
 			CanPickup,
