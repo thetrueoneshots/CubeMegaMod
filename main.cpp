@@ -10,6 +10,7 @@
 #include "src/mods/ShopUpdateMod/ShopUpdateMod.h"
 #include "src/mods/WorldGenMod/WorldGenMod.h"
 #include "src/mods/BeginnerModeMod/BeginnerModeMod.h"
+#include "src/mods/RegionLockUpdateMod/RegionLockUpdateMod.h"
 #include "src/CubeMod.h"
 
 GLOBAL std::vector<CubeMod*> g_Mods;
@@ -201,6 +202,7 @@ class Mod : GenericMod {
 		modVector.push_back(new ShopUpdateMod());
 		modVector.push_back(new WorldGenMod());
 		modVector.push_back(new BeginnerModeMod());
+		modVector.push_back(new RegionLockUpdateMod());
 
 		cube::ApplySettings(&modVector);
 		cube::SaveSettings(&modVector);
