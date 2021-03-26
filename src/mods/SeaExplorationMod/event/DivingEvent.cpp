@@ -24,27 +24,6 @@ cube::DivingEvent::~DivingEvent()
 		return;
 	}
 
-	if (!TryEnterCriticalSection(&game->host.cube_host_lock_1))
-	{
-		game->PrintMessage(L"Error lock 1\n", 255, 0, 0);
-		return;
-	}
-
-	if (!TryEnterCriticalSection(&game->host.world.zones_mesh_critical_section))
-	{
-		game->PrintMessage(L"Error lock 2\n", 255, 0, 0);
-		LeaveCriticalSection(&game->host.cube_host_lock_1);
-		return;
-	}
-
-	if (!TryEnterCriticalSection(&game->host.world.critical_section_2))
-	{
-		game->PrintMessage(L"Error lock 3\n", 255, 0, 0);
-		LeaveCriticalSection(&game->host.world.zones_mesh_critical_section);
-		LeaveCriticalSection(&game->host.cube_host_lock_1);
-		return;
-	}
-
 	auto map = &game->host.world.id_to_creature_map;
 	auto list = &game->host.world.creatures;
 	if (m_ItemEffectTimer != nullptr)
@@ -86,10 +65,6 @@ cube::DivingEvent::~DivingEvent()
 	}
 
 	SetDiving(false);
-
-	LeaveCriticalSection(&game->host.world.critical_section_2);
-	LeaveCriticalSection(&game->host.world.zones_mesh_critical_section);
-	LeaveCriticalSection(&game->host.cube_host_lock_1);
 }
 
 /*
