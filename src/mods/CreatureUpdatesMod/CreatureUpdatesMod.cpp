@@ -4,7 +4,7 @@ static void BuffPet(cube::Creature* creature, float* stat)
 {
 	if (creature->entity_data.hostility_type == (char)cube::Enums::EntityBehaviour::Pet)
 	{
-		*stat *= 2.f;
+		*stat *= 1.5f;
 	}
 }
 

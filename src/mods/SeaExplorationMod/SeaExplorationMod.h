@@ -19,7 +19,7 @@ public:
 		m_Name = "Sea Exploration Mod";
 		m_FileName = "SeaExplorationMod";
 		m_ID = 1;
-		m_Version = { 1, 2, 0 };
+		m_Version = { 1, 3, 0 };
 		m_DivingEvent = nullptr;
 
 		m_Data = { true };

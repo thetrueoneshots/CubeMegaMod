@@ -8,7 +8,7 @@ public:
 		m_Name = "Creature Updates Mod";
 		m_FileName = "CreatureUpdatesMod";
 		m_ID = 4;
-		m_Version = { 1, 0, 0 };
+		m_Version = { 1, 1, 0 };
 	}
 
 	void Initialize();

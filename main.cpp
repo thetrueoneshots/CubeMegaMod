@@ -101,10 +101,35 @@ class Mod : GenericMod {
 			return 1;
 		}
 
+		if (swscanf_s(msg, L"/field %d", &ID) == 1)
+		{
+			cube::Game* game = cube::GetGame();
+			auto it = game->world->zones.begin();
+			while (it != game->world->zones.end())
+			{
+				for (int i = 0; i < 4096; i++)
+				{
+					it->second->fields[i].field_8 = ID;
+					it->second->fields[i].field_C = ID;
+					it->second->fields[i].field_10 = ID;
+					it->second->fields[i].field_14 = ID;
+					it->second->fields[i].field_18 = ID;
+					it->second->fields[i].field_1C = ID;
+					it->second->fields[i].field_20 = ID;
+					it->second->fields[i].field_24 = ID;
+					it->second->fields[i].field_28 = ID;
+					it->second->fields[i].field_2C = ID;
+					it->second->fields[i].field_30 = ID;
+					it->second->fields[i].field_34 = ID;
+					it->second->fields[i].field_38 = ID;
+				}
+				it++;
+			}
+			return 1;
+		}
 		if (!wcscmp(msg, L"/up"))
 		{
 			cube::Game* game = cube::GetGame();
-			//auto zone = game->world->zones.find(game->GetPlayer()->entity_data.current_region);
 			auto it = game->world->zones.begin();
 			while (it != game->world->zones.end())
 			{

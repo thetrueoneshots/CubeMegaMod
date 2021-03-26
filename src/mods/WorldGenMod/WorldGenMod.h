@@ -9,7 +9,7 @@ public:
 		m_Name = "World Gen Mod";
 		m_FileName = "WorldGenMod";
 		m_ID = 6;
-		m_Version = { 1, 0, 0 };
+		m_Version = { 1, 1, 0 };
 	}
 
 	void Initialize();
