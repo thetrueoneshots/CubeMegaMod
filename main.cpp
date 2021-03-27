@@ -102,6 +102,13 @@ class Mod : GenericMod {
 			return 1;
 		}
 
+		if (!wcscmp(msg, L"/upgrade"))
+		{
+			plasma::Display* display = cube::GetGame()->gui.adaption_widget->node->display;
+			display->SetVisibility(display->visibility.current_frame, 1);
+			return 1;
+		}
+
 		if (swscanf_s(msg, L"/field %d", &ID) == 1)
 		{
 			cube::Game* game = cube::GetGame();
