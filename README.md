@@ -8,12 +8,12 @@ I am not to be held responsible for any damage because of usage of this mod. Use
 
 **Be safe and back up your save data when playing with mods**
 
-### Features
+## Features
 Features of this mod include sea exploration, lore interactions and combat improvements. This mods also allowins the user to select which parts of the mod they want to have enabled while playing the game. These preferences will be saved and taken next time you start up the game.
 
 **NOTE THAT EVERY SEPERATE FEATURE CAN BE DISABLED WITH THE CHAT**
 
-#### Sea exploration [ID: 1]
+### Sea exploration [ID: 1]
 Going underwater will spawn random hostile fishes around you. Going underwater usually drains stamina.
 This is still the case, however now 10 gold is automatically used to gain the underwater breathing ability for 10 seconds.
 On top of that, underwater exploring is rewarded with random chests spawning every 60 seconds.
@@ -26,14 +26,14 @@ The chest types are:
 Next to that, random bosses spawn while diving. These can get be really strong (500k hp for example),
 so only take them on when you are geared up with 5+ star gear.
 
-#### Lore interactions [ID: 2]
+### Lore interactions [ID: 2]
 Lore interactions are updated. Now, whenever you interaction with a lore object, you have a chance of finding an item.
 In the chat, a message will appear on how this item was found. The rates for finding items are the following:
 - Every (lore < 100) has a maximum of 50% (based on lore) chance to drop a 1 star gear.
 - Every (lore >= 100 && lore < 150) has a maximum of 50% (based on lore) chance to drop 2-3 star weapon.
 - Every (lore >= 150) has a maximum of 100% (based on lore) chance to drop an artifact.
 
-#### Combat improvements [ID: 3]
+### Combat improvements [ID: 3]
 New combat abilities added:
 - The 1 key converts your mana to stamina.
 - The 2 key restores you to full health at the cost of 50 combo.
@@ -42,7 +42,7 @@ If the doubletap functionality is active, the following abilities can be activat
 If it is disabled, it can be activated using leftControl + mentioned key.
 - The movement keys (WASD) can be pressed for movement abilities (WAD) and an attack ability (S). The costs of these abilities is currently 75 stamina.
 
-#### Creature updates [ID: 4]
+### Creature updates [ID: 4]
 Stat updates to mobs and pets.
 - Buffed pet stats. (All pet stats increased with 50%)
 - Nerfing ranged mobs.
@@ -69,6 +69,15 @@ Stat updates to mobs and pets.
 - World now consists of bigger islands with similar biomes. The world should still be compatible with old save data, but please back it up to be sure no save data is lost.
 ![https://imgur.com/a/vh4U86s](https://i.imgur.com/yjl5c8m.png "New world generation")
 
+### Beginner Mode [ID: 7]
+- For the first 5 levels of the player, enemies are scaled down, to allow a more beginner friendly start of a new character.
+	- Scaling is <17%, 33%, 50%, 67%, 83%> for each increasing level respectively.
+
+### Region Lock Updates [ID: 8]
+- Gear is tuned with local power of a region, so it is the strongest in that region and its power fades the further it gets from the region.
+	- For normal gear, every region away from the source region substracts 2 stars of weapon effectiveness.
+	- For + gear, every region away from the source region substracts 1 star of weapon effectiveness.
+
 ### Spirit Cubes [ID: -]
 Spirit cubes are available again in the game. They can be bought from the weapon vendor for 25g each! Checkout the 
 Shop Updates [ID: 5] part of the mod. 
@@ -90,9 +99,7 @@ For v.1.2.0+, the usage is the following:
 
 ## Bugs
 Bugs known:
-- Underwater creatures drop gear from random regions.
-- Invisible creatures / chests (but visible on map).
-- Dissapearing creatures / chest.
+- <none known...>
 
 ## Possible features
 This is a list of the possible features I am considering for this mod. Everything with a preceding *[possible]* is simply an idea that I might take a look into. Everything without the preceding possible is likely to be implemented at one point in this mod.
