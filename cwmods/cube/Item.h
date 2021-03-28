@@ -5,6 +5,7 @@
 #include "../common/Vector2.h"
 
 namespace cube {
+class Creature;
 class Item {
     public:
         char category;
@@ -23,6 +24,14 @@ class Item {
         Item();
         Item(char category, int id);
         void ctor();
+
+
+        void Copy(cube::Item* src);
+        float GetArmor(cube::Creature* creature);
+        float GetHP(cube::Creature* creature);
+        int GetArtifactType();
+        int GetEffectiveRarity(IntVector2* region);
+        int GetPrice();
 };
 }
 
