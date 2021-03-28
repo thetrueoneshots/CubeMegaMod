@@ -154,6 +154,13 @@ Talking another person of type Z gets you those materials. You need to bring the
   - A kill quest: Kill X creatures of type Y or faction Z.
   - A gathering quest: Person X requires Y materials of type Z.
 Delivering that gives a larger reward than the value of said materials.
+### 14. New items
+  - Item reskinning for unobtainable items.
+### 15. Model loader
+  - Model loader that loads in new cub files and distribute types.
+### 16. New buyable skins with gold.
+### 17. Unlocking new classes / skins with achievements.
+
 
 ## Final words
 Special thanks **Chris** for his work for the modding community and **Timothy(GrayShadoz - Youtube)** for his effort to make cubeworld videos (including of all of my mods).
