@@ -7,7 +7,7 @@
 #include "../hooks.h"
 
 extern "C" int OnGetEffectiveItemRarity(cube::Item * item, int distance) {
-	int plus = item->modifier % ((item->rarity + 1) * 5) == 0 ? 1 : 0;
+	int plus = item->IsPlusItem() ? 1 : 0;
 	int calc = item->rarity - (2 - plus) * distance;
 	if (calc < 0)
 	{

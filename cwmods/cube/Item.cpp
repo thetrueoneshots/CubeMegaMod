@@ -40,6 +40,40 @@ int cube::Item::GetPrice()
 	return ((int (*)(cube::Item*))CWOffset(0x109D30))(this);
 }
 
+bool cube::Item::IsPlusItem()
+{
+	return this->modifier % ((this->rarity + 1) * 10) == 0;
+}
+
+void cube::Item::ConvertToPlusItem()
+{
+	while (!this->IsPlusItem())
+	{
+		this->modifier++;
+	}
+}
+
+void cube::Item::ConvertToNormalWeapon()
+{
+	if (this->IsPlusItem())
+	{
+		this->modifier--;
+	}
+}
+
+void cube::Item::UpgradeItem()
+{
+	if (this->IsPlusItem())
+	{
+		this->rarity++;
+		this->ConvertToNormalWeapon();
+	}
+	else
+	{
+		this->ConvertToPlusItem();
+	}
+}
+
 void cube::Item::ctor()
 {
 	this->category = 0;

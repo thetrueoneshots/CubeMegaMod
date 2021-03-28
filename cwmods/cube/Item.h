@@ -32,6 +32,11 @@ class Item {
         int GetArtifactType();
         int GetEffectiveRarity(IntVector2* region);
         int GetPrice();
+
+        bool IsPlusItem();
+        void ConvertToPlusItem();
+        void ConvertToNormalWeapon();
+        void UpgradeItem();
 };
 }
 

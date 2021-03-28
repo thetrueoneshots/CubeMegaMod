@@ -55,5 +55,5 @@ add_library (CubeMegaMod-v1.4.2 SHARED "main.cpp"
 "src/mods/WorldGenMod/WorldGenMod.h" 
 "src/mods/WorldGenMod/WorldGenOverride/WorldGenOverride.h" 
 "src/mods/WorldGenMod/Noise/SimplexNoise.h" 
-"src/mods/WorldGenMod/Noise/SimplexNoise.cpp" "src/hooks/ItemDropPatch.h" "src/mods/RegionLockUpdateMod/RegionLockUpdateMod.h" "src/mods/RegionLockUpdateMod/RegionLockUpdateMod.cpp" "src/hooks/RegionLockUpdate.h")
+"src/mods/WorldGenMod/Noise/SimplexNoise.cpp" "src/hooks/ItemDropPatch.h" "src/mods/RegionLockUpdateMod/RegionLockUpdateMod.h" "src/mods/RegionLockUpdateMod/RegionLockUpdateMod.cpp" "src/hooks/RegionLockUpdate.h" "src/mods/WeaponUpgradeMod/WeaponUpgradeMod.h" "src/mods/WeaponUpgradeMod/WeaponUpgradeMod.cpp" "src/mods/WeaponUpgradeMod/hooks/ModifyWeaponUpgrade.h")
 target_link_libraries (CubeMegaMod-v1.4.2 LINK_PUBLIC CWSDK)
