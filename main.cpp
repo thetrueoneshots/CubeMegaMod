@@ -109,6 +109,11 @@ class Mod : GenericMod {
 			return 1;
 		}
 
+		if (!wcscmp(msg, L"/t"))
+		{
+			cube::GetGame()->shutdown = true;
+		}
+
 		if (swscanf_s(msg, L"/field %d", &ID) == 1)
 		{
 			cube::Game* game = cube::GetGame();
