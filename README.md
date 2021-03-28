@@ -78,6 +78,13 @@ Stat updates to mobs and pets.
 	- For normal gear, every region away from the source region substracts 2 stars of weapon effectiveness.
 	- For + gear, every region away from the source region substracts 1 star of weapon effectiveness.
 
+### Weapon Upgrading [ID: 9]
+- Brings back the weapon adaption from the alpha in a new jacket. NPC's with the tag smithy appear in some towns at the smithy (where you melt iron).
+	- Upgrading a normal weapon will convert it into a + weapon.
+	- Upgrading a + weapon will convert it into a normal weapon with 1 star extra rarity.
+	- Upgrading a weapon destroys all attached spirit cubes!
+![https://imgur.com/a/cHnS1Ij](https://i.imgur.com/JahE2aD.png "Weapon adaption / upgrading")
+
 ### Spirit Cubes [ID: -]
 Spirit cubes are available again in the game. They can be bought from the weapon vendor for 25g each! Checkout the 
 Shop Updates [ID: 5] part of the mod. 
@@ -99,7 +106,8 @@ For v.1.2.0+, the usage is the following:
 
 ## Bugs
 Bugs known:
-- <none known...>
+- Interactable game elments not responding after playing for a long time.
+- Doors not opening with harp sometimes.
 
 ## Possible features
 This is a list of the possible features I am considering for this mod. Everything with a preceding *[possible]* is simply an idea that I might take a look into. Everything without the preceding possible is likely to be implemented at one point in this mod.
@@ -107,9 +115,7 @@ This is a list of the possible features I am considering for this mod. Everythin
 ### 1. User mod selection.
   - *[Possible]* Automatic updating from the github repo.
 ### 2. Increased Supplier Gnome Usefullness.
-  - Extra usages for gems, such as leveling up weapons.
-### 3. Weapon upgrading.
-  - Either use gems, gold, XP or something else to upgrade weapons.
+  - *[Possible]* Extra usages for gems, such as leveling up weapons.
 ### 4. Creature updates.
   - Nerfing poison DOT by mobs.
 ### 5. Buff gold gained from gold bags. (They are useless right now)
@@ -130,7 +136,8 @@ This is a list of the possible features I am considering for this mod. Everythin
 ### 9. New classes.
   - Adding the monk class in the mod.
   - Creating a new necromancer class.
-  - [Possible] Creating a woodland / druid class.
+  - Creating a flying vampire class.
+  - *[Possible]* Creating a woodland / druid class.
 ### 10. Incorporate previous mods into the mod.
   - Cubegression
   - GuardianFix
@@ -138,7 +145,6 @@ This is a list of the possible features I am considering for this mod. Everythin
   - CubeTravel
   - MonkClass
 ### 11. Shop updates
-  - Upgrading weapons for gold in a vendor / shop / identifier.
   - New crafting recipes for crafting higher tiered potions.
 ### 12. Character creation updates
   - Allowing more races like necromancer and spike creatures e.t.c.
