@@ -8,6 +8,23 @@ extern "C" void SetWeaponPreview(cube::Item * dest, cube::Item * src) {
 	return;
 }
 
+extern "C" void UpgradeWeapon(cube::AdaptionWidget * widget) {
+	widget->game->PrintMessage(L"Upgrading! \n");
+
+	cube::Item* item = widget->item;
+	cube::Creature* player = widget->game->GetPlayer();
+	int price = item->GetPrice();
+	if (price > player->gold)
+	{
+		return;
+	}
+
+	player->gold -= price;
+	item->UpgradeItem();
+	widget->game->AnnounceReceiptOfItem(item);
+	return;
+}
+
 GETTER_VAR(void*, ASMWeaponUpgradePreview_jmpback);
 __attribute__((naked)) void ASMWeaponUpgradePreview() {
 	asm(".intel_syntax \n"
@@ -30,8 +47,28 @@ __attribute__((naked)) void ASMWeaponUpgradePreview() {
 	);
 }
 
+__attribute__((naked)) void ASMOnWeaponUpgrade() {
+	asm(".intel_syntax \n"
+
+		PUSH_ALL
+
+		PREPARE_STACK
+
+		"call UpgradeWeapon \n"
+
+		RESTORE_STACK
+
+		POP_ALL
+
+		"retn \n"
+		".att_syntax \n"
+	);
+}
+
 void SetupWeaponUpgradeModification()
 {
 	WriteFarJMP(CWOffset(0x267BD5), &ASMWeaponUpgradePreview);
 	ASMWeaponUpgradePreview_jmpback = CWOffset(0x267C89);
+
+	WriteFarJMP(CWOffset(0x267930), &ASMOnWeaponUpgrade);
 }

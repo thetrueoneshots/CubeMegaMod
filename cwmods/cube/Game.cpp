@@ -102,6 +102,15 @@ void cube::Game::PlaySoundEffect(SoundEffect sound_id, float volume, float speed
 	this->PlaySoundEffect(sound_id, this->global_camera_position, volume, speed, unkbool);
 }
 
+void cube::Game::AnnounceReceiptOfItem(cube::Item* item, int count, cube::Creature* creature)
+{
+	if (creature == nullptr)
+	{
+		creature = this->GetPlayer();
+	}
+	((void (*)(cube::Game*, cube::Item*, int, cube::Creature*))CWOffset(0x9D6F0))(this, item, count, creature);
+}
+
 void cube::Game::SetRestrictedSpawnRegions(bool enabled)
 {
 	const static auto offset = 0x2D1291;

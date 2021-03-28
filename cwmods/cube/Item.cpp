@@ -66,10 +66,12 @@ void cube::Item::UpgradeItem()
 	if (this->IsPlusItem())
 	{
 		this->rarity++;
+		this->num_spirits = 0;
 		this->ConvertToNormalWeapon();
 	}
 	else
 	{
+		this->num_spirits = 0;
 		this->ConvertToPlusItem();
 	}
 }
