@@ -160,6 +160,7 @@ Delivering that gives a larger reward than the value of said materials.
   - Model loader that loads in new cub files and distribute types.
 ### 16. New buyable skins with gold.
 ### 17. Unlocking new classes / skins with achievements.
+### 18. Holding artefacts / wearing them.
 
 
 ## Final words
