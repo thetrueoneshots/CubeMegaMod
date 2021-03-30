@@ -5,8 +5,10 @@
 #include <string>
 
 #include "SpeechText.h"
+#include "../common/Vector2.h"
 
 namespace cube {
+class Item;
 class Speech {
     public:
 		virtual ~Speech();
@@ -16,13 +18,15 @@ class Speech {
 		std::map<std::pair<uint32_t, uint32_t>, std::wstring> specialization_type_id_map;
 		std::map<uint32_t, std::wstring> faction_type_id_map;
 		std::map<uint32_t, std::wstring> ruler_type_id_map;
-		std::map<uint64_t, std::wstring> item_identifier_map;
+		std::map<IntVector2, std::wstring> item_identifier_map;
 		std::map<void*, void*> unk_map_1;
 		std::map<void*, void*> unk_map_2;
 		std::map<void*, void*> unk_map_3;
 		std::map<std::wstring, cube::SpeechText*> speech_node_map;
 		std::map<std::wstring, cube::SpeechText*> macro_node_map;
 		std::map<void*, void*> unk_map_4;
+
+		std::wstring* GetItemName(std::wstring* string, cube::Item* item);
     };
 }
 

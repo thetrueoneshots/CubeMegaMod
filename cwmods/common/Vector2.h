@@ -15,6 +15,10 @@ class Vector2 {
 			return (this->x == other.x && this->y == other.y);
 		}
 
+		bool operator<(const Vector2<T>& other) const {
+			return (this->x < other.x || this->y < other.y);
+		}
+
 		Vector2<float> operator/(const Vector2<float>& other) const {
 			return Vector2<float>(this->x / other.x, this->y / other.y);
 		}

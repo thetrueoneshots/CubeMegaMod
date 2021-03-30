@@ -12,6 +12,7 @@
 #include "src/mods/BeginnerModeMod/BeginnerModeMod.h"
 #include "src/mods/RegionLockUpdateMod/RegionLockUpdateMod.h"
 #include "src/mods/WeaponUpgradeMod/WeaponUpgradeMod.h"
+#include "src/mods/QuestMod/QuestMod.h"
 #include "src/CubeMod.h"
 
 GLOBAL std::vector<CubeMod*> g_Mods;
@@ -112,7 +113,14 @@ class Mod : GenericMod {
 
 		if (!wcscmp(msg, L"/t"))
 		{
-			cube::GetGame()->shutdown = true;
+			std::wstring name;
+			cube::Item item(1, 0);
+			name = *cube::GetGame()->speech.GetItemName(&name, &item);
+
+			wchar_t buffer[250];
+			swprintf_s(buffer, 250, L"%s\n", name.c_str());
+			cube::GetGame()->PrintMessage(buffer);
+			return 1;
 		}
 
 		if (swscanf_s(msg, L"/field %d", &ID) == 1)
@@ -217,6 +225,7 @@ class Mod : GenericMod {
 		modVector.push_back(new BeginnerModeMod());
 		modVector.push_back(new RegionLockUpdateMod());
 		modVector.push_back(new WeaponUpgradeMod());
+		modVector.push_back(new QuestMod());
 
 		cube::ApplySettings(&modVector);
 		cube::SaveSettings(&modVector);
