@@ -18,7 +18,7 @@ class Speech {
 		std::map<std::pair<uint32_t, uint32_t>, std::wstring> specialization_type_id_map;
 		std::map<uint32_t, std::wstring> faction_type_id_map;
 		std::map<uint32_t, std::wstring> ruler_type_id_map;
-		std::map<IntVector2, std::wstring> item_identifier_map;
+		std::map<std::pair<uint32_t, uint32_t>, std::wstring> item_identifier_map;
 		std::map<void*, void*> unk_map_1;
 		std::map<void*, void*> unk_map_2;
 		std::map<void*, void*> unk_map_3;
