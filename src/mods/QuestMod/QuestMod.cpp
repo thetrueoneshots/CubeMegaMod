@@ -1,6 +1,7 @@
 #include "QuestMod.h"
 
 #include "hooks/ChangeQuestItemName.h"
+#include "hooks/ChangeQuestDescription.h"
 #include <utility>
 
 
@@ -22,4 +23,5 @@ void QuestMod::Initialize()
 {
 	MemoryHelper::FindAndReplaceString(L"Formula: ", L"[Quest]: ");
 	SetupOnGetItemName();
+	SetupOnGetItemDescription();
 }
