@@ -161,6 +161,7 @@ Delivering that gives a larger reward than the value of said materials.
 ### 16. New buyable skins with gold.
 ### 17. Unlocking new classes / skins with achievements.
 ### 18. Holding artefacts / wearing them.
+### 19. Make portal stones spawn bosses on usage.
 
 
 ## Final words
