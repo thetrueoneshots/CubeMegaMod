@@ -8,12 +8,12 @@
 
 extern "C" int OnGetEffectiveItemRarity(cube::Item * item, int distance) {
 	int plus = item->IsPlusItem() ? 1 : 0;
-	int calc = item->rarity - (2 - plus) * distance;
+	long long calc = (long long)item->rarity - (long long)((2 - plus) * distance);
 	if (calc < 0)
 	{
 		return -1;
 	}
-	return calc;
+	return (int)calc;
 }
 
 __attribute__((naked)) void ASMEffectiveItemRarity() {
