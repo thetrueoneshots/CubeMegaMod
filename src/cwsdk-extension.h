@@ -19,6 +19,8 @@
 #include "cwsdk-extension/helper/Helper.h"
 #include "cwsdk-extension/helper/FileParser.h"
 
+#include "cwsdk-extension/quest/Quest.h"
+
 #include "cwsdk-extension/Inventory.h"
 #include "cwsdk-extension/Timer.h"
 

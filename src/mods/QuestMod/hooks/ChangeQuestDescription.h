@@ -10,10 +10,21 @@ extern "C" int OnGetItemDescription(cube::BaseWidget* widget, cube::Item* item, 
 	if (item->category == 2)
 	{
 		std::wstring text(L"Kill 10 flies to complete this quest.\n");
-		
-		FloatRGBA color(1.f, 0.f, 0.f, 1.f);
+		cube::Quest* quest = (cube::Quest*)item;
+		text = *quest->GetQuestDescription(&cube::GetGame()->speech, &text);
+
+		FloatRGBA color(1.f, 1.f, 1.f, 1.f);
 		widget->SetDrawColor(&color);
 		widget->DrawBaseWidgetText(pos, &text, pos->x, pos->y);
+
+		if (quest->IsCompleted())
+		{
+			std::wstring complete(L"[Not implemented yet] You completed the quest, go back to the questgiver or one of its friends to complete the quest.");
+			color = { 0.25f, 1.0f, 0.25f, 1.0f };
+			widget->SetDrawColor(&color);
+			widget->DrawBaseWidgetText(pos, &complete, pos->x, pos->y);
+		}
+		
 		return 1;
 	}
 	return 0;

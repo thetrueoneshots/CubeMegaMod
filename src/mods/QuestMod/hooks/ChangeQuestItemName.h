@@ -7,10 +7,10 @@
 
 extern "C" int OnGetItemName(cube::Speech* speech, cube::Item* item, cube::Item* copy)
 {
+	const static int ID_OFFSET = 15;
 	if (item->category == 2)
 	{
-		int id = item->modifier % 4;
-		*copy = cube::Item(1, 15 + id);
+		*copy = cube::Item(1, ID_OFFSET + (int)((cube::Quest*)item)->GetType());
 		return 1;
 	}
 	return 0;

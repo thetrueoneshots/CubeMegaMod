@@ -26,7 +26,8 @@ class Speech {
 		std::map<std::wstring, cube::SpeechText*> macro_node_map;
 		std::map<void*, void*> unk_map_4;
 
-		std::wstring* GetItemName(std::wstring* string, cube::Item* item);
+		std::wstring* GenerateItemName(std::wstring* string, cube::Item* item);
+		std::wstring* GetRaceName(std::wstring* str, int race);
     };
 }
 

@@ -23,6 +23,7 @@ GLOBAL char* g_Base;
 #include "src/hooks/ItemPriceHandler.h"
 #include "src/hooks/lore_increase.h"
 #include "src/hooks/ItemDropPatch.h"
+#include "src/hooks/CreatureDeathHandler.h"
 
 // OLD
 #define DEBUG 1
@@ -83,88 +84,15 @@ class Mod : GenericMod {
 			return 0;
 		}
 
-		// Test
-		if (!wcscmp(msg, L"/test"))
+		if (!wcscmp(msg, L"/quest"))
 		{
-			wchar_t buffer[250];
-			swprintf_s(buffer, 250, L"Player: %#012X\n", cube::GetGame()->GetPlayer());
-			cube::GetGame()->PrintMessage(buffer, 0, 255, 100);
-
-			for (cube::Creature* creature : cube::GetGame()->host.world.creatures)
-			{
-				swprintf_s(buffer, 250, L"Creature (%ld, %d)\n", creature->id, creature->entity_data.race);
-				cube::GetGame()->PrintMessage(buffer, 0, 255, 100);
-
-				//if (creature->entity_data.race == 304)
-				//{
-				//	swprintf_s(buffer, 250, L"Supplier gnome: %#012X\n", creature);
-				//	cube::GetGame()->PrintMessage(buffer, 0, 255, 100);
-				//}
-			}
+			cube::Item item(2, 0);
+			item.modifier = std::rand() * 4;
+			item.rarity = 0;
+			cube::Creature* player = cube::GetGame()->GetPlayer();
+			cube::Helper::DropItem(player, item, 1);
 			return 1;
 		}
-
-		if (!wcscmp(msg, L"/upgrade"))
-		{
-			plasma::Display* display = cube::GetGame()->gui.adaption_widget->node->display;
-			display->SetVisibility(display->visibility.current_frame, 1);
-			return 1;
-		}
-
-		if (!wcscmp(msg, L"/t"))
-		{
-			std::wstring name;
-			cube::Item item(1, 0);
-			name = *cube::GetGame()->speech.GetItemName(&name, &item);
-
-			wchar_t buffer[250];
-			swprintf_s(buffer, 250, L"%s\n", name.c_str());
-			cube::GetGame()->PrintMessage(buffer);
-			return 1;
-		}
-
-		if (swscanf_s(msg, L"/field %d", &ID) == 1)
-		{
-			cube::Game* game = cube::GetGame();
-			auto it = game->world->zones.begin();
-			while (it != game->world->zones.end())
-			{
-				for (int i = 0; i < 4096; i++)
-				{
-					it->second->fields[i].field_8 = ID;
-					it->second->fields[i].field_C = ID;
-					it->second->fields[i].field_10 = ID;
-					it->second->fields[i].field_14 = ID;
-					it->second->fields[i].field_18 = ID;
-					it->second->fields[i].field_1C = ID;
-					it->second->fields[i].field_20 = ID;
-					it->second->fields[i].field_24 = ID;
-					it->second->fields[i].field_28 = ID;
-					it->second->fields[i].field_2C = ID;
-					it->second->fields[i].field_30 = ID;
-					it->second->fields[i].field_34 = ID;
-					it->second->fields[i].field_38 = ID;
-				}
-				it++;
-			}
-			return 1;
-		}
-		if (!wcscmp(msg, L"/up"))
-		{
-			cube::Game* game = cube::GetGame();
-			auto it = game->world->zones.begin();
-			while (it != game->world->zones.end())
-			{
-				game->PrintMessage(L"Found zone!\n");
-				//for (cube::Field& field : zone->second->fields)
-				for (int i = 0; i < 4096; i++)
-				{
-					it->second->fields[i].base_z++;
-				}
-				it++;
-			}
-		}
-		
 
 		for (CubeMod* mod : g_Mods)
 		{
@@ -258,6 +186,7 @@ class Mod : GenericMod {
 		// Setup handlers
 		SetupChestInteractionHandler();
 		SetupShopInteractionHandler();
+		SetupOnCreatureDeathHandler();
 		SetupItemPriceHandler();
 		IncreaseLoreInitialize(&hookEvents); // Todo: Rename handler
 		ItemDropPatchInitialize();

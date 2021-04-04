@@ -54,12 +54,22 @@ public:
 
 	/*
 	* Triggers on increase of lore.
+	* Note: Bugged somewhat. Typing: lore increased to 100 in chat triggers this function.
 	*
 	* @param	{cube::Game*}		game		Pointer to the game.
 	* @param	{int}				value		New percentage value of the lore.
 	* @return	{void}
 	*/
 	inline virtual void OnLoreIncrease(cube::Game* game, int value) {}
+
+	/*
+	* Triggers on creature death.
+	*
+	* @param	{cube::Creature*}	creature	Pointer to the dead creature.
+	* @param	{cube::Creature*}	attacker	Pointer to the one who killed the creature.
+	* @return	{void}
+	*/
+	inline virtual void OnCreatureDeath(cube::Creature* creature, cube::Creature* attacker) {}
 
 	/*
 	* Triggers on interaction with the shop

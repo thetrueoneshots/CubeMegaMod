@@ -16,4 +16,5 @@ public:
 
 	void OnGameTick(cube::Game* game);
 	void Initialize();
+	void OnCreatureDeath(cube::Creature* creature, cube::Creature* attacker);
 };
