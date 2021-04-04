@@ -72,7 +72,7 @@ __int64 cube::CreatureFactory::GenerateId()
 	for (auto creature : *list)
 	{
 		long long id = creature->id;
-		if (id == 1)
+		if (id >= 0 && id < 1000)
 		{
 			continue;
 		}
