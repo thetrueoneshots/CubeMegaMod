@@ -5,6 +5,10 @@
 #include <string>
 
 extern "C" void OnCreatureDeath(cube::Creature * creature, cube::Creature * attacker) {
+	if (attacker == nullptr)
+	{
+		attacker = cube::GetGame()->GetPlayer();
+	}
 	for (CubeMod* mod : g_Mods) {
 		mod->OnCreatureDeath(creature, attacker);
 	}
