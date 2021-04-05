@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 3.8)
 project(project_CubeMegaMod)
 add_subdirectory(cwmods)
-add_library (CubeMegaMod-v1.5.1 SHARED "main.cpp" 
+add_library (CubeMegaMod-v1.5.2 SHARED "main.cpp" 
 "src/cwsdk-extension.h"  
 "src/hooks.h" 
 "src/hooks.cpp" 
@@ -56,4 +56,4 @@ add_library (CubeMegaMod-v1.5.1 SHARED "main.cpp"
 "src/mods/WorldGenMod/WorldGenOverride/WorldGenOverride.h" 
 "src/mods/WorldGenMod/Noise/SimplexNoise.h" 
 "src/mods/WorldGenMod/Noise/SimplexNoise.cpp" "src/hooks/ItemDropPatch.h" "src/mods/RegionLockUpdateMod/RegionLockUpdateMod.h" "src/mods/RegionLockUpdateMod/RegionLockUpdateMod.cpp" "src/hooks/RegionLockUpdate.h" "src/mods/WeaponUpgradeMod/WeaponUpgradeMod.h" "src/mods/WeaponUpgradeMod/WeaponUpgradeMod.cpp" "src/mods/WeaponUpgradeMod/hooks/ModifyWeaponUpgrade.h"  "src/mods/WeaponUpgradeMod/hooks/SmithyInteraction.h" "src/mods/QuestMod/QuestMod.cpp" "src/mods/QuestMod/QuestMod.h" "src/memory_helper/memory_helper.h" "src/mods/QuestMod/hooks/ChangeQuestItemName.h" "src/mods/QuestMod/hooks/ChangeQuestDescription.h" "src/cwsdk-extension/quest/Quest.h" "src/cwsdk-extension/quest/Quest.cpp" "src/hooks/CreatureDeathHandler.h" "src/hooks/CreatureTalkHandler.h")
-target_link_libraries (CubeMegaMod-v1.5.1 LINK_PUBLIC CWSDK)
+target_link_libraries (CubeMegaMod-v1.5.2 LINK_PUBLIC CWSDK)
