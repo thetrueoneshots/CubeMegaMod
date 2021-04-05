@@ -24,6 +24,7 @@ GLOBAL char* g_Base;
 #include "src/hooks/lore_increase.h"
 #include "src/hooks/ItemDropPatch.h"
 #include "src/hooks/CreatureDeathHandler.h"
+#include "src/hooks/CreatureTalkHandler.h"
 
 // OLD
 #define DEBUG 1
@@ -190,6 +191,7 @@ class Mod : GenericMod {
 		SetupItemPriceHandler();
 		IncreaseLoreInitialize(&hookEvents); // Todo: Rename handler
 		ItemDropPatchInitialize();
+		SetupCreatureInteraction();
 
 		for (CubeMod* mod : g_Mods)
 		{

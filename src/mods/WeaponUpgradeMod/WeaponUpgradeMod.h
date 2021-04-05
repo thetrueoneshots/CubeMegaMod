@@ -13,4 +13,5 @@ public:
 	}
 
 	void Initialize();
+	int OnCreatureTalk(cube::Game* game, cube::Creature* creature);
 };

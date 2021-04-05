@@ -63,6 +63,15 @@ public:
 	inline virtual void OnLoreIncrease(cube::Game* game, int value) {}
 
 	/*
+	* Triggers when talking to a creature.
+	*
+	* @param	{cube::Game*}		game		Pointer to the game.
+	* @param	{cube::Creature*}	creature	Pointer to the creature talked to.
+	* @return	{void}
+	*/
+	inline virtual int OnCreatureTalk(cube::Game* game, cube::Creature* creature) { return 0; }
+
+	/*
 	* Triggers on creature death.
 	*
 	* @param	{cube::Creature*}	creature	Pointer to the dead creature.
