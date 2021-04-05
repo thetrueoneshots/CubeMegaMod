@@ -4,6 +4,7 @@
 #include "hooks/ChangeQuestDescription.h"
 #include <utility>
 #include "../../cwsdk-extension.h"
+#include <algorithm>
 
 
 void QuestMod::OnGameTick(cube::Game* game)
@@ -23,6 +24,7 @@ void QuestMod::OnGameTick(cube::Game* game)
 
 void QuestMod::Initialize()
 {
+	// Todo: patch length
 	MemoryHelper::FindAndReplaceString(L"Formula: ", L"[Quest]: ");
 	SetupOnGetItemName();
 	SetupOnGetItemDescription();
@@ -56,4 +58,35 @@ void QuestMod::OnCreatureDeath(cube::Creature* creature, cube::Creature* attacke
 			}
 		}
 	}
+}
+
+int QuestMod::OnCreatureTalk(cube::Game* game, cube::Creature* creature)
+{
+	// Check if already talked to.
+	if (std::find(m_TalkedIds.begin(), m_TalkedIds.end(), creature->id) != m_TalkedIds.end())
+	{
+		return 0;
+	}
+	// Pushing in front, to make the find return faster on the latest NPC's talked to.
+	m_TalkedIds.push_front(creature->id);
+
+	// Check elledgible to drop a quest.
+	if (creature->id % 5 != 0)
+	{
+		return 0;
+	}
+
+	long long mod = std::abs(creature->id / 5);
+	while (mod > INT_MAX)
+	{
+		mod = mod >> 2;
+	}
+
+	cube::Item item(2, 0);
+	item.modifier = (mod / 4) * 4; // Make multiple of 4.
+	item.rarity = mod % 5;
+	cube::Creature* player = cube::GetGame()->GetPlayer();
+	cube::Helper::DropItem(player, item, 1);
+
+	return 0;
 }

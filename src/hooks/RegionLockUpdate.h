@@ -6,7 +6,13 @@
 #include "cwsdk.h"
 #include "../hooks.h"
 
+// Todo make function for cubemod.
 extern "C" int OnGetEffectiveItemRarity(cube::Item * item, int distance) {
+	if (item->category == 2)
+	{
+		return item->rarity;
+	}
+
 	int plus = item->IsPlusItem() ? 1 : 0;
 	long long calc = (long long)item->rarity - (long long)((2 - plus) * distance);
 	if (calc < 0)
