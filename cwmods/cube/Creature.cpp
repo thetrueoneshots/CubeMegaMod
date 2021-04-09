@@ -46,3 +46,8 @@ float cube::Creature::GetRegeneration() {
 float cube::Creature::GetManaGeneration() {
 	return ((float (*)(cube::Creature*))CWOffset(0x5F8D0))(this);
 }
+
+void cube::Creature::ClearInventoryGear()
+{
+	this->inventory_tabs.at(0).clear();
+}

@@ -40,6 +40,11 @@ int cube::Item::GetPrice()
 	return ((int (*)(cube::Item*))CWOffset(0x109D30))(this);
 }
 
+bool cube::Item::CanBeEquippedByClass(int classType)
+{
+	return ((int (*)(cube::Item*, int))CWOffset(0x109720))(this, classType) == 0 ? false : true;
+}
+
 bool cube::Item::IsPlusItem()
 {
 	return this->modifier % ((this->rarity + 1) * 10) == 0;

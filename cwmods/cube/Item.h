@@ -32,6 +32,7 @@ class Item {
         int GetArtifactType();
         int GetEffectiveRarity(IntVector2* region);
         int GetPrice();
+        bool CanBeEquippedByClass(int classType);
 
         bool IsPlusItem();
         void ConvertToPlusItem();

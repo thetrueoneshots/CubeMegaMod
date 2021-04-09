@@ -13,6 +13,7 @@
 #include "src/mods/RegionLockUpdateMod/RegionLockUpdateMod.h"
 #include "src/mods/WeaponUpgradeMod/WeaponUpgradeMod.h"
 #include "src/mods/QuestMod/QuestMod.h"
+#include "src/mods/NewClassesMod/NewClassesMod.h"
 #include "src/CubeMod.h"
 
 GLOBAL std::vector<CubeMod*> g_Mods;
@@ -80,18 +81,19 @@ class Mod : GenericMod {
 			cube::Creature* creature = cube::CreatureFactory::SpawnCreature(player->entity_data.position, player->entity_data.current_region,
 				304, (int)cube::Enums::EntityBehaviour::NPC, 1);
 			creature->entity_data.appearance.flags2 |= 1 << (int)cube::Enums::AppearanceModifiers::NeededForGemTrader;
-			creature->entity_data.classType = ID;//(int)cube::Enums::ClassType::GemTrader;
+			creature->entity_data.classType = ID;
 			creature->entity_data.specialization = 1;
 			return 0;
 		}
 
-		if (!wcscmp(msg, L"/quest"))
+		if (!wcscmp(msg, L"/t"))
 		{
-			cube::Item item(2, 0);
-			item.modifier = std::rand() * 4;
-			item.rarity = 0;
-			cube::Creature* player = cube::GetGame()->GetPlayer();
-			cube::Helper::DropItem(player, item, 1);
+			cube::Game* game = cube::GetGame();
+			wchar_t buffer[250];
+			swprintf_s(buffer, 250, L"Shift skill: %d\n", game->controls.button_class_skill);
+			game->PrintMessage(buffer);
+			swprintf_s(buffer, 250, L"Button special attack: %d\n", game->controls.button_special_attack);
+			game->PrintMessage(buffer);
 			return 1;
 		}
 
@@ -155,6 +157,7 @@ class Mod : GenericMod {
 		modVector.push_back(new RegionLockUpdateMod());
 		modVector.push_back(new WeaponUpgradeMod());
 		modVector.push_back(new QuestMod());
+		modVector.push_back(new NewClassesMod());
 
 		cube::ApplySettings(&modVector);
 		cube::SaveSettings(&modVector);

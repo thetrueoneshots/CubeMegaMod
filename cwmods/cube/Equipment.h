@@ -16,6 +16,8 @@ class Equipment {
 		cube::Item ring_left;
 		cube::Item ring_right;
 		cube::Item pet;
+
+		void Clear();
     };
 }
 

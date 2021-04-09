@@ -111,6 +111,11 @@ void cube::Game::AnnounceReceiptOfItem(cube::Item* item, int count, cube::Creatu
 	((void (*)(cube::Game*, cube::Item*, int, cube::Creature*))CWOffset(0x9D6F0))(this, item, count, creature);
 }
 
+char cube::Game::GeneratePlayerStarterGear()
+{
+	return ((char (*)(cube::Game*))CWOffset(0x913B0))(this);
+}
+
 void cube::Game::SetRestrictedSpawnRegions(bool enabled)
 {
 	const static auto offset = 0x2D1291;

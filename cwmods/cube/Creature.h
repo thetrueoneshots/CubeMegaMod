@@ -102,7 +102,7 @@ namespace cube {
 			_BYTE gap149[27];
 			FloatVector3 attack_rotation;
 			float HP;
-			float float_184;
+			float block_power;
 			float MP;
 			float stealth;
 			_BYTE gap180[4];
@@ -285,6 +285,8 @@ namespace cube {
 			float GetResistance();
 			float GetRegeneration();
 			float GetManaGeneration();
+
+			void ClearInventoryGear();
     };
 }
 

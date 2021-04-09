@@ -293,6 +293,8 @@ namespace cube {
 			void PlaySoundEffect(SoundEffect sound_id, float volume = 1.0, float speed = 1.0, bool unkbool = true);
 
 			void AnnounceReceiptOfItem(cube::Item* item, int count = 1, cube::Creature* creature = nullptr);
+			// Might return bool
+			char GeneratePlayerStarterGear();
 
 			static void SetRestrictedSpawnRegions(bool enabled);
         };
