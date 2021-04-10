@@ -47,6 +47,11 @@ bool cube::Item::CanBeEquippedByClass(int classType)
 
 bool cube::Item::IsPlusItem()
 {
+	if (this->rarity < 0)
+	{
+		return false;
+	}
+
 	return this->modifier % ((this->rarity + 1) * 10) == 0;
 }
 
