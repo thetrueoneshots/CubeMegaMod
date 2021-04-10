@@ -85,6 +85,14 @@ Stat updates to mobs and pets.
 	- Upgrading a weapon destroys all attached spirit cubes!
 ![https://imgur.com/a/cHnS1Ij](https://i.imgur.com/JahE2aD.png "Weapon adaption / upgrading")
 
+### New Quests [ID: 10]
+- Adds new quest types that can be dropped when talking to NPC's.
+	- The quests consists of 4 different kill quest for 4 different animal types.
+	- Quests of different rarities can drop, increasing the reward and amount of kills needed.
+
+### New Classes	[ID: 11]
+- Adds a modified version of the monk class into the game. Note that this part is still bound the change a lot.
+
 ### Spirit Cubes [ID: -]
 Spirit cubes are available again in the game. They can be bought from the weapon vendor for 25g each! Checkout the 
 Shop Updates [ID: 5] part of the mod. 
@@ -108,6 +116,7 @@ For v.1.2.0+, the usage is the following:
 Bugs known:
 - Interactable game elments not responding after playing for a long time.
 - Doors not opening with harp sometimes.
+- Game crashing sometimes when talking to NPC's.
 
 ## Possible features
 This is a list of the possible features I am considering for this mod. Everything with a preceding *[possible]* is simply an idea that I might take a look into. Everything without the preceding possible is likely to be implemented at one point in this mod.
@@ -134,16 +143,15 @@ This is a list of the possible features I am considering for this mod. Everythin
   - Mapping the abilities to the appropriate keys (currently 1 - 9)
 ### 8. Buffing climbing speed by think of 100%. (The jumping hack is faster than climbing)
 ### 9. New classes.
-  - Adding the monk class in the mod.
   - Creating a new necromancer class.
   - Creating a flying vampire class.
+  - Creating a stance changer class.
   - *[Possible]* Creating a woodland / druid class.
 ### 10. Incorporate previous mods into the mod.
   - Cubegression
   - GuardianFix
   - CubePatch
   - CubeTravel
-  - MonkClass
 ### 11. Shop updates
   - New crafting recipes for crafting higher tiered potions.
 ### 12. Character creation updates
@@ -151,7 +159,6 @@ This is a list of the possible features I am considering for this mod. Everythin
 ### 13. New Quest types:
   - A delivery quest: Person X of type Z needs special materials from a neighbouring village.
 Talking another person of type Z gets you those materials. You need to bring them back and give them to the quest giver.
-  - A kill quest: Kill X creatures of type Y or faction Z.
   - A gathering quest: Person X requires Y materials of type Z.
 Delivering that gives a larger reward than the value of said materials.
 ### 14. New items
@@ -162,7 +169,6 @@ Delivering that gives a larger reward than the value of said materials.
 ### 17. Unlocking new classes / skins with achievements.
 ### 18. Holding artefacts / wearing them.
 ### 19. Make portal stones spawn bosses on usage.
-
 
 ## Final words
 Special thanks **Chris** for his work for the modding community and **Timothy(GrayShadoz - Youtube)** for his effort to make cubeworld videos (including of all of my mods).
