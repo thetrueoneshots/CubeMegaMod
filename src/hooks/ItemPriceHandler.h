@@ -5,6 +5,7 @@
 
 #pragma once
 #include "cwsdk.h"
+#include <math.h> 
 
 #include "../CubeMod.h"
 
@@ -50,10 +51,21 @@ extern "C" void OnItemPriceHandler(cube::Item* item, int* price) {
 	}
 }
 
+extern "C" float callPowf(float a1, float a2)
+{
+	return std::powf(a1, a2);
+}
+
 GETTER_VAR(void*, ASMItemPrice_jmpback);
 __attribute__((naked)) void ASMItemPriceHandler() {
 	asm(".intel_syntax \n"
 		// Old code
+		"push r8 \n"
+		PREPARE_STACK
+		"call callPowf \n"
+		RESTORE_STACK
+		"pop r8 \n"
+		"mulss xmm0, xmm6 \n"
 		"mov     eax, 1 \n"
 		"cvttss2si ecx, xmm0 \n"
 		"cmp     ecx, eax \n"
@@ -88,6 +100,6 @@ __attribute__((naked)) void ASMItemPriceHandler() {
 }
 
 void SetupItemPriceHandler() {
-	WriteFarJMP(CWOffset(0x109E17), (void*)&ASMItemPriceHandler);
+	WriteFarJMP(CWOffset(0x109E0E), (void*)&ASMItemPriceHandler);
 	ASMItemPrice_jmpback = CWOffset(0x109E2E);
 }
