@@ -16,7 +16,7 @@ public:
 		m_FileName = "CombatUpdateMod";
 		m_ID = 3;
 		m_Version = { 1, 0, 0 };
-		m_Data = { true };
+		m_Data = { false };
 		Load(&m_Data, sizeof(m_Data));
 	}
 
