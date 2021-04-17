@@ -32,17 +32,17 @@ extern "C" void OnExecuteAbility(cube::World* world, cube::Creature* player) {
 		if (player->entity_data.MP >= 0.2f)
 		{
 			ExecuteSelfLavaPuddleAbility(world, player);
-			player->entity_data.MP -= 0.2f;
+			player->entity_data.MP -= 0.1f;
 			player->entity_data.hit_combo += 1;
 			player->entity_data.time_since_hit = 0;
 		}
 		break;
 	case CharacterClass::Ability::PuddlePoison:
 		player->entity_data.current_ability = 0;
-		if (player->stamina >= 0.50f)
+		if (player->stamina >= 0.5)
 		{
 			ExecuteSelfPoisonPuddleAbility(world, player);
-			player->stamina -= 0.50f;
+			player->stamina -= 0.5f;
 			player->entity_data.hit_combo += 5;
 			player->entity_data.time_since_hit = 0;
 		}

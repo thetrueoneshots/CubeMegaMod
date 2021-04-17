@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 3.8)
 project(project_CubeMegaMod)
 add_subdirectory(cwmods)
-add_library (CubeMegaMod-v1.5.3 SHARED "main.cpp" 
+add_library (CubeMegaMod-v1.5.4 SHARED "main.cpp" 
 "src/cwsdk-extension.h"  
 "src/hooks.h" 
 "src/hooks.cpp" 
@@ -10,8 +10,8 @@ add_library (CubeMegaMod-v1.5.3 SHARED "main.cpp"
 "src/cwsdk-extension/events/AddGoldEvent.h" 
 "src/cwsdk-extension/events/AddGoldEvent.cpp" 
 "src/cwsdk-extension/Timer.h"
- "src/mods/SeaExplorationMod/event/DivingEvent.h"
- "src/mods/SeaExplorationMod/event/DivingEvent.cpp" 
+"src/mods/SeaExplorationMod/event/DivingEvent.h"
+"src/mods/SeaExplorationMod/event/DivingEvent.cpp" 
 "src/cwsdk-extension/Inventory.h" 
 "src/cwsdk-extension/Inventory.cpp" 
 "src/cwsdk-extension/Item.h" 
@@ -56,4 +56,4 @@ add_library (CubeMegaMod-v1.5.3 SHARED "main.cpp"
 "src/mods/WorldGenMod/WorldGenOverride/WorldGenOverride.h" 
 "src/mods/WorldGenMod/Noise/SimplexNoise.h" 
 "src/mods/WorldGenMod/Noise/SimplexNoise.cpp" "src/hooks/ItemDropPatch.h" "src/mods/RegionLockUpdateMod/RegionLockUpdateMod.h" "src/mods/RegionLockUpdateMod/RegionLockUpdateMod.cpp" "src/hooks/RegionLockUpdate.h" "src/mods/WeaponUpgradeMod/WeaponUpgradeMod.h" "src/mods/WeaponUpgradeMod/WeaponUpgradeMod.cpp" "src/mods/WeaponUpgradeMod/hooks/ModifyWeaponUpgrade.h"  "src/mods/WeaponUpgradeMod/hooks/SmithyInteraction.h" "src/mods/QuestMod/QuestMod.cpp" "src/mods/QuestMod/QuestMod.h" "src/memory_helper/memory_helper.h" "src/mods/QuestMod/hooks/ChangeQuestItemName.h" "src/mods/QuestMod/hooks/ChangeQuestDescription.h" "src/cwsdk-extension/quest/Quest.h" "src/cwsdk-extension/quest/Quest.cpp" "src/hooks/CreatureDeathHandler.h" "src/hooks/CreatureTalkHandler.h" "src/mods/NewClassesMod/NewClassesMod.h" "src/mods/NewClassesMod/NewClassesMod.cpp" "src/mods/NewClassesMod/hooks/CharacterCreationHandler.h" "src/mods/NewClassesMod/CharacterClass.h"  "src/mods/NewClassesMod/classes/MonkClass.h" "src/mods/NewClassesMod/classes/MonkClass.cpp" "src/mods/NewClassesMod/hooks/OnGetUltimateAbilityID.h" "src/mods/NewClassesMod/hooks/OnGetUltimateAbilityCooldown.h" "src/mods/NewClassesMod/hooks/OnCreatureCanEquipItem.h"     "src/mods/NewClassesMod/hooks/OnGetShiftAbilityID.h" "src/mods/NewClassesMod/hooks/OnCreaturePassiveMana.h" "src/mods/NewClassesMod/hooks/TreasureFixHandler.h" "src/mods/NewClassesMod/hooks/OnExecuteAbility.h" "src/mods/NewClassesMod/abilities/FullHealAbility.h" "src/mods/NewClassesMod/abilities/HealingPuddle.h" "src/mods/NewClassesMod/abilities/LavaPuddle.h" "src/mods/NewClassesMod/abilities/PoisonPuddle.h")
-target_link_libraries (CubeMegaMod-v1.5.3 LINK_PUBLIC CWSDK)
+target_link_libraries (CubeMegaMod-v1.5.4 LINK_PUBLIC CWSDK)
