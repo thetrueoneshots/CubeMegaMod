@@ -32,27 +32,46 @@ void QuestMod::Initialize()
 
 void QuestMod::OnCreatureDeath(cube::Creature* creature, cube::Creature* attacker)
 {
-	cube::Creature* player = cube::GetGame()->GetPlayer();
-	if (player->id == attacker->id)
+	//cube::Creature* player = cube::GetGame()->GetPlayer();
+	
+	cube::Creature* foundPlayer = nullptr;
+	for (cube::Creature* c : cube::GetGame()->world->creatures)
 	{
-		auto ingredients = &player->inventory_tabs.at(cube::Inventory::IngredientsTab);
-
-		for (int i = ingredients->size() - 1; i >= 0 ; i--)
+		if (c->entity_data.hostility_type == (int)cube::Enums::EntityBehaviour::Player)
 		{
-			cube::ItemStack* stack = &ingredients->at(i);
-			if (stack->item.category == 2)
+			if (c->id == attacker->id)
 			{
-				cube::Quest* quest = (cube::Quest*)&stack->item;
-				if (quest->GetType() == cube::Quest::QuestType::Killing)
+				foundPlayer = c;
+			}
+			else if (c->pet_id == attacker->id)
+			{
+				foundPlayer = c;
+			}
+		}
+	}
+
+	if (foundPlayer == nullptr)
+	{
+		return;
+	}
+	
+	auto ingredients = &foundPlayer->inventory_tabs.at(cube::Inventory::IngredientsTab);
+
+	for (int i = ingredients->size() - 1; i >= 0 ; i--)
+	{
+		cube::ItemStack* stack = &ingredients->at(i);
+		if (stack->item.category == 2)
+		{
+			cube::Quest* quest = (cube::Quest*)&stack->item;
+			if (quest->GetType() == cube::Quest::QuestType::Killing)
+			{
+				if (quest->GetSubType() == creature->entity_data.race)
 				{
-					if (quest->GetSubType() == creature->entity_data.race)
+					quest->IncreaseProgress();
+					if (quest->IsCompleted())
 					{
-						quest->IncreaseProgress();
-						if (quest->IsCompleted())
-						{
-							quest->Complete();
-							ingredients->erase(ingredients->begin() + i);
-						}
+						quest->Complete();
+						ingredients->erase(ingredients->begin() + i);
 					}
 				}
 			}

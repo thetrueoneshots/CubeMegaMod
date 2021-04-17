@@ -10,10 +10,6 @@
 #include "../CubeMod.h"
 
 extern "C" void OnItemPriceHandler(cube::Item* item, int* price) {
-	//for (CubeMod* mod : g_Mods) {
-	//	mod->OnItemPrice(item, price);
-	//}
-	// Todo: Create a CubeMod function that gets called for every mod.
 	switch (item->category)
 	{
 	case 1:

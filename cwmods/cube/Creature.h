@@ -252,7 +252,9 @@ namespace cube {
 			std::list<cube::Creature::Buff> buffs;
 			_BYTE gap990[16];
 			float stamina;
-			_BYTE gap9A4[76];
+			_BYTE gap9A4[52];
+			long long pet_id;
+			_BYTE gap9E0[16];
 			std::vector<std::vector<cube::ItemStack>> inventory_tabs;
 			int field_A08;
 			cube::Item unk_item;
