@@ -86,14 +86,31 @@ class Mod : GenericMod {
 			return 0;
 		}
 
-		if (!wcscmp(msg, L"/t"))
+		int type, subtype;
+		if (swscanf_s(msg, L"/t %d %d", &type, &subtype) == 2)
 		{
 			cube::Game* game = cube::GetGame();
-			wchar_t buffer[250];
-			swprintf_s(buffer, 250, L"Shift skill: %d\n", game->controls.button_class_skill);
-			game->PrintMessage(buffer);
-			swprintf_s(buffer, 250, L"Button special attack: %d\n", game->controls.button_special_attack);
-			game->PrintMessage(buffer);
+			cube::World* world = game->world;
+
+			cube::Projectile projectile;
+			projectile.target_pos = game->GetPlayer()->entity_data.position + LongVector3(100, 100 ,100);
+			projectile.field_38 = 0;
+			projectile.field_40 = 0;
+			projectile.some_size_in_blocks = 5.f;
+			projectile.visual_size = 1.f;
+			projectile.damage = 1000.f;
+			projectile.projectile_subtype = subtype;
+			projectile.projectile_type = (cube::Projectile::ProjectileType)type;
+			projectile.current_time_ms_float = 0.f;
+			projectile.max_time_to_live_ms_int = 10000;
+			projectile.field_64 = 0;
+			projectile.field_60 = 0;
+			projectile.guid = game->GetPlayer()->id;
+			projectile.pos = game->GetPlayer()->entity_data.position;
+			projectile.velocity.x = 10.f;
+			projectile.velocity.z = 10.f;
+			world->projectiles.push_front(projectile);
+			game->PrintMessage(L"Place fire puddle \n");
 			return 1;
 		}
 

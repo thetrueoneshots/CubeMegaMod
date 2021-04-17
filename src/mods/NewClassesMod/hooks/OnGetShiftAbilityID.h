@@ -54,14 +54,6 @@ extern "C" int OnShiftAbilityID(cube::Game* game, cube::Creature* player) {
 		return 0;
 	}
 
-	if (game->control_states[ControlIndex::button_ultimate_skill])
-	{
-		if (player->entity_data.current_ability > 164)
-		{
-			game->PrintMessage(L"R!\n");
-		}
-	}
-
 	if (game->control_states[ControlIndex::button_class_skill])
 	{
 		player->entity_data.current_ability = MOD->m_Classes.at(index)->GetShiftAbilityId(player);

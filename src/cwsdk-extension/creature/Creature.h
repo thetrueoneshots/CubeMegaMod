@@ -60,7 +60,7 @@ namespace cube
 			Snow,
 			Leaves,
 			Unk_12,
-			Unk_13,
+			Road,
 			Unk_14,
 			Unk_15,
 		};

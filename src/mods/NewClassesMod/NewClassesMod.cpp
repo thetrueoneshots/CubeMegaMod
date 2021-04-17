@@ -8,6 +8,7 @@ static NewClassesMod* MOD;
 #include "hooks/OnGetShiftAbilityID.h"
 #include "hooks/OnCreaturePassiveMana.h"
 #include "hooks/TreasureFixHandler.h"
+#include "hooks/OnExecuteAbility.h"
 
 #include "classes/MonkClass.h"
 
@@ -27,9 +28,14 @@ void NewClassesMod::OnGameTick(cube::Game* game)
 		WriteByte(base + offset + 0x03, 0x90);
 		WriteByte(base + offset + 0x04, 0x90);
 		WriteByte(base + offset + 0x05, 0x90);
+
+		CharacterClass::IntializeAbilities(game);
+
+		int i = 0;
 		for (CharacterClass* characterClass : m_Classes)
 		{
-			characterClass->Initialize(game);
+			characterClass->Initialize(game, i + 5);
+			i++;
 		}
 	}
 }
@@ -45,6 +51,7 @@ void NewClassesMod::Initialize()
 	InitializeOnGetShiftIDHandler();
 	InitializeOnCreatureManaHandler();
 	InitializeTreasureFixHandler();
+	InitializeOnExecuteAbilityHandler();
 
 	// Extend menu to supply the amount of classes
 	// Add the names of new classes

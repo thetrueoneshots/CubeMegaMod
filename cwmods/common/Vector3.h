@@ -81,6 +81,13 @@ public:
 	Vector3<T> operator*(const T& other) const {
 		return Vector3<T>(this->x * other, this->y * other, this->z * other);
 	}
+
+	Vector3<T> operator+(const Vector3<T>& other) const {
+	return Vector3<T>(this->x + other.x, this->y + other.y, this->z + other.z);
+	}
+	Vector3<T> operator+(const T& other) const {
+		return Vector3<T>(this->x + other, this->y + other, this->z + other);
+	}
 };
 
 typedef Vector3<int> IntVector3;

@@ -115,6 +115,8 @@ namespace cube {
 			void SetTime(int ms);
 			void SetTime(int hour, int minute);
 			float GetTime();
+
+			void ExecuteAbilityMaybe(cube::Creature* creature);
 	};
 }
 

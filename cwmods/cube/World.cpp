@@ -107,3 +107,74 @@ void cube::World::SetTime(int hour, int minute) {
 float cube::World::GetTime() {
 	return this->state.time;
 }
+
+int SomethingWithAbilityAndHaste(cube::Creature*);
+void HandleBinaryToggles(cube::Creature*);
+
+void cube::World::ExecuteAbilityMaybe(cube::Creature* creature)
+{
+	auto var_B38 = 0x0FFFFFFFFFFFFFFFE;
+	if (this->local_creature == creature || (this->field_358 == 0 && creature->entity_data.hostility_type == 0))
+	{
+		creature->entity_data.binary_toggles &= 0x0FFFB;
+		int current_ability = creature->entity_data.current_ability;
+		if (current_ability != 0)
+		{
+			HandleBinaryToggles(creature);
+			//Do some math when ability = 133
+		}
+	}
+}
+
+// Todo: Call CW function 0x4F220
+int SomethingWithAbilityAndHaste(cube::Creature* creature)
+{
+	return 0;
+}
+
+void HandleBinaryToggles(cube::Creature* creature)
+{
+	int current_ability = creature->entity_data.current_ability;
+
+	int a1 = current_ability - 95;
+	if (a1 & 0xFF <= 57 && (0x200880002000001 >> (a1 & 0xFF)) & 1 == 1)
+	{
+		return;
+	}
+
+	if (current_ability == 159 || (current_ability == 161 && creature->entity_data.hostility_type == 0))
+	{
+		return;
+	}
+
+	int a2 = current_ability - 118;
+	if (a2 & 0xFF <= 45 && (0x30C010000CC9 >> (a2 & 0xFF)) & 1 == 1)
+	{
+		return;
+	}
+
+	int a3 = current_ability - 80;
+	if (a3 & 0xFF <= 10 && (0x7F7 >> (a3 & 0xFF)) & 1 == 1)
+	{
+		return;
+	}
+
+	if (current_ability == 12)
+	{
+		return;
+	}
+
+	if ((float)(SomethingWithAbilityAndHaste(creature) + 200) <= creature->entity_data.time_since_ability && current_ability == 147)
+	{
+		return;
+	}
+
+	if ((a1 & 0xFF <= 60 && (0x104327400040004F >> (a1 & 0xFF)) & 1 == 1) || current_ability == 35 || creature->entity_data.binary_toggles != 0x2012)
+	{
+		creature->entity_data.binary_toggles &= 0x0FFBF;
+		return;
+	}
+
+	creature->entity_data.binary_toggles |= 4;
+	return;
+}

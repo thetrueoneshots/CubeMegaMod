@@ -6,7 +6,7 @@ public:
 	MonkClass() : CharacterClass("Monk", L"Monk") {}
 	~MonkClass() {}
 
-	void Initialize(cube::Game* game) override;
+	void Initialize(cube::Game* game, int index) override;
 	void GenerateStarterGear(cube::Game* game, cube::Creature* player) override;
 	int GetUltimateAbilityId(cube::Creature* player) override;
 	int GetUltimateAbilityCooldown(cube::Creature* player, int abilityID) override;
