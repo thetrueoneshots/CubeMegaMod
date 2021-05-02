@@ -44,6 +44,7 @@ void NewClassesMod::Initialize()
 {
 	MOD = this;
 	m_Classes.push_back(new MonkClass());
+
 	InitializeMenuHook();
 	InitializeOnGetUltimateIDHandler();
 	InitializeOnGetUltimateCooldownHandler();

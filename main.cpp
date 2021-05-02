@@ -87,30 +87,14 @@ class Mod : GenericMod {
 		}
 
 		int type, subtype;
-		if (swscanf_s(msg, L"/t %d %d", &type, &subtype) == 2)
+		if (swscanf_s(msg, L"/t %d", &type) == 1)
 		{
 			cube::Game* game = cube::GetGame();
 			cube::World* world = game->world;
 
-			cube::Projectile projectile;
-			projectile.target_pos = game->GetPlayer()->entity_data.position + LongVector3(100, 100 ,100);
-			projectile.field_38 = 0;
-			projectile.field_40 = 0;
-			projectile.some_size_in_blocks = 5.f;
-			projectile.visual_size = 1.f;
-			projectile.damage = 1000.f;
-			projectile.projectile_subtype = subtype;
-			projectile.projectile_type = (cube::Projectile::ProjectileType)type;
-			projectile.current_time_ms_float = 0.f;
-			projectile.max_time_to_live_ms_int = 10000;
-			projectile.field_64 = 0;
-			projectile.field_60 = 0;
-			projectile.guid = game->GetPlayer()->id;
-			projectile.pos = game->GetPlayer()->entity_data.position;
-			projectile.velocity.x = 10.f;
-			projectile.velocity.z = 10.f;
-			world->projectiles.push_front(projectile);
-			game->PrintMessage(L"Place fire puddle \n");
+			cube::Creature::AnimationState* animationState = &game->GetPlayer()->animation_state;
+			animationState->current_animation_state_timer = 0.f;
+			animationState->current_animation_state_id = type;
 			return 1;
 		}
 

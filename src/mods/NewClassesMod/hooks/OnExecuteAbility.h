@@ -11,6 +11,8 @@
 #include "../abilities/LavaPuddle.h"
 #include "../abilities/PoisonPuddle.h"
 
+void AnimationTest(cube::World* world, cube::Creature* player);
+
 extern "C" void OnExecuteAbility(cube::World* world, cube::Creature* player) {
 	if (player->entity_data.classType <= 4 || player->entity_data.current_ability <= 165)
 	{
@@ -20,7 +22,8 @@ extern "C" void OnExecuteAbility(cube::World* world, cube::Creature* player) {
 	switch (player->entity_data.current_ability)
 	{
 	case CharacterClass::Ability::FullHeal:
-		ExecuteFullHealAbility(player);
+		cube::GetGame()->PrintMessage(L"Execute Bulwark full heal!");
+		ExecuteFullHealAbility(player, true);
 		break;
 	case CharacterClass::Ability::PuddleHeal:
 		ExecuteSelfHealingPuddleAbility(world, player);
@@ -47,9 +50,25 @@ extern "C" void OnExecuteAbility(cube::World* world, cube::Creature* player) {
 			player->entity_data.time_since_hit = 0;
 		}
 		break;
+	case CharacterClass::Ability::AnimationTest:
+		AnimationTest(world, player);
+		break;
 	default:
 		break;
 	}
+}
+
+void AnimationTest(cube::World* world, cube::Creature* player)
+{
+	float time = player->entity_data.time_since_ability;
+	int max_time = 500.f;
+
+	if (time > max_time)
+	{
+		player->entity_data.current_ability = 0;
+	}
+
+	player->entity_data.appearance.chest_rotation = (time / max_time) * 360.f;
 }
 
 GETTER_VAR(void*, ASMOnExecuteAbility_jmpback);

@@ -29,6 +29,7 @@ public:
 		PuddleHeal = 167,
 		PuddleLava = 168,
 		PuddlePoison = 169,
+		AnimationTest = 170,
 	};
 
 	CharacterClass(char* name, wchar_t* widename) : m_Name(name), m_WideName(widename) {};

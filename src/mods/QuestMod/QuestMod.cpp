@@ -55,6 +55,11 @@ void QuestMod::OnCreatureDeath(cube::Creature* creature, cube::Creature* attacke
 		return;
 	}
 	
+	if (foundPlayer->inventory_tabs.size() < cube::Inventory::IngredientsTab)
+	{
+		return;
+	}
+
 	auto ingredients = &foundPlayer->inventory_tabs.at(cube::Inventory::IngredientsTab);
 
 	for (int i = ingredients->size() - 1; i >= 0 ; i--)

@@ -59,6 +59,12 @@ int MonkClass::GetShiftAbilityId(cube::Creature* player)
 		{
 			return 53;
 		}
+
+		if (player->entity_data.time_since_ability <= 250.f)
+		{
+			return player->entity_data.current_ability;
+		}
+
 		return Ability::PuddleLava;
 	}
 
@@ -73,6 +79,12 @@ int MonkClass::GetMiddleMouseAbilityId(cube::Creature* player)
 		{
 			return 53;
 		}
+
+		if (player->entity_data.time_since_ability <= 250.f)
+		{
+			return player->entity_data.current_ability;
+		}
+
 		return Ability::PuddlePoison;
 	}
 
@@ -111,5 +123,5 @@ int MonkClass::ManaGenerationType(cube::Creature* player)
 	{
 		return ManaGenerationType::PassiveManaGain;
 	}
-	return ManaGenerationType::NoManaChange;
+	return ManaGenerationType::PassiveManaGain;
 }

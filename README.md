@@ -91,7 +91,18 @@ Stat updates to mobs and pets.
 	- Quests of different rarities can drop, increasing the reward and amount of kills needed.
 
 ### New Classes	[ID: 11]
-- Adds a modified version of the monk class into the game. Note that this part is still bound the change a lot.
+- Monk class
+	- Gear wearable: all gear except weapons can be equipped, with the exception of the fists.
+	- Specialization 0: Chieftain
+		- Ultimate: Bulwark, 20s cooldown. Heals the player back to full.
+		- Shift: Fire trail. Consumes mana and leaves a trail of fire, dealing damage based on damage and combo.
+		- Passive: Mana gain.
+		- Middle mouse button: Weird movement dash ability I made myself.
+	- Specialization 1: Sorcerer
+		- Ultimate: Bulwark, 30s cooldown. Drops a healing puddle. Gains 20 combo.
+		- Shift: Lava puddle, gains 1 combo. Costs 10 mana.
+		- Passive: Mana gain.
+		- Middle mouse button: Poison puddle, gains 5 combo. Costs 50 stamina. 
 
 ### Spirit Cubes [ID: -]
 Spirit cubes are available again in the game. They can be bought from the weapon vendor for 25g each! Checkout the 
