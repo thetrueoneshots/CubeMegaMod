@@ -4,7 +4,7 @@
 #pragma once
 
 #include "cwsdk.h"
-#include "../NewClassesMod.h"
+#include "../PlayerUpdatesMod.h"
 
 extern "C" int OnCanEquipItem(cube::Item* item, int classType) {
 	if (classType <= 4)

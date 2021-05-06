@@ -1,6 +1,6 @@
-#include "NewClassesMod.h"
+#include "PlayerUpdatesMod.h"
 
-static NewClassesMod* MOD;
+static PlayerUpdatesMod* MOD;
 #include "hooks/CharacterCreationHandler.h"
 #include "hooks/OnGetUltimateAbilityID.h"
 #include "hooks/OnGetUltimateAbilityCooldown.h"
@@ -9,10 +9,11 @@ static NewClassesMod* MOD;
 #include "hooks/OnCreaturePassiveMana.h"
 #include "hooks/TreasureFixHandler.h"
 #include "hooks/OnExecuteAbility.h"
+#include "hooks/OnGenerateCreatureAppearance.h"
 
 #include "classes/MonkClass.h"
 
-void NewClassesMod::OnGameTick(cube::Game* game)
+void PlayerUpdatesMod::OnGameTick(cube::Game* game)
 {
 	static bool initialized = false;
 	if (!initialized)
@@ -40,7 +41,7 @@ void NewClassesMod::OnGameTick(cube::Game* game)
 	}
 }
 
-void NewClassesMod::Initialize()
+void PlayerUpdatesMod::Initialize()
 {
 	MOD = this;
 	m_Classes.push_back(new MonkClass());
@@ -53,6 +54,7 @@ void NewClassesMod::Initialize()
 	InitializeOnCreatureManaHandler();
 	InitializeTreasureFixHandler();
 	InitializeOnExecuteAbilityHandler();
+	InitializeOnGenerateCreatureHandler();
 
 	// Extend menu to supply the amount of classes
 	// Add the names of new classes

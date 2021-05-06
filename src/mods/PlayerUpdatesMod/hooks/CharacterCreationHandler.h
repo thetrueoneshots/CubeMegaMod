@@ -1,7 +1,7 @@
 #pragma once
 #include "cwsdk.h"
 #include "../../../hooks.h"
-#include "../NewClassesMod.h"
+#include "../PlayerUpdatesMod.h"
 
 const static int STANDARD_CLASS_COUNT = 4;
 

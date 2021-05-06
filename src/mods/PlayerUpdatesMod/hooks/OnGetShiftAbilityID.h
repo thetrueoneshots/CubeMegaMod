@@ -5,7 +5,7 @@
 
 #include "cwsdk.h"
 #include "../../../cwsdk-extension.h"
-#include "../NewClassesMod.h"
+#include "../PlayerUpdatesMod.h"
 #include <stddef.h>
 
 enum ControlIndex : int

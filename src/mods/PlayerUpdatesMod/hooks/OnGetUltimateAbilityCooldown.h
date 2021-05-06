@@ -4,7 +4,7 @@
 #pragma once
 
 #include "cwsdk.h"
-#include "../NewClassesMod.h"
+#include "../PlayerUpdatesMod.h"
 
 std::vector<int> cooldownMap;
 

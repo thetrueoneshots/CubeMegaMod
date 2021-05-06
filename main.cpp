@@ -13,7 +13,7 @@
 #include "src/mods/RegionLockUpdateMod/RegionLockUpdateMod.h"
 #include "src/mods/WeaponUpgradeMod/WeaponUpgradeMod.h"
 #include "src/mods/QuestMod/QuestMod.h"
-#include "src/mods/NewClassesMod/NewClassesMod.h"
+#include "src/mods/PlayerUpdatesMod/PlayerUpdatesMod.h"
 #include "src/CubeMod.h"
 
 GLOBAL std::vector<CubeMod*> g_Mods;
@@ -158,7 +158,7 @@ class Mod : GenericMod {
 		modVector.push_back(new RegionLockUpdateMod());
 		modVector.push_back(new WeaponUpgradeMod());
 		modVector.push_back(new QuestMod());
-		modVector.push_back(new NewClassesMod());
+		modVector.push_back(new PlayerUpdatesMod());
 
 		cube::ApplySettings(&modVector);
 		cube::SaveSettings(&modVector);

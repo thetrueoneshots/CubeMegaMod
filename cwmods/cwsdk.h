@@ -74,6 +74,8 @@
 #include "cube/Zone.h"
 #include "cube/constants.h"
 
+#include "cube/SaveData.h"
+
 #include "gfx/Chunk.h"
 #include "gfx/ChunkBuffer.h"
 #include "gfx/D3D11Graphics.h"

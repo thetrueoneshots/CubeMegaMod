@@ -2,14 +2,14 @@
 #include "../../CubeMod.h"
 #include "CharacterClass.h"
 
-class NewClassesMod : public CubeMod
+class PlayerUpdatesMod : public CubeMod
 {
 public:
 	std::vector<CharacterClass*> m_Classes;
 
-	NewClassesMod() {
-		m_Name = "New Classes Mod";
-		m_FileName = "NewClassesMod";
+	PlayerUpdatesMod() {
+		m_Name = "Player Updates Mod";
+		m_FileName = "PlayerUpdatesMod";
 		m_ID = 11;
 		m_Version = { 1, 0, 0 };
 	}
