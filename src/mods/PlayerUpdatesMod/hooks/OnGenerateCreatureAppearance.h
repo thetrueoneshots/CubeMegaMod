@@ -2,6 +2,14 @@
 #include "cwsdk.h"
 #include "../PlayerUpdatesMod.h"
 
+const static int RACES[] = {
+	79,
+	80,
+	91,
+	97,
+	165,
+};
+
 extern "C" void OnGenerateCreature(int* race, cube::SaveData * save_data) {
 	int gender = save_data->gender;
 	int calc_race = 0;
@@ -32,83 +40,18 @@ extern "C" void OnGenerateCreature(int* race, cube::SaveData * save_data) {
 	case 7:
 		calc_race = (gender & 1) + 13;
 		break;
-	case 8:
-		calc_race = (gender & 1) + 83;
-		break;
-	case 9:
-		calc_race = 17;
-		break;
-	case 10:
-		calc_race = 43;
-		break;
-	case 11:
-		calc_race = 45;
-		break;
-	case 12:
-		calc_race = 48;
-		break;
-	case 13:
-		calc_race = 49;
-		break;
-	case 14:
-		calc_race = 50;
-		break;
-	case 15:
-		calc_race = 51;
-		break;
-	case 16:
-		calc_race = 52;
-		break;
-	case 17:
-		calc_race = 68;
-		break;
-	case 18:
-		calc_race = 69;
-		break;
-	case 19:
-		calc_race = 165;
-		break;
-	case 20:
-		calc_race = 76;
-		break;
-	case 21:
-		calc_race = 77;
-		break;
-	case 22:
-		calc_race = 79;
-		break;
-	case 23:
-		calc_race = 80;
-		break;
-	case 24:
-		calc_race = 81;
-		break;
-	case 25:
-		calc_race = 18;
-		break;
-	case 26:
-		calc_race = 85;
-		break;
-	case 27:
-		calc_race = 91;
-		break;
-	case 28:
-		calc_race = 94;
-		break;
-	case 29:
-		calc_race = 95;
-		break;
-	case 30:
-		calc_race = 96;
-		break;
-	case 31:
-		calc_race = 97;
-		break;
-	case 32:
-		calc_race = 101;
-		break;
 	default:
+	{
+		int index = save_data->race - 8;
+		int size = sizeof(RACES) / sizeof(RACES[0]);
+
+		if (index >= size) {
+			break;
+		}
+
+		calc_race = RACES[index];
 		break;
+	}
 	}
 
 	*race = calc_race;
@@ -285,6 +228,6 @@ void InitializeOnGenerateCreatureHandler() {
 	auto offset_increase = 0x272648;
 	auto offset_decrease = 0x2725F1;
 
-	WriteByte(CWOffset(offset_increase + 0x02), 32);
-	WriteByte(CWOffset(offset_decrease + 0x01), 32);
+	WriteByte(CWOffset(offset_increase + 0x02), 7 + sizeof(RACES) / sizeof(RACES[0]));
+	WriteByte(CWOffset(offset_decrease + 0x01), 7 + sizeof(RACES) / sizeof(RACES[0]));
 }
