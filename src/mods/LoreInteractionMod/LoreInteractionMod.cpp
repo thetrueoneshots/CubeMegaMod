@@ -83,8 +83,8 @@ void LoreInteractionMod::OnLoreIncrease(cube::Game* game, int value)
 	}
 	else
 	{
-		compare = min(value - 150, 100);
-		// (value - 150) % chance of an artifact drop
+		compare = min((value - 150)/5, 40);
+		// (value - 150)/5 % chance of an artifact drop until a max of 40%
 		if (chance <= compare)
 		{
 			cube::Helper::DropItem(player, cube::Helper::ItemGenerationType::Artifact);
