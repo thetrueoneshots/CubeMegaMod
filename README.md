@@ -87,7 +87,40 @@ Stat updates to mobs and pets.
 
 ### New Quests [ID: 10]
 - Adds new quest types that can be dropped when talking to NPC's.
-	- The quests consists of 4 different kill quest for 4 different animal types.
+	- The current types of kill quests are:
+		- cow
+		- fly
+		- chicken
+		- sheep
+		- collie
+		- skull bull
+		- alpaca
+		- turtle
+		- terrier
+		- scottisch terrier
+		- pig
+		- bunny
+		- ogre
+		- rockling
+		- hornets
+		- crow
+		- bat
+		- plain runner
+		- snow runner
+		- desert runner
+		- radishling
+		- onionling
+		- desert onionling
+		- imp
+		- spitter
+		- mole
+		- biter
+		- horse
+		- bark beetle
+		- fire beetle
+		- snout beetle
+		- lemon beetle
+		- mana deer
 	- Quests of different rarities can drop, increasing the reward and amount of kills needed.
 
 ### New Classes	[ID: 11]

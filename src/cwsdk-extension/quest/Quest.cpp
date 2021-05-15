@@ -13,13 +13,42 @@ cube::Quest::QuestType cube::Quest::GetType()
 int cube::Quest::GetSubType()
 {
 	int subtypes[] = {
-		100,
-		60,
-		56,
-		34
+		100,	// cow
+		60,		// fly
+		56,		// chicken
+		34,		// sheep
+		19,		// collie
+		21,		// skull bull
+		22,		// alpaca
+		25,		// turtle
+		26,		// terrier
+		27,		// scottisch terrier
+		33,		// pig
+		35,		// bunny
+		46,		// ogre
+		47,		// rockling
+		53,		// hornets
+		55,		// crow
+		59,		// bat
+		63,		// plain runner
+		65,		// snow runner
+		66,		// desert runner
+		70,		// radishling
+		71,		// onionling
+		72,		// desert onionling
+		85,		// imp
+		86,		// spitter
+		87,		// mole
+		88,		// biter
+		98,		// horse
+		102,	// bark beetle
+		103,	// fire beetle
+		104,	// snout beetle
+		105,	// lemon beetle
+		277,	// mana deer
 	};
 	int cnt = sizeof(subtypes) / sizeof(*subtypes);
-	return subtypes[this->modifier / (int)QuestType::QuestType_END % 4];
+	return subtypes[(this->modifier / (int)QuestType::QuestType_END) % cnt];
 }
 
 int cube::Quest::GetTarget()
@@ -111,7 +140,7 @@ std::wstring* cube::Quest::GetQuestName(cube::Speech* speech, std::wstring* str)
 	{
 		wchar_t buffer[250];
 		std::wstring buffer2;
-		swprintf_s(buffer, 250, L"%s killing quest\n", speech->GetRaceName(&buffer2, this->GetSubType()));
+		swprintf_s(buffer, 250, L"%s killing quest\n", speech->GetRaceName(&buffer2, this->GetSubType())->c_str());
 		*str = std::wstring(buffer);
 	}
 		break;

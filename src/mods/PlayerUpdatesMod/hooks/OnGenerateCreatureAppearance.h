@@ -3,14 +3,68 @@
 #include "../PlayerUpdatesMod.h"
 
 const static int RACES[] = {
-	79,
-	80,
-	91,
-	97,
-	165,
+	79,  // 8: Jester
+	80,  // 9: Spectrino
+	91,  //10: Raccoon
+	97,  //11: Vampire
+	165, //12: Skeleton Knight
 };
 
-extern "C" void OnGenerateCreature(int* race, cube::SaveData * save_data) {
+bool SetPreAppearance(cube::SaveData* saveData, cube::Creature::EntityData::Appearance* appearance)
+{
+	if (saveData == nullptr)
+	{
+		return false;
+	}
+
+	if (appearance == nullptr)
+	{
+		return false;
+	}
+
+	appearance->hair_color = saveData->hair_color;
+	switch (saveData->race)
+	{
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+	case 5:
+	case 6:
+	case 7:
+		return false;
+		break;
+	case 9:
+		if (saveData->haircut > 0)
+		{
+			appearance->hair_model = 1489 + saveData->haircut;
+		}
+		return false;
+		break;
+	case 11:
+		appearance->head_model = 0x0B580B57;
+		//appearance->hair_model = 0x0B580B57;
+		appearance->feet_model = 0x69F0267;
+		appearance->hands_model = 0x0B59;
+		appearance->wings_model = 0x18A;
+		appearance->wing_scale = 2.f;
+		appearance->wings_rotation = 60.f;
+		appearance->flags2 |= 0x402;
+		//appearance->hair_model = 1489;
+		appearance->hair_color = saveData->hair_color;
+		
+		return true;
+		break;
+	default:
+		return false;
+		break;
+	}
+
+	return true;
+}
+
+extern "C" void OnGenerateCreature(int* race, cube::SaveData * save_data, cube::Creature::EntityData::Appearance* appearance) {
 	int gender = save_data->gender;
 	int calc_race = 0;
 
@@ -55,6 +109,11 @@ extern "C" void OnGenerateCreature(int* race, cube::SaveData * save_data) {
 	}
 
 	*race = calc_race;
+
+	if (SetPreAppearance(save_data, appearance))
+	{
+		*race = -1;
+	}
 }
 
 std::string* GetRaceName(std::string* string, int race)
@@ -143,7 +202,7 @@ extern "C" void OnGetRaceName2(void* toAppend, int raceIndex)
 	data.race = raceIndex;
 	data.gender = 0;
 
-	OnGenerateCreature(&race, &data);
+	OnGenerateCreature(&race, &data, nullptr);
 
 	GetRaceName(&name, race);
 
@@ -164,6 +223,7 @@ __attribute__((naked)) void ASMOnGenerateCreature() {
 		// Set parameters
 		"mov rcx, r12 \n"
 		"mov rdx, r8 \n"
+		"mov r8, rbx \n"
 
 		// Call function
 		PREPARE_STACK
