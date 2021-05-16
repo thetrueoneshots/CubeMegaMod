@@ -12,7 +12,7 @@ public:
 		m_Name = "Quest Mod";
 		m_FileName = "QuestMod";
 		m_ID = 10;
-		m_Version = { 1, 1, 0 };
+		m_Version = { 1, 2, 0 };
 	}
 
 	void OnGameTick(cube::Game* game);
