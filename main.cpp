@@ -14,6 +14,7 @@
 #include "src/mods/WeaponUpgradeMod/WeaponUpgradeMod.h"
 #include "src/mods/QuestMod/QuestMod.h"
 #include "src/mods/PlayerUpdatesMod/PlayerUpdatesMod.h"
+#include "src/mods/StackUpdatesMod/StackUpdatesMod.h"
 #include "src/CubeMod.h"
 
 GLOBAL std::vector<CubeMod*> g_Mods;
@@ -159,6 +160,7 @@ class Mod : GenericMod {
 		modVector.push_back(new WeaponUpgradeMod());
 		modVector.push_back(new QuestMod());
 		modVector.push_back(new PlayerUpdatesMod());
+		modVector.push_back(new StackUpdatesMod());
 
 		cube::ApplySettings(&modVector);
 		cube::SaveSettings(&modVector);
