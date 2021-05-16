@@ -135,7 +135,15 @@ Stat updates to mobs and pets.
 		- Ultimate: Bulwark, 30s cooldown. Drops a healing puddle. Gains 20 combo.
 		- Shift: Lava puddle, gains 1 combo. Costs 10 mana.
 		- Passive: Mana gain.
-		- Middle mouse button: Poison puddle, gains 5 combo. Costs 50 stamina. 
+		- Middle mouse button: Poison puddle, gains 5 combo. Costs 50 stamina.
+- Added playable races
+	- Jester
+	- Spectrino
+	- Raccoon
+	- Vampire
+	- Skeleton Knight
+	- Archdruid
+	- Half-demon
 
 ### Stack updates mod [ID: 12]
 - Increased the stack size for every item to 100.
