@@ -11,7 +11,7 @@ public:
 		m_Name = "Player Updates Mod";
 		m_FileName = "PlayerUpdatesMod";
 		m_ID = 11;
-		m_Version = { 1, 0, 0 };
+		m_Version = { 1, 1, 0 };
 	}
 
 	void OnGameTick(cube::Game* game);

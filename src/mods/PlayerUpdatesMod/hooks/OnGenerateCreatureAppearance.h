@@ -2,12 +2,20 @@
 #include "cwsdk.h"
 #include "../PlayerUpdatesMod.h"
 
-const static int RACES[] = {
-	79,  // 8: Jester
-	80,  // 9: Spectrino
-	91,  //10: Raccoon
-	97,  //11: Vampire
-	165, //12: Skeleton Knight
+struct RaceData
+{
+	int race_type;
+	bool gender, face, haircut, hair_color;
+};
+
+const static RaceData RACES[] = {
+	{79, false, false, false, false},	// 8: Jester
+	{80, false, false, true, true },	// 9: Spectrino
+	{91, false, false, false, false},	//10: Raccoon
+	{97, false, false, false, true},	//11: Vampire
+	{165, false, true, false, true},	//12: Skeleton Knight
+	{253, false, false, false, false},	//13: Archdruid
+	{254, false, false, false, false},	//14: Half-demon
 };
 
 bool SetPreAppearance(cube::SaveData* saveData, cube::Creature::EntityData::Appearance* appearance)
@@ -41,20 +49,6 @@ bool SetPreAppearance(cube::SaveData* saveData, cube::Creature::EntityData::Appe
 			appearance->hair_model = 1489 + saveData->haircut;
 		}
 		return false;
-		break;
-	case 11:
-		appearance->head_model = 0x0B580B57;
-		//appearance->hair_model = 0x0B580B57;
-		appearance->feet_model = 0x69F0267;
-		appearance->hands_model = 0x0B59;
-		appearance->wings_model = 0x18A;
-		appearance->wing_scale = 2.f;
-		appearance->wings_rotation = 60.f;
-		appearance->flags2 |= 0x402;
-		//appearance->hair_model = 1489;
-		appearance->hair_color = saveData->hair_color;
-		
-		return true;
 		break;
 	default:
 		return false;
@@ -103,7 +97,7 @@ extern "C" void OnGenerateCreature(int* race, cube::SaveData * save_data, cube::
 			break;
 		}
 
-		calc_race = RACES[index];
+		calc_race = RACES[index].race_type;
 		break;
 	}
 	}
@@ -211,7 +205,190 @@ extern "C" void OnGetRaceName2(void* toAppend, int raceIndex)
 	((void (*)(void*, const wchar_t*))CWOffset(0x486B0))(toAppend, wname.c_str());
 }
 
+extern "C" void OnGetGenderText(void* toAppend, cube::CharacterStyleWidget * widget)
+{
+	std::string name = "Male";
+	if (widget->gender == 1)
+	{
+		name = "Female";
+	}
 
+	if (widget->race > 7)
+	{
+		int index = widget->race - 8;
+		if (!RACES[index].gender)
+		{
+			name = "<None>";
+		}
+	}
+
+	((void (*)(void*, const char*))CWOffset(0x6D8E0))(toAppend, name.c_str());
+}
+
+extern "C" void OnGetFaceText(void* toAppend, cube::CharacterStyleWidget * widget)
+{
+	std::wstring name = L"Face " + std::to_wstring(widget->face + 1);
+
+	if (widget->race > 7)
+	{
+		int index = widget->race - 8;
+		if (!RACES[index].face)
+		{
+			name = L"<None>";
+		}
+	}
+
+	((void (*)(void*, const wchar_t*))CWOffset(0x486B0))(toAppend, name.c_str());
+}
+
+extern "C" void OnGetHairCutText(void* toAppend, cube::CharacterStyleWidget * widget)
+{
+	std::wstring name = L"Haircut " + std::to_wstring(widget->haircut + 1);
+
+	if (widget->race > 7)
+	{
+		int index = widget->race - 8;
+		if (!RACES[index].haircut)
+		{
+			name = L"<None>";
+		}
+	}
+
+	((void (*)(void*, const wchar_t*))CWOffset(0x486B0))(toAppend, name.c_str());
+}
+
+extern "C" void OnGetHairColorText(void* toAppend, cube::CharacterStyleWidget * widget)
+{
+	std::wstring name = L"Hair color";
+
+	if (widget->race > 7)
+	{
+		int index = widget->race - 8;
+		RaceData data = RACES[index];
+		if (data.hair_color && !data.haircut)
+		{
+			name = L"Eye color";
+		}
+
+		if (!data.hair_color)
+		{
+			name = L"";
+		}
+	}
+
+	((void (*)(void*, const wchar_t*))CWOffset(0x486B0))(toAppend, name.c_str());
+}
+
+extern "C" int OnGetHairColorDisplay(cube::CharacterStyleWidget * widget)
+{
+	if (widget->race > 7)
+	{
+		int index = widget->race - 8;
+
+		if (!RACES[index].hair_color)
+		{
+			return 0;
+		}
+	}
+
+	widget->preview_hair_color = widget->current_hair_color;
+	return 1;
+}
+
+GETTER_VAR(void*, ASMOnDrawColorPicker_jmpback);
+GETTER_VAR(void*, ASMOnDrawColorPicker_bail);
+__attribute__((naked)) void ASMOnDrawColorPicker() {
+	asm(".intel_syntax \n"
+		// Set parameters
+		"mov rcx, rdi \n"	// cube::CharacterStyleWidget* widget
+
+		// Call function
+		PREPARE_STACK
+		"call OnGetHairColorDisplay \n"
+		RESTORE_STACK
+
+		"xorps xmm0, xmm0 \n"
+		"movdqu [rbp + 0x58], xmm0 \n"
+		"mov [rbp + 0x68], rsi \n"
+
+		"cmp rax, 1 \n"
+		"jne 1f \n"
+
+		DEREF_JMP(ASMOnDrawColorPicker_jmpback)
+
+		"1: \n"
+		DEREF_JMP(ASMOnDrawColorPicker_bail)
+		".att_syntax \n"
+	);
+}
+
+GETTER_VAR(void*, ASMOnDrawHairColor_jmpback);
+__attribute__((naked)) void ASMOnDrawHairColor() {
+	asm(".intel_syntax \n"
+		// Set parameters
+		"lea rcx, [rsp + 0x50] \n"	// void* toAppend
+		"mov rdx, rdi \n"			// cube::CharacterStyleWidget* widget
+
+		// Call function
+		PREPARE_STACK
+		"call OnGetHairColorText \n"
+		RESTORE_STACK
+
+		DEREF_JMP(ASMOnDrawHairColor_jmpback)
+		".att_syntax \n"
+	);
+}
+
+GETTER_VAR(void*, ASMOnDrawHairCut_jmpback);
+__attribute__((naked)) void ASMOnDrawHairCut() {
+	asm(".intel_syntax \n"
+		// Set parameters
+		"lea rcx, [rsp + 0x50] \n"	// void* toAppend
+		"mov rdx, rdi \n"			// cube::CharacterStyleWidget* widget
+
+		// Call function
+		PREPARE_STACK
+		"call OnGetHairCutText \n"
+		RESTORE_STACK
+
+		DEREF_JMP(ASMOnDrawHairCut_jmpback)
+		".att_syntax \n"
+	);
+}
+
+GETTER_VAR(void*, ASMOnDrawFace_jmpback);
+__attribute__((naked)) void ASMOnDrawFace() {
+	asm(".intel_syntax \n"
+		// Set parameters
+		"lea rcx, [rsp + 0x50] \n"	// void* toAppend
+		"mov rdx, rdi \n"			// cube::CharacterStyleWidget* widget
+
+		// Call function
+		PREPARE_STACK
+		"call OnGetFaceText \n"
+		RESTORE_STACK
+
+		DEREF_JMP(ASMOnDrawFace_jmpback)
+		".att_syntax \n"
+	);
+}
+
+GETTER_VAR(void*, ASMOnDrawGender_jmpback);
+__attribute__((naked)) void ASMOnDrawGender() {
+	asm(".intel_syntax \n"
+		// Set parameters
+		"lea rcx, [rsp + 0x50] \n"	// void* toAppend
+		"mov rdx, rdi \n"			// cube::CharacterStyleWidget* widget
+
+		// Call function
+		PREPARE_STACK
+		"call OnGetGenderText \n"
+		RESTORE_STACK
+
+		DEREF_JMP(ASMOnDrawGender_jmpback)
+		".att_syntax \n"
+	);
+}
 
 GETTER_VAR(void*, ASMOnGenerateCreature_jmpback);
 __attribute__((naked)) void ASMOnGenerateCreature() {
@@ -260,6 +437,7 @@ GETTER_VAR(void*, ASMOnGetRaceName2_jmpback);
 __attribute__((naked)) void ASMOnGetRaceName2() {
 	asm(".intel_syntax \n"
 
+
 		// Set parameters
 		"lea rcx, [rsp + 0x50] \n"
 		"mov rdx, rax \n"
@@ -278,12 +456,27 @@ void InitializeOnGenerateCreatureHandler() {
 	WriteFarJMP(CWOffset(0x53FDB), (void*)&ASMOnGenerateCreature);
 	ASMOnGenerateCreature_jmpback = CWOffset(0x54057);
 
-
 	WriteFarJMP(CWOffset(0x26F548), (void*)&ASMOnGetRaceName);
 	ASMOnGetRaceName_jmpback = CWOffset(0x26F5A4);
 
 	WriteFarJMP(CWOffset(0x271144), (void*)&ASMOnGetRaceName2);
 	ASMOnGetRaceName2_jmpback = CWOffset(0x2711A5);
+
+	WriteFarJMP(CWOffset(0x27135A), ASMOnDrawGender);
+	ASMOnDrawGender_jmpback = CWOffset(0x27137B);
+
+	WriteFarJMP(CWOffset(0x271640), ASMOnDrawFace);
+	ASMOnDrawFace_jmpback = CWOffset(0x271663);
+
+	WriteFarJMP(CWOffset(0x2717A3), ASMOnDrawHairCut);
+	ASMOnDrawHairCut_jmpback = CWOffset(0x2717C6);
+
+	WriteFarJMP(CWOffset(0x271D2A), ASMOnDrawHairColor);
+	ASMOnDrawHairColor_jmpback = CWOffset(0x271D3B);
+
+	WriteFarJMP(CWOffset(0x271DC2), ASMOnDrawColorPicker);
+	ASMOnDrawColorPicker_jmpback = CWOffset(0x271DE6);
+	ASMOnDrawColorPicker_bail = CWOffset(0x272326);
 
 	auto offset_increase = 0x272648;
 	auto offset_decrease = 0x2725F1;
