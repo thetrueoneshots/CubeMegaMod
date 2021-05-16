@@ -123,7 +123,7 @@ Stat updates to mobs and pets.
 		- mana deer
 	- Quests of different rarities can drop, increasing the reward and amount of kills needed.
 
-### New Classes	[ID: 11]
+### Player updates [ID: 11]
 - Monk class
 	- Gear wearable: all gear except weapons can be equipped, with the exception of the fists.
 	- Specialization 0: Chieftain
@@ -136,6 +136,9 @@ Stat updates to mobs and pets.
 		- Shift: Lava puddle, gains 1 combo. Costs 10 mana.
 		- Passive: Mana gain.
 		- Middle mouse button: Poison puddle, gains 5 combo. Costs 50 stamina. 
+
+### Stack updates mod [ID: 12]
+- Increased the stack size for every item to 100.
 
 ### Spirit Cubes [ID: -]
 Spirit cubes are available again in the game. They can be bought from the weapon vendor for 25g each! Checkout the 
