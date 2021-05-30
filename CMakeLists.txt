@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 3.8)
 project(project_CubeMegaMod)
 add_subdirectory(cwmods)
-add_library (CubeMegaMod-v1.5.7 SHARED "main.cpp" 
+add_library (CubeMegaMod-v1.5.9 SHARED "main.cpp" 
 "src/cwsdk-extension.h"  
 "src/hooks.h" 
 "src/hooks.cpp" 
@@ -56,4 +56,4 @@ add_library (CubeMegaMod-v1.5.7 SHARED "main.cpp"
 "src/mods/WorldGenMod/WorldGenOverride/BiomeTypeOverwrite.h" 
 "src/mods/WorldGenMod/Noise/SimplexNoise.h" 
 "src/mods/WorldGenMod/Noise/SimplexNoise.cpp" "src/hooks/ItemDropPatch.h" "src/mods/RegionLockUpdateMod/RegionLockUpdateMod.h" "src/mods/RegionLockUpdateMod/RegionLockUpdateMod.cpp" "src/hooks/RegionLockUpdate.h" "src/mods/WeaponUpgradeMod/WeaponUpgradeMod.h" "src/mods/WeaponUpgradeMod/WeaponUpgradeMod.cpp" "src/mods/WeaponUpgradeMod/hooks/ModifyWeaponUpgrade.h"  "src/mods/WeaponUpgradeMod/hooks/SmithyInteraction.h" "src/mods/QuestMod/QuestMod.cpp" "src/mods/QuestMod/QuestMod.h" "src/memory_helper/memory_helper.h" "src/mods/QuestMod/hooks/ChangeQuestItemName.h" "src/mods/QuestMod/hooks/ChangeQuestDescription.h" "src/cwsdk-extension/quest/Quest.h" "src/cwsdk-extension/quest/Quest.cpp" "src/hooks/CreatureDeathHandler.h" "src/hooks/CreatureTalkHandler.h" "src/mods/PlayerUpdatesMod/PlayerUpdatesMod.h" "src/mods/PlayerUpdatesMod/PlayerUpdatesMod.cpp" "src/mods/PlayerUpdatesMod/hooks/CharacterCreationHandler.h" "src/mods/PlayerUpdatesMod/CharacterClass.h"  "src/mods/PlayerUpdatesMod/classes/MonkClass.h" "src/mods/PlayerUpdatesMod/classes/MonkClass.cpp" "src/mods/PlayerUpdatesMod/hooks/OnGetUltimateAbilityID.h" "src/mods/PlayerUpdatesMod/hooks/OnGetUltimateAbilityCooldown.h" "src/mods/PlayerUpdatesMod/hooks/OnCreatureCanEquipItem.h"     "src/mods/PlayerUpdatesMod/hooks/OnGetShiftAbilityID.h" "src/mods/PlayerUpdatesMod/hooks/OnCreaturePassiveMana.h" "src/mods/PlayerUpdatesMod/hooks/TreasureFixHandler.h" "src/mods/PlayerUpdatesMod/hooks/OnExecuteAbility.h" "src/mods/PlayerUpdatesMod/abilities/FullHealAbility.h" "src/mods/PlayerUpdatesMod/abilities/HealingPuddle.h" "src/mods/PlayerUpdatesMod/abilities/LavaPuddle.h" "src/mods/PlayerUpdatesMod/abilities/PoisonPuddle.h"    "src/mods/PlayerUpdatesMod/hooks/CharacterStyleWidget_UpdateCreature.h" "src/mods/PlayerUpdatesMod/hooks/OnGenerateCreatureAppearance.h" "src/mods/StackUpdatesMod/StackUpdatesMod.h" "src/mods/StackUpdatesMod/StackUpdatesMod.cpp" "src/mods/WorldGenMod/WorldGenOverride/BuildingTypeOverwrite.h")
-target_link_libraries (CubeMegaMod-v1.5.7 LINK_PUBLIC CWSDK)
+target_link_libraries (CubeMegaMod-v1.5.9 LINK_PUBLIC CWSDK)
