@@ -226,5 +226,4 @@ Delivering that gives a larger reward than the value of said materials.
 ### 19. Make portal stones spawn bosses on usage.
 
 ## Final words
-Special thanks **Chris** for his work for the modding community and **Timothy(GrayShadoz - Youtube)** for his effort to make cubeworld videos (including of all of my mods).
-Also thanks to **TheBagel3(Youtube, Discord, Twitch)**, **Raxiti(Reddit)**, **kuba.dlouhej(Discord)** for testing and giving feedback on the mod.
+Special thanks **Chris** for his work for the modding community. **TheBagel3(Youtube, Discord, Twitch)** is the one to build on for support, ideas and enthousiasm. He makes awesome videos about the mods, is a nice person and lots of love for him ❤️. Also thanks **Timothy(GrayShadoz - Youtube)**, **Raxiti(Reddit)**, **kuba.dlouhej(Discord)** for testing and giving feedback on the mod.
