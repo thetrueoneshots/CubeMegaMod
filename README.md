@@ -154,7 +154,7 @@ Shop Updates [ID: 5] part of the mod.
 
 ## Installing
 Download the latest version from the releases. Put the `CubeMegaMod-v.x.x.x.dll` of one of the releases in your mod folder. For usage of the mod, checkout the attached readme.
-If you have any trouble installing the mod, check out this guide: https://www.youtube.com/watch?v=Uuq47N3YT8I.
+If you have any trouble installing the mod, check out this showcase video and guide: https://www.youtube.com/watch?v=8xM1lcF0FWo.
 
 ## Usage
 For v.1.2.0+, the usage is the following:
