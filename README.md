@@ -224,6 +224,14 @@ Delivering that gives a larger reward than the value of said materials.
 ### 17. Unlocking new classes / skins with achievements.
 ### 18. Holding artefacts / wearing them.
 ### 19. Make portal stones spawn bosses on usage.
+### 20. Job system
+  - Farmer job: Farming crops, increasing levels, selling them on the market?
+  - Mining job: Having a mode where you can walk around with a pickaxe and destroy terrain. Destroying terrain levels up your mining skills giving you a higher chance of dropping resources.
+  - Woodcutter job: Cutting woods and stuff, selling wood.
+  - Merchant job: Becoming a merchant, selling stuff from town to town.
+  - Fishing job: Having a fishing pole and getting a chance of chatching a magikarp. Uhhh I mean fishes!
+  - Blacksmithing job: Crafting weapons gives you xp and you get better more famous idk whatever.
+  - Adventurer job: Just the normal stuff, killing and quests give you adventurer xp.
 
 ## Final words
 Special thanks **Chris** for his work for the modding community. **TheBagel3(Youtube, Discord, Twitch)** is the one to build on for support, ideas and enthousiasm. He makes awesome videos about the mods, is a nice person and lots of love for him ❤️. Also thanks **Timothy(GrayShadoz - Youtube)**, **Raxiti(Reddit)**, **kuba.dlouhej(Discord)** for testing and giving feedback on the mod.
