@@ -196,6 +196,7 @@ This is a list of the possible features I am considering for this mod. Everythin
   - Converting mana to stamina / other way around.
   - Converting HP to mana / stamina.
   - Mapping the abilities to the appropriate keys (currently 1 - 9)
+  - Making combo abilities depend on weapon used
 ### 8. Buffing climbing speed by think of 100%. (The jumping hack is faster than climbing)
 ### 9. New classes.
   - Creating a new necromancer class.
@@ -232,6 +233,12 @@ Delivering that gives a larger reward than the value of said materials.
   - Fishing job: Having a fishing pole and getting a chance of chatching a magikarp. Uhhh I mean fishes!
   - Blacksmithing job: Crafting weapons gives you xp and you get better more famous idk whatever.
   - Adventurer job: Just the normal stuff, killing and quests give you adventurer xp.
+### 21. Ultimate progression
+  - Combining megamod region lock updates with cubegression and betterprogression enemy scaling
+### 22. All artifact bug fixing
+  - Fixes all stats that artifacts are supposed to give
+### 23. Weapon deconstruction
+  - Allowing gear to be deconstructed into resources, like: wood, iron, gold, emerals and more based on their rarity, material and gear type.
 
 ## Final words
 Special thanks **Chris** for his work for the modding community. **TheBagel3(Youtube, Discord, Twitch)** is the one to build on for support, ideas and enthousiasm. He makes awesome videos about the mods, is a nice person and lots of love for him ❤️. Also thanks **Timothy(GrayShadoz - Youtube)**, **Raxiti(Reddit)**, **kuba.dlouhej(Discord)** for testing and giving feedback on the mod.
