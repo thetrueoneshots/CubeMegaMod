@@ -239,6 +239,9 @@ Delivering that gives a larger reward than the value of said materials.
   - Fixes all stats that artifacts are supposed to give
 ### 23. Weapon deconstruction
   - Allowing gear to be deconstructed into resources, like: wood, iron, gold, emerals and more based on their rarity, material and gear type.
+### 24. Mini map updates
+  - Mini map showing question marks for points of interest.
+  - Re-introducing a fog over the minimap
 
 ## Final words
 Special thanks **Chris** for his work for the modding community. **TheBagel3(Youtube, Discord, Twitch)** is the one to build on for support, ideas and enthousiasm. He makes awesome videos about the mods, is a nice person and lots of love for him ❤️. Also thanks **Timothy(GrayShadoz - Youtube)**, **Raxiti(Reddit)**, **kuba.dlouhej(Discord)** for testing and giving feedback on the mod.
