@@ -25,7 +25,7 @@ GLOBAL char* g_Base;
 #include "src/hooks/ItemPriceHandler.h"
 #include "src/hooks/lore_increase.h"
 #include "src/hooks/ItemDropPatch.h"
-#include "src/hooks/CreatureDeathHandler.h"
+//#include "src/hooks/CreatureDeathHandler.h"
 #include "src/hooks/CreatureTalkHandler.h"
 
 // OLD
@@ -108,6 +108,13 @@ class Mod : GenericMod {
 		}
 
 		return 0;
+	}
+
+	virtual void OnCreatureDeath(cube::Game* game, cube::Creature* creature, cube::Creature* attacker) override
+	{
+		for (CubeMod* mod : g_Mods) {
+			mod->OnCreatureDeath(creature, attacker);
+		}
 	}
 
 	/* Function hook that gets called every game tick.
@@ -193,7 +200,7 @@ class Mod : GenericMod {
 		// Setup handlers
 		SetupChestInteractionHandler();
 		SetupShopInteractionHandler();
-		SetupOnCreatureDeathHandler();
+		//SetupOnCreatureDeathHandler();
 		SetupItemPriceHandler();
 		IncreaseLoreInitialize(&hookEvents); // Todo: Rename handler
 		ItemDropPatchInitialize();

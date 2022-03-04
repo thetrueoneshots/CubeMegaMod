@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.8)
 project(project_CubeMegaMod)
-add_subdirectory(cwmods)
+add_subdirectory(CWSDK)
 add_library (CubeMegaMod-v1.5.7 SHARED "main.cpp" 
 "src/cwsdk-extension.h"  
 "src/hooks.h" 

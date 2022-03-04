@@ -10,7 +10,7 @@
 #include <sstream>
 #include <map>
 #include <windows.h>
-#include "cwmods/cwsdk.h"
+#include "CWSDK/cwsdk.h"
 
 #define GLOBAL static __attribute__((used))
 

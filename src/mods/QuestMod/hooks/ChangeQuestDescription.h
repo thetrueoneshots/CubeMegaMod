@@ -14,13 +14,13 @@ extern "C" int OnGetItemDescription(cube::BaseWidget* widget, cube::Item* item, 
 		text = *quest->GetQuestName(&cube::GetGame()->speech, &text);
 
 		FloatRGBA color(1.f, .25f, 0.25f, 1.f);
-		widget->SetDrawColor(&color);
-		widget->DrawBaseWidgetText(pos, &text, pos->x, pos->y);
+		widget->SetTextColor(&color);
+		widget->DrawString(pos, &text, pos->x, pos->y);
 
 		color = { 1.f, 1.f, 1.f, 1.f };
 		text = *quest->GetQuestDescription(&cube::GetGame()->speech, &text);
-		widget->SetDrawColor(&color);
-		widget->DrawBaseWidgetText(pos, &text, pos->x, pos->y);
+		widget->SetTextColor(&color);
+		widget->DrawString(pos, &text, pos->x, pos->y);
 		
 		return 1;
 	}

@@ -1,1 +1,0 @@
-#include "FormulaDetailsWidget.h"

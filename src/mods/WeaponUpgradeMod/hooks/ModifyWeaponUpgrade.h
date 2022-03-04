@@ -13,7 +13,7 @@ extern "C" void UpgradeWeapon(cube::AdaptionWidget * widget) {
 
 	cube::Item* item = widget->item;
 	cube::Creature* player = widget->game->GetPlayer();
-	int price = item->GetPrice();
+	int price = item->GetBuyingPrice();
 	if (price > player->gold)
 	{
 		return;

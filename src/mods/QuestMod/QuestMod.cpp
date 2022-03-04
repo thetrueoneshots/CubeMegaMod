@@ -5,6 +5,7 @@
 #include <utility>
 #include "../../cwsdk-extension.h"
 #include <algorithm>
+#include <map>
 
 
 void QuestMod::OnGameTick(cube::Game* game)

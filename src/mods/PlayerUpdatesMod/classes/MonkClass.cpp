@@ -21,7 +21,7 @@ void MonkClass::GenerateStarterGear(cube::Game* game, cube::Creature* player)
 	chest.rarity = 1;
 	chest.region = player->entity_data.current_region;
 
-	player->entity_data.equipment.creature = chest;
+	player->entity_data.equipment.chest = chest;
 
 	cube::Item fist(3, 4);
 	chest.rarity = 0;
